@@ -1,4 +1,4 @@
-import { Customer } from '@/types/customers';
+import { Customer } from '@/types/customer';
 import React, { useState } from 'react';
 
 interface CustomersSearchBarProps {
@@ -24,11 +24,11 @@ const CustomerSearchBar: React.FC<CustomersSearchBarProps> = ({ customers, onFil
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 ml-4 mr-4 bg-secondary min-w-xl rounded-lg">
       <label className="input input-bordered flex items-center gap-2">
         <input
           type="text"
-          className="grow text-black"
+          className="grow text-inherit font-bold"
           placeholder="Type Here to Search"
           value={searchTerm}
           onChange={handleSearchChange}
@@ -50,4 +50,4 @@ const CustomerSearchBar: React.FC<CustomersSearchBarProps> = ({ customers, onFil
   );
 };
 
-export default CustomersSearchBar;
+export default CustomerSearchBar;

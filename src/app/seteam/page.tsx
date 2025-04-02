@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import Image from "next/image";
 
+
 const SETEAMHOME = async () => {
   // Connect to the database
   await connectDB();

@@ -26,3 +26,8 @@ type CustomFields = {
     } | null;
     CustomFields: CustomFields[] | null;
   };
+
+  export type CustomerArray = {
+    CustomerArray: Customer[] | null;
+  };
+  

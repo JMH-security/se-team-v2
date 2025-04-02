@@ -7,6 +7,7 @@ import Image from "next/image";
 import NavMenu from "../navigationMenu/NavMenu";
 import Link from "next/link"
 import { Button } from "../ui/button";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 
 export default async function Header () {
@@ -49,10 +50,12 @@ export default async function Header () {
                             <h1 className="text-xs">{sessionUser?.role || "Role not found"}</h1>
                         </div>         
                         <div className="flex flex-wrap items-center">
-                            <Image src={session.user.image || "/se-shield.png"} alt="Avatar" width={25} height={25}/>    
+                            <Avatar className="m-2">
+                                <AvatarImage src={session.user.image || "/se-shield.png"} alt="Avatar" />
+                            </Avatar>
                         </div>
-                        <div className="bg-foreground text-background">
-                            <Button asChild>
+                        <div className="">
+                            <Button asChild variant="secondary">
                                 <Link href='/api/auth/signout'>Logout</Link>
                             </Button>
                         </div>

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Customer } from '@/types/customers';
-import { InvoiceList } from '@/app/components/customer/InvoiceList';
-import AddJobForm from '../job/addJobForm';
+import { Customer } from '@/types/customer';
+import Invoices from "@/components/customers/CustomerInvoiceList";
+//import AddJobForm from '../job/addJobForm';
+import { Button } from '../ui/button';
 
 interface CustomerDetailsProps {
     customer: Customer;
@@ -12,14 +13,13 @@ interface CustomerDetailsProps {
 export function CustomerDetails({ customer }: CustomerDetailsProps) {
     const [showInvoices, setShowInvoices] = useState(false);
     const [showJobAddForm, setShowJobAddForm] = useState(false);
-
-
+    console.log("customer details", customer.CustomerNumber)
 
     return (
         <div className="p-6">
-            <div className="bg-blue-600 text-white p-6 rounded-lg mb-6">
-                <h1 className="text-2xl font-bold mb-4">{customer.CustomerName}</h1>
-                <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gp text-primary p-6 rounded-lg mb-6">
+                <h1 className="bg-gp text-2xl font-bold mb-4">{customer.CustomerName}</h1>
+                <div className="bg-gp grid grid-cols-2 gap-4">
                     <div>
                         <p>Customer Number: {customer.CustomerNumber}</p>
                         <p>Address: {customer.Address?.Address1}</p>
@@ -38,27 +38,29 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
             </div>
 
             <div className="flex gap-4">
-                <button
-                    onClick={() => setShowInvoices(!showInvoices)}
-                    className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
-                >
-                    View Invoices
-                </button>
-                <button
-                    className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
+           
+                <Button
+                    className="bg-secondary text-black px-6 py-2 rounded"
                 >
                     View Jobs
-                </button>
-                <button
+                </Button>
+                <Button
                     onClick={() => setShowJobAddForm(!showJobAddForm)}
-                    className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
+                    className="bg-secondary text-black px-6 py-2 rounded"
                 >
                     Add New Job
-                </button>
+                </Button>
+                <Button
+                    onClick={() => setShowInvoices(!showInvoices)}
+                    className="bg-secondary text-black px-6 py-2 rounded"
+                >
+                {showInvoices ? 'Close Invoices' : 'Invoices'}
+                </Button>
+
             </div>
 
-            {showInvoices && <InvoiceList customerNumber={customer.CustomerNumber?.toString() || ''} />}
-            {showJobAddForm && <AddJobForm customer={customer} />}
+            {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
+            {/* {showJobAddForm && <AddJobForm customer={customer} />} */}
         </div>
     );
 } 
