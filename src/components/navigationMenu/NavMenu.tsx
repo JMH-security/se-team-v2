@@ -9,6 +9,7 @@ import {
   import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
   import Link from "next/link"
   import { ModeToggle } from "@/components/header/ModeToggle"
+  
 
 
 function NavMenu(role) {
@@ -18,15 +19,15 @@ function NavMenu(role) {
 
   return (
     <>
-    <div className="border-[1vh] border-secondary bg-secondary"><p>HELLO {sessionRole}</p></div>
-            <div className="flex flex-wrap m-0 p-0 justify-start items-center">
-                <div className="flex flex-wrap m-1 grow">
+    <div className="border-[1vh] border-secondary bg-secondary"></div>
+            <div className="flex flex-wrap bg-muted m-0 p-0 justify-start items-center">
+                <div className="flex flex-wrap bg-muted m-1 p-2 grow">
                     <NavigationMenu>
                         <NavigationMenuList className="flex flex-wrap mr-1 ml-1">
                             <NavigationMenuItem>
-                            <NavigationMenuTrigger>WinTeam Items</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <Link href="/seteam/customers" legacyBehavior passHref>
+                            <NavigationMenuTrigger className="bg-gp">WinTeam Items</NavigationMenuTrigger>
+                            <NavigationMenuContent className="">
+                                <Link className="mt-2" href="/seteam/customers" legacyBehavior passHref>
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>Customers</NavigationMenuLink>
                                 </Link>
                                 <Link href="/seteam/jobs" legacyBehavior passHref>
@@ -42,7 +43,7 @@ function NavMenu(role) {
                         <NavigationMenu>
                         <NavigationMenuList className="mr-1 ml-1">
                             <NavigationMenuItem>
-                            <NavigationMenuTrigger>Integrated</NavigationMenuTrigger>
+                            <NavigationMenuTrigger className="bg-gp">Integrated</NavigationMenuTrigger>
                             <NavigationMenuContent>
                                 <Link href="/seteam/" legacyBehavior passHref>
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>MSUs</NavigationMenuLink>
@@ -58,7 +59,7 @@ function NavMenu(role) {
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>    
-                <div className="">
+                <div className="bg-muted m-1 p-2">
                     <ModeToggle />
                 </div>
             </div>

@@ -25,9 +25,4 @@ type CustomFields = {
       Zip: string | null;
     } | null;
     CustomFields: CustomFields[] | null;
-  };
-
-  export type CustomerArray = {
-    CustomerArray: Customer[] | null;
-  };
-  
+  };  

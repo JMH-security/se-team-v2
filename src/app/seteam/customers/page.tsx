@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Customer, CustomerArray } from "@/types/customer"
+import { Customer } from "@/types/customer"
 import Customers from "@/components/customers/Customers"
 import { toNumber } from "@/lib/utils"
 
