@@ -13,9 +13,13 @@ import {
 
 
 function NavMenu(role) {
+    
+    const navRole = role?.role || "unauthorized"
 
-  const sessionRole = role.role
+    
 
+
+    
 
   return (
     <>
@@ -58,6 +62,42 @@ function NavMenu(role) {
                             </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu>
+
+                    {navRole === "admin" && (
+                        <NavigationMenu>
+                            <NavigationMenuList className="mr-1 ml-1">
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger className="bg-gp">Admin Tools</NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <Link href="/seteam/admin/user" legacyBehavior passHref>
+                                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                                Users
+                                            </NavigationMenuLink>
+                                        </Link>
+                                        <Link href="/seteam/admin/region" legacyBehavior passHref>
+                                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                                Regions
+                                            </NavigationMenuLink>
+                                        </Link>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu>
+                    )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
                 </div>    
                 <div className="bg-muted m-1 p-2">
                     <ModeToggle />
