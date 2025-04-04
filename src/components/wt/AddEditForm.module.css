@@ -1,0 +1,100 @@
+/* pages/RegionForm.module.css */
+
+/* Main container */
+.container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    min-height: 100vh;
+    background-color: #f1f3f7; /* Set background color for the entire page */
+  }
+  
+  /* Main content styling */
+  .mainContent {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff; /* Set white background for the form area */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow to the form container */
+    border-radius: 8px; /* Rounded corners */
+    width: 100%;
+    max-width: 600px; /* Set a maximum width for the form */
+  }
+  
+  /* Header with the page title */
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    color: #2d3748; /* Set "Edit Region" text to black or dark gray */
+  }
+  
+  /* Form styles */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Form Group styling */
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formLabel {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2d3748; /* Dark text color */
+  }
+  
+  .formInput {
+    padding: 10px;
+    border: 1px solid #ccd0d5;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #2d3748; /* Dark text color */
+    width: 100%; /* Ensure input fields take the full available width */
+    max-width: 100%; /* Ensure no horizontal overflow */
+  }
+  
+  .formInput:focus {
+    outline: none;
+    border-color: #4c84d3;
+  }
+  
+  /* Submit button */
+  .submitButton {
+    padding: 12px 20px;
+    background-color: #4c84d3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%; /* Make the button span the full width of the form */
+  }
+  
+  .submitButton:hover {
+    background-color: #3b70a1;
+  }
+  
+  /* Back to Entities button */
+  .backButton {
+    padding: 12px 20px;
+    background-color: #e2e8f0; /* Light gray background */
+    color: #2d3748; /* Dark text color */
+    border: 1px solid #ccd0d5; /* Light gray border */
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%; /* Make the button span the full width of the form */
+    transition: background-color 0.3s;
+  }
+  
+  .backButton:hover {
+    background-color: #cbd5e0; /* Slightly darker gray for hover */
+  }
+  

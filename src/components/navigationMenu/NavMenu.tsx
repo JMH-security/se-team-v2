@@ -74,9 +74,9 @@ function NavMenu(role) {
                                                 Users
                                             </NavigationMenuLink>
                                         </Link>
-                                        <Link href="/seteam/admin/region" legacyBehavior passHref>
+                                        <Link href="/seteam/admin/wt" legacyBehavior passHref>
                                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                                Regions
+                                                WinTeam Admin
                                             </NavigationMenuLink>
                                         </Link>
                                     </NavigationMenuContent>
