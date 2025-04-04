@@ -1,7 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { Employee } from "@/app/types/employee";
+import { Employee } from "@/types/employee";
+import { Button } from "@/components/ui/button";
+
 
 export default function EmployeeItem({
   employeeId,
@@ -19,24 +21,24 @@ export default function EmployeeItem({
     <>
     
       <div>
-        <div className="flex flex-row bg-gray-900 p-1">
+        <div className="flex flex-row grow bg-muted border border-inherit border-2 p-1 rounded-sm">
           <div className="flex flex-row grow items-center">
             <li
               key={employeeId}
-              className="flex grow items-center text-white"
+              className="flex flex-row grow items-center text-inherit"
             >
-              <div className="m-2 p-2 min-w-24 border-slate-500 border-solid border-2">
+              <div className="flex flex-row flex-none m-2">
                 {employeeNumber}
               </div>
-              <div className="m-2 p-2 min-w-80 border-slate-700 border-solid border-2">{lastName}</div>
-              <div className="m-2 p-2 border-slate-700 border-solid border-2">{statusDescription}</div>
-              <div className="m-2 p-2 min-w-24 border-slate-700 border-solid border-2">{locationId}</div>
-              <div className="m-2 p-2 min-w-24 border-slate-700 border-solid border-2">{supervisorId}</div>
+              <div className="m-2 p-2 min-w-80 ">{lastName}</div>
+              <div className="m-2 p-2">{statusDescription}</div>
+              <div className="m-2 p-2 min-w-24 ">{locationId}</div>
+              <div className="m-2 p-2 min-w-24 ">{supervisorId}</div>
             </li>
-            <div className="flex m-2 justify-end">
-                <button onClick={handleDetailsClick} className="btn btn-info">
+            <div className="flex p-2 justify-end">
+                <Button onClick={handleDetailsClick} className="btn btn-info text-secondary">
                   Employee Details
-                </button>
+                </Button>
               </div>
           </div>
         </div>

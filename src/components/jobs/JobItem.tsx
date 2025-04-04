@@ -19,8 +19,8 @@ export default function JobItem({
 };
   return (
     <>
-      <div>
-        <div className="flex flex-row bg-primary-foreground rounded max-w-5xl">
+      <div className="ml-8">
+        <div className="flex flex-row justify-center bg-primary-foreground rounded max-w-5xl">
           <div className="justify-center grow">
             <li
               key={jobId}
@@ -32,7 +32,7 @@ export default function JobItem({
               <div className="flex grow m-2">{jobDescription}</div>
               <div className="flex m-2 text-xs text-secondary">{ typeId===1 ? 'Active' : 'Inactive'}</div>
               <div className="p-2 flex">
-                <Button id={jobId} onClick={handleDetailsClick} className="btn btn-info text-secondary" variant="outline">
+                <Button id={jobId} onClick={handleDetailsClick} className="btn btn-info text-secondary">
                   Job Details
                 </Button>
               </div>
