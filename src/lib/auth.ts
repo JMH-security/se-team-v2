@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import MicrosoftEntraIdProvider from "next-auth/providers/microsoft-entra-id";
-import { connectDB } from "../lib/db";
-import User from "../models/User";
+import { connectDB } from "@/lib/db";
+import User from "@/models/User";
 
 export const {
   handlers: { GET, POST },
