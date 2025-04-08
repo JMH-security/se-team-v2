@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Customer } from '@/types/customer';
 import Invoices from "@/components/customers/CustomerInvoiceList";
 //import AddJobForm from '../job/addJobForm';
+import JobForm from '@/components/jobs/form/JobForm'
 import { Button } from '../ui/button';
 
 interface CustomerDetailsProps {
@@ -13,7 +14,7 @@ interface CustomerDetailsProps {
 export function CustomerDetails({ customer }: CustomerDetailsProps) {
     const [showInvoices, setShowInvoices] = useState(false);
     const [showJobAddForm, setShowJobAddForm] = useState(false);
-    console.log("customer details", customer.CustomerNumber)
+    console.log("customer details", customer)
 
     return (
         <div className="p-6">
@@ -60,7 +61,7 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
             </div>
 
             {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
-            {/* {showJobAddForm && <AddJobForm customer={customer} />} */}
+            {showJobAddForm && <JobForm customer={customer.CustomerID} />}
         </div>
     );
 } 

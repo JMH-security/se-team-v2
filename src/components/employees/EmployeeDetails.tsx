@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Employee } from '@/types/employee';
 import { usePathname } from 'next/navigation';
+import SendSms from '@/components/sms/sendSms'; 
 
 interface EmployeeDetailsProps {
     employee: Employee;
@@ -48,7 +49,7 @@ export function EmployeeDetails({ employee }: EmployeeDetailsProps) {
                     </div>
                 </div>
             </div>
-
+            <SendSms />
             <div className="flex gap-4">
                 <button
                     onClick={() => setShowCompliance(!showCompliance)}
