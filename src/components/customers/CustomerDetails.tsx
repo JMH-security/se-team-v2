@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { Customer } from '@/types/customer';
 import Invoices from "@/components/customers/CustomerInvoiceList";
-//import AddJobForm from '../job/addJobForm';
 import JobForm from '@/components/jobs/form/JobForm'
 import { Button } from '../ui/button';
+import { AddJob } from '@/components/jobCreate/AddJob';
 
 interface CustomerDetailsProps {
     customer: Customer;
@@ -62,6 +62,7 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 
             {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
             {showJobAddForm && <JobForm customer={customer.CustomerID} />}
+            <AddJob customerId='12345'/>
         </div>
     );
 } 
