@@ -1,5 +1,5 @@
-import { doExternalLogin } from "@/app/actions/signInSignOut"
-import { Button } from "../ui/button"
+import { doExternalLogin } from "@/actions/signInSignOut"
+import { Button } from "@/components/ui/button"
 
 const LoginForm = () => {
   return (
