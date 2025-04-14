@@ -27,7 +27,7 @@ export function AddJob({ customerId }: { customerId: string }) {
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="customerId" value={customerId} />
       <Input id="jobNumber" name="jobNumber" placeholder="Job Number" />
-      <Input id="JobName" name="jobName" placeholder="Job Name" />
+      <Input id="JobDescription" name="jobDescription" placeholder="Job Name" />
       <Submit />
       {state?.error && <pre className="text-red-500 text-sm">{JSON.stringify(state.error, null, 2)}</pre>}
     </form>

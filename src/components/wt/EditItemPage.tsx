@@ -39,6 +39,7 @@ const EditItemPage: React.FC<EditItemPageProps> = ({ entity, activeSection, head
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      console.log('URL Endpoing', endpointUrl);
       if (response.ok) {
         handleClickBack();
       } else {
@@ -57,8 +58,9 @@ const EditItemPage: React.FC<EditItemPageProps> = ({ entity, activeSection, head
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           {headers.map((header) => (
-            header !== 'id' && (
-              <div key={header} className={styles.formGroup}>
+            
+            //header !== 'id' && (
+              (<div key={header} className={styles.formGroup}>
                 <label htmlFor={header} className={styles.formLabel}>{header}</label>
                 <input
                   type="text"

@@ -62,7 +62,7 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 
             {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
             {showJobAddForm && <JobForm customer={customer.CustomerID} />}
-            <AddJob customerId='12345'/>
+            <AddJob customerId={customer.CustomerID} />
         </div>
     );
 } 

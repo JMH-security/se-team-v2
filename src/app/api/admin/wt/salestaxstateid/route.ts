@@ -75,12 +75,12 @@ export async function POST(req: NextRequest) {
 
     // Establish DB connection
     await connectDB();
-
+    const stringId = String(id);
     // Update the service in the database
     const updatedService = await Salestaxstateid.findOneAndUpdate(
-      { id },
-      { name },
-      { new: true, upsert: true },
+      { id: stringId },
+      { id: stringId, name },
+      { new: true, upsert: false },
     );
 
     if (!updatedService) {

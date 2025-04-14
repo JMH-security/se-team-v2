@@ -7,6 +7,7 @@ import { Region } from "@/types/regions";
 import { Supervisor } from "@/types/supervisor";
 import { Branch } from "@/types/branch"
 import { entityConfig } from "@/components/wt/entityConfig";
+import { SalesTaxStateId } from "@/types/salestaxstateid";
 //import styles from "./page.module.css";
 
 interface FormState {
@@ -137,6 +138,7 @@ const JobForm: React.FC<JobsProps> = ({ customer }) => {
     const [regions, setRegions] = useState<Region[]>([]);
     const [branches, setBranches] = useState<Branch[]>([]);
     const [supervisors, setSupervisors] = useState<Supervisor[]>([]);
+    const [salesTaxStateId, setSalesTaxStateId] = useState<SalesTaxStateId[]>([]);
     const [formState, setFormState] = useState<FormState>(initialFormState);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
   
@@ -144,6 +146,7 @@ const JobForm: React.FC<JobsProps> = ({ customer }) => {
       getRegions();
       getBranches();
       getSupervisors();
+      getSalesTaxStateIds()
     }, []);
   
     const getRegions = async () => {
@@ -175,6 +178,18 @@ const JobForm: React.FC<JobsProps> = ({ customer }) => {
         console.error("Error fetching supervisors", error);
       }
     };
+
+
+    const getSalesTaxStateIds = async () => {
+      try {
+        const res = await fetch(entityConfig.salestaxstateid.endpointUrl, { method: "GET" });
+        const data = await res.json();
+        setSalesTaxStateId(data);
+      } catch (error) {
+        console.error("Error fetching Sales Tax State Ids", error);
+      }
+    };
+
   
     const handleChange = (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

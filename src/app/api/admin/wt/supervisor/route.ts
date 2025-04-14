@@ -73,12 +73,18 @@ export async function POST(req: NextRequest) {
 
     // Establish DB connection
     await connectDB();
-
+    console.log (req.body)
     // Update the supervisor in the database
+
+//###################### NEED TO GET _ID AND USE THAT INSTEAD OF ID ###########################
+//
+//
+//
+//###################### NEED TO GET _ID AND USE THAT INSTEAD OF ID ###########################
     const updatedSupervisor = await Supervisor.findOneAndUpdate(
       { id },
-      { name },
-      { new: true, upsert: true },
+      { id, name },
+      { new: true, upsert: false },
     );
 
     if (!updatedSupervisor) {
