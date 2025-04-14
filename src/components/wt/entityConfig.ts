@@ -19,5 +19,9 @@ export const entityConfig: {
     services: {
         mongoEntityName: 'service',
         endpointUrl: `/api/admin/wt/service`
+    },
+    salestaxstateid: {
+        mongoEntityName: 'salestaxstateid',
+        endpointUrl: `/api/admin/wt/salestaxstateid`
     }
 }

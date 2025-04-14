@@ -13,7 +13,7 @@ const Page = () => {
     [key: string]: any;
   };
 
-  type Selections = 'regions' | 'branches' | 'supervisors' | 'services';
+  type Selections = 'regions' | 'branches' | 'supervisors' | 'services' | 'salestaxstateid';
 
   const [activeSection, setActiveSection] = useState<Selections>('regions');
   const [items, setItems] = useState<Array<EntityItem>>([]);
@@ -137,6 +137,7 @@ const Page = () => {
           <li onClick={() => handleSectionChange('branches')} className={activeSection === 'branches' ? styles.active : ''}>Branches</li>
           <li onClick={() => handleSectionChange('supervisors')} className={activeSection === 'supervisors' ? styles.active : ''}>Supervisors</li>
           <li onClick={() => handleSectionChange('services')} className={activeSection === 'services' ? styles.active : ''}>Services</li>
+          <li onClick={() => handleSectionChange('salestaxstateid')} className={activeSection === 'salestaxstateid' ? styles.active : ''}>Sales Tax State</li>
         </ul>
       </nav>
 
