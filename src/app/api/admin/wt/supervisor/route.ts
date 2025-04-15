@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   const searchParams = req.nextUrl.searchParams
   const id = searchParams.get('id')
-
+  
   const session = auth();
 
   if (!session) {
@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
 
     if (!id) {
         getSupervisor = await Supervisor.find();
+        console.log('The getSupervisor: ', getSupervisor)
     } else {
         getSupervisor = await Supervisor.find({ id: id });
     }
@@ -36,10 +37,12 @@ export async function GET(req: NextRequest) {
     // Return the fetched supervisor data
     const transformedData = getSupervisor.map(supervisor => {
       return {
+        //_id: supervisor._id,
         id: supervisor.id,
         name: supervisor.name,
       }
     })
+    console.log('The transformedData: ', transformedData)
     return NextResponse.json(transformedData);
   } catch (error) {
     console.error('Error fetching the Supervisor:', error);
@@ -53,15 +56,16 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
 
   const session = auth();
-
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
+  
   try {
     // Parse the JSON body from the request
-    const { name, id } = await req.json();
-
+    const { name, id, _id } = await req.json();  //Good to go
+    console.log(name, id, _id)
+    
     // Validate the input
     if (!name) {
       return NextResponse.json({ error: 'Bad Request. name must be provided' }, { status: 400 });
@@ -70,34 +74,76 @@ export async function POST(req: NextRequest) {
     if (!id) {
       return NextResponse.json({ error: 'Invalid or missing supervisor ID' }, { status: 400 });
     }
+    
+    if (!_id) {
+      // Establish DB connection
+    await connectDB();
+    const item = await Supervisor.insertOne({ name: name, id: id})
+  
+       if (!item) {
+        return NextResponse.json({ error: 'Unable to add Supervisor' }, { status: 404 });
+       }
+        return NextResponse.json({ success: true, data: item });
+    } 
+
 
     // Establish DB connection
     await connectDB();
-    console.log (req.body)
-    // Update the supervisor in the database
-
-//###################### NEED TO GET _ID AND USE THAT INSTEAD OF ID ###########################
-//
-//
-//
-//###################### NEED TO GET _ID AND USE THAT INSTEAD OF ID ###########################
-    const updatedSupervisor = await Supervisor.findOneAndUpdate(
-      { id },
-      { id, name },
-      { new: true, upsert: false },
-    );
-
-    if (!updatedSupervisor) {
-      return NextResponse.json({ error: 'Supervisor not found or update failed' }, { status: 404 });
-    }
-
-    // Return the updated supervisor data
-    return NextResponse.json(updatedSupervisor);
+    const item = await Supervisor.findByIdAndUpdate(_id, { name: name, id: id})
+  
+       if (!item) {
+        return NextResponse.json({ error: 'Supervisor not found or update failed' }, { status: 404 });
+       }
+       return NextResponse.json({ success: true, data: item });
   } catch (error) {
-    console.error('Error updating supervisor:', error);
-    return NextResponse.json({ error: 'Failed to update Supervisor' }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to update Supervisor' }, { status: 500 });
+      }
+
+
+
+
   }
-}
+
+
+// // Handle edit - PUT requests
+
+// export async function PUT(req: NextRequest) {
+
+//   const session = auth();
+//   if (!session) {
+//     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+//   }
+
+//   try {
+//     // Parse the JSON body from the request
+//     const { name, id, _id } = await req.json();  //Good to go
+    
+
+//     // Validate the input
+//     if (!name) {
+//       return NextResponse.json({ error: 'Bad Request. name must be provided' }, { status: 400 });
+//     }
+
+//     if (!id) {
+//       return NextResponse.json({ error: 'Invalid or missing supervisor ID' }, { status: 400 });
+//     }
+
+//     // Establish DB connection
+//     await connectDB();
+    
+//     const item = await Supervisor.findByIdAndUpdate(_id, req.body, {
+//       new: true,
+//       reunvalidators: true,
+//      })
+
+//      if (!item) {
+//       return NextResponse.json({ error: 'Supervisor not found or update failed' }, { status: 404 });
+//      }
+//      res.status(200).json({ success: true, data: item });
+//     } catch (error) {
+//   }
+// }
+
 
 
 

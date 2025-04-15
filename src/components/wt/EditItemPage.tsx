@@ -25,21 +25,24 @@ const EditItemPage: React.FC<EditItemPageProps> = ({ entity, activeSection, head
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log('FORM DATA', formData);
     setFormData({
       ...formData,
       [name]: value,
     });
+    console.log('FORM DATA AFTER CHANGE', formData);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('FORM DATA HANDLE SUBMIT', formData);
     try {
       const response = await fetch(endpointUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      console.log('URL Endpoing', endpointUrl);
+      console.log('Handle Submit Response', response);
       if (response.ok) {
         handleClickBack();
       } else {
@@ -59,7 +62,7 @@ const EditItemPage: React.FC<EditItemPageProps> = ({ entity, activeSection, head
         <form className={styles.form} onSubmit={handleSubmit}>
           {headers.map((header) => (
             
-            //header !== 'id' && (
+            header !== '_id' && 
               (<div key={header} className={styles.formGroup}>
                 <label htmlFor={header} className={styles.formLabel}>{header}</label>
                 <input

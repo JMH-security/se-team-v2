@@ -8,6 +8,7 @@ import NewItemPage from '@/components/wt/NewItemPage';
 
 const Page = () => {
   type EntityItem = {
+    _id: string;
     id: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
@@ -36,16 +37,15 @@ const Page = () => {
       throw new Error(`Failed to fetch ${mongoEntityName} data`);
     }
     const data = await res.json();
-
+    console.log("data: ", data)
     setItems(data);
 
     if (data.length > 0) {
       // Extract keys dynamically from the first item
       const dynamicHeaders = Object.keys(data[0]);
+      console.log("dynamicHeaders: ", dynamicHeaders)
       setHeaders(dynamicHeaders);
     }
-
-    console.log(data);
   }
 
   useEffect(() => {
