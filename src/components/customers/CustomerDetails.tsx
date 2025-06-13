@@ -5,7 +5,7 @@ import { Customer } from '@/types/customer';
 import Invoices from "@/components/customers/CustomerInvoiceList";
 import JobForm from '@/components/jobs/form/JobForm'
 import { Button } from '../ui/button';
-import { AddJob } from '@/components/jobCreate/AddJob';
+import { AddJobForm } from '@/components/jobCreate/AddJobForm';
 
 interface CustomerDetailsProps {
     customer: Customer;
@@ -62,7 +62,9 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 
             {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
             {showJobAddForm && <JobForm customer={customer.CustomerID} />}
-            <AddJob customerId={customer.CustomerID} />
+            <div className='m-4'>
+            <AddJobForm customer={customer} />
+            </div>
         </div>
     );
 } 

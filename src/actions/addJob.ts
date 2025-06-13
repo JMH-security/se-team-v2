@@ -4,7 +4,8 @@
 import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/db';
 import { Job } from '@/models/Job';
-import { JobSchema } from '@/lib/validation';
+// import { JobSchema } from '@/lib/validation';
+import { jobFormSchema } from '@/lib/formSchemas/jobSchema'
 
 
 
@@ -14,27 +15,35 @@ export async function addJob(prevState: {
         message: string;
     },
     formData: FormData) {
-
-  await connectDB();
+      console.log('FormData:', formData);
+  
+  
+      await connectDB();
+  
   console.log('FormData:', formData);
 
-  const parse = JobSchema.safeParse({
+  const parse = jobFormSchema.safeParse({
     jobNumber: formData.get("jobNumber"),
     jobDescription: formData.get("jobDescription"),
-    customerId: formData.get("customerId")
+    customerId: formData.get("customerId"),
+    regionId: formData.get("regionId"),
+    branchId: formData.get("branchId")
   })
 
   if (!parse.success) {
-    console.log('PARsE fIALED');
+    console.log('Parse failed');
     return { success: false, error: parse.error.format() };
   }
 
-  const { jobNumber, jobDescription, customerId } = parse.data;
+  const { jobNumber, jobDescription, customerId, regionId, branchId } = parse.data;
   console.log('Parsed Data:', parse.data);
   const jobFinal = {
     jobNumber: jobNumber,
     jobDescription: jobDescription,
-    customerId: customerId}
+    customerId: customerId,
+    regionId: regionId,
+    branchId: branchId
+  }
 
     console.log('Job Final:', jobFinal);
 
