@@ -44,13 +44,13 @@ export const {
 
       }
       return token;
-    },
+    },    
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.userId;
-      }
+      }      
       return session;
-    },
+    },    
     async signIn({ user, account, profile }) {
       try {
         await connectDB();
