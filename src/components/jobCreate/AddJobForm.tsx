@@ -6,7 +6,7 @@ import { jobFormSchema } from "@/lib/formSchemas/jobSchema"
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { useState, useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form'
 
 
 
@@ -110,8 +110,10 @@ export const AddJobForm = ( customerObj : Customer ) => {
       }
     };
 
+
+
   
-  const form = useForm<z.infer<typeof jobFormSchema>>({
+  const { form } = useForm<z.infer<typeof jobFormSchema>>({
     resolver: zodResolver(jobFormSchema),
     defaultValues: {
       jobId: "",
@@ -153,10 +155,13 @@ export const AddJobForm = ( customerObj : Customer ) => {
   
     const [state, formAction] = useActionState(addJob, initialState);
 
-  const onSubmit = async (data: z.infer<typeof jobFormSchema>) => {
+   const onSubmit = async (data: z.infer<typeof jobFormSchema>) => {
+     console.log("Form submitted with data:", data);
+   } 
+
+   const onSubmit2: SubmitHandler<z.infer<typeof jobFormSchema>> = async (data) => {
     console.log("Form submitted with data:", data);
-  } 
-  
+   }
   
   const Submit = () => {
     console.log("Submit button clicked");
@@ -165,17 +170,17 @@ export const AddJobForm = ( customerObj : Customer ) => {
     return <Button type="submit" disabled={pending}>{pending ? 'Adding...' : 'Add Job'}</Button>;
   };
 
-  const { fields } = useFieldArray({
-    name: "jobTier",
-    control: form.control,
-  })
+  // const { fields } = useFieldArray({
+  //   name: "jobTier",
+  //   control: form.control,
+  // })
 
   return (
 
     <div className="flex flex-row min-w-96 p-6 bg-gray-900">
 
     <Form {...form} action={formAction} className="space-y-4">
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit2)} className="space-y-4">
         
 
       <FormField

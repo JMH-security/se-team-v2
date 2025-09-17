@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Customer } from '@/types/customer';
 import Invoices from "@/components/customers/CustomerInvoiceList";
-import JobForm from '@/components/jobs/form/JobForm'
 import { Button } from '../ui/button';
 import { AddJobForm } from '@/components/jobCreate/AddJobForm';
 
@@ -61,9 +60,9 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
             </div>
 
             {showInvoices && <Invoices customerNumber={customer.CustomerNumber?.toString() || ''} />}
-            {showJobAddForm && <JobForm customer={customer.CustomerID} />}
+            {showJobAddForm && <AddJobForm customer={customer} />}
             <div className='m-4'>
-            <AddJobForm customer={customer} />
+            
             </div>
         </div>
     );
