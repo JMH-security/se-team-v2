@@ -3,9 +3,6 @@ import Google from "next-auth/providers/google";
 import MicrosoftEntraIdProvider from "next-auth/providers/microsoft-entra-id";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-
-const secret = process.env.NEXTAUTH_SECRET;
 
 export const {
 	handlers: { GET, POST },
@@ -13,16 +10,15 @@ export const {
 	signIn,
 	signOut,
 } = NextAuth({
-	//adapter: MongoDBAdapter(client, options),
 	providers: [
 		MicrosoftEntraIdProvider({
-			clientId: process.env.EntraAppID,
-			clientSecret: process.env.EntraSecretValue,
+			clientId: process.env.ENTRA_APP_ID,
+			clientSecret: process.env.ENTRA_SECRET,
 			authorization: {
 				params: {
 					scope: "openid profile email User.Read",
-					redirect_uri: process.env.AUTH_MICROSOFT_ENTRA_ID_ISSUER,
-					tenantId: process.env.EntraTenantID,
+					redirect_uri: process.env.AUTH_MICROSOFT_ENTRA_ID_AUTHORIZATION_URL,
+					tenantId: process.env.ENTRA_TENANT_ID,
 				},
 			},
 		}),

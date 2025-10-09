@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { CONNECTIONSTRING } = process.env;
 
-export const connectDB = async () => {
+const connectDB = async () => {
 	try {
 		const { connection } = await mongoose.connect(CONNECTIONSTRING as string);
 		if (connection.readyState === 1) {
@@ -13,3 +13,5 @@ export const connectDB = async () => {
 		return Promise.reject(error);
 	}
 };
+
+export default connectDB;
