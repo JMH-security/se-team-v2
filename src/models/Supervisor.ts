@@ -1,28 +1,11 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-export interface SupervisorDocument {
-  _id: string;
-  id: number;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+const SupervisorSchema = new mongoose.Schema({
+	supervisorId: { type: String, required: true, unique: true },
+	supervisorName: { type: String, required: true },
+	supervisorEmail: { type: String, required: true },
+	supervisorCell: { type: String },
+});
 
-const SupervisorSchema = new Schema<SupervisorDocument>(
-  {
-    id: {
-      type: Number,
-      unique: true,
-      required: [true, "Supervisor ID is required"]
-    },
-    name: {
-      type: String,
-      required: [true, "Supervisor Name is required"]
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-const Supervisor = mongoose.models?.Supervisor || model<SupervisorDocument>("Supervisor", SupervisorSchema);
-export default Supervisor;
+export default mongoose.models.Supervisor ||
+	mongoose.model("Supervisor", SupervisorSchema);

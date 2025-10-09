@@ -21,29 +21,19 @@ export async function POST(request: Request) {
 	try {
 		await connectDB();
 		const body = await request.json();
-		console.log("Body data", body);
-		const parsed = jobFormSchema.parse({ ...body, jobId: uuidv4() });
-
-		console.log("Parsed job data:", parsed);
+		//console.log("Body data", body);
+		const parsed = jobFormSchema.parse(body);
+		parsed.jobId = uuidv4();
 		const job = new Job(parsed);
-		await job.save();
+		const addJob = await job.save();
 
-		if (job) {
-			try {
-				const res = await fetch("http://localhost:3000/api/jobs/wt", {
-					method: "POST",
-					body: JSON.stringify(parsed),
-				});
-				if (!res.ok) {
-					throw new Error(`Error: ${res.status} ${res.statusText}`);
-				} else {
-					return NextResponse.json(job, { status: 201 });
-					console.log("Form submission successful");
-				}
-			} catch (error) {
-				console.error("Error:", error);
-				throw error; // This will trigger Next.js error boundary
-			}
+		if (addJob) {
+			return NextResponse.json(addJob, { status: 201 });
+		} else {
+			return NextResponse.json(
+				{ error: "Failed to create job" },
+				{ status: 400 }
+			);
 		}
 	} catch (error) {
 		console.error("This is a problem: ", error);

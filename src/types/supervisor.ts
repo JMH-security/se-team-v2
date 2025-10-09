@@ -1,4 +1,7 @@
-export type Supervisor = {
-    id: number
-    name: string
+export interface Supervisor {
+	_id: string;
+	supervisorId: string;
+	supervisorName: string;
+	supervisorEmail: string;
+	supervisorCell?: string;
 }
