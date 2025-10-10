@@ -1,12 +1,14 @@
+"use client";
 import Sidebar from "@/components/wt/Sidebar";
 import RegionForm from "@/components/wt/RegionForm";
-import { Region } from "@/types/regions";
+import { Region } from "@/types/region";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataProvider, useData } from "@/contexts/DataContext";
 
 function RegionsContent() {
 	const { regions } = useData();
+	console.log("RegionsContent regions:", regions);
 
 	return (
 		<div className="flex">
@@ -29,10 +31,10 @@ function RegionsContent() {
 						<CardContent>
 							<ul>
 								{regions?.map((region: Region) => (
-									<li key={region._id} className="flex justify-between py-2">
-										<span>{region.regionName}</span>
+									<li key={region.id} className="flex justify-between py-2">
+										<span>{region.name}</span>
 										<Button asChild>
-											<a href={`/wt/admin/regions/${region._id}`}>Edit</a>
+											<a href={`/wt/admin/regions/${region.id}`}>Edit</a>
 										</Button>
 									</li>
 								))}

@@ -1,12 +1,29 @@
-import Sidebar from "@/components/Sidebar";
-import SupervisorForm from "@/components/SupervisorForm";
-import { Supervisor } from "@/lib/types";
+"use client";
+import { useState, useEffect } from "react";
+import Sidebar from "@/components/wt/Sidebar";
+import SupervisorForm from "@/components/wt/SupervisorForm";
+import { Supervisor } from "@/types/supervisor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataProvider, useData } from "@/contexts/DataContext";
 
 function SupervisorsContent() {
-	const { supervisors } = useData();
+	const [supervisors, setSupervisors] = useState<Supervisor[]>([]);
+
+	const fetchSupervisors = async () => {
+		try {
+			const response = await fetch("/api/admin/wt/supervisors");
+			if (!response.ok) return [];
+			const data = await response.json();
+			setSupervisors(data);
+		} catch (err) {
+			console.error("fetchSupervisors error", err);
+			return [];
+		}
+	};
+
+	useEffect(() => {
+		fetchSupervisors();
+	}, []);
 
 	return (
 		<div className="flex">
@@ -15,15 +32,15 @@ function SupervisorsContent() {
 				<h1 className="text-2xl font-bold mb-6">Supervisors</h1>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<Card>
-						<CardHeader>
-							<CardTitle>Add Supervisor</CardTitle>
+						<CardHeader className="flex items-center text-2xl">
+							<CardTitle>ADD SUPERVISOR</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<SupervisorForm />
 						</CardContent>
 					</Card>
 					<Card>
-						<CardHeader>
+						<CardHeader className="flex items-center text-2xl">
 							<CardTitle>Supervisors List</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -31,11 +48,13 @@ function SupervisorsContent() {
 								{supervisors?.map((supervisor: Supervisor) => (
 									<li
 										key={supervisor._id}
-										className="flex justify-between py-2"
+										className="flex justify-between py-2 border-b-2 border-accent"
 									>
 										<span>{supervisor.supervisorName}</span>
 										<Button asChild>
-											<a href={`/wt/admin/supervisors/${supervisor._id}`}>
+											<a
+												href={`/seteam/admin/wt/supervisors/${supervisor._id}`}
+											>
 												Edit
 											</a>
 										</Button>
@@ -51,9 +70,5 @@ function SupervisorsContent() {
 }
 
 export default function SupervisorsPage() {
-	return (
-		<DataProvider>
-			<SupervisorsContent />
-		</DataProvider>
-	);
+	return <SupervisorsContent />;
 }

@@ -17,17 +17,30 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+// interface SupervisorFormProps {
+// 	initialData?: Supervisor;
+// }
+
+// export default function SupervisorEditForm({
+// 	initialData,
+// }: SupervisorFormProps) {
+
 interface SupervisorFormProps {
-	initialData?: Supervisor;
+	simpleSupervisor?: string;
 }
 
-export default function SupervisorForm({ initialData }: SupervisorFormProps) {
+export default function SupervisorEditForm({
+	simpleSupervisor,
+}: SupervisorFormProps) {
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	const supervisorObj: Supervisor = JSON.parse(simpleSupervisor);
+
 	const form = useForm({
 		resolver: zodResolver(supervisorSchema),
-		defaultValues: initialData || {
+		defaultValues: supervisorObj || {
+			_id: "",
 			supervisorId: "",
 			supervisorName: "",
 			supervisorEmail: "",
@@ -37,13 +50,18 @@ export default function SupervisorForm({ initialData }: SupervisorFormProps) {
 
 	const onSubmit = async (data: any) => {
 		setIsSubmitting(true);
+		data._id = supervisorObj?._id;
+		console.log("URL", `/api/admin/wt/supervisors/${supervisorObj?._id}`);
 		try {
-			const response = await fetch("/api/admin/wt/supervisors", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
-			});
-			if (!response.ok) throw new Error("Failed to save supervisor");
+			const response = await fetch(
+				`/api/admin/wt/supervisors/${supervisorObj?._id}`,
+				{
+					method: "PUT",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(data),
+				}
+			);
+			if (!response.ok) throw new Error("Failed to update supervisor");
 			router.push("/seteam/admin/wt/supervisors");
 		} catch (error) {
 			console.error(error);
@@ -60,7 +78,7 @@ export default function SupervisorForm({ initialData }: SupervisorFormProps) {
 					name="supervisorId"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Supervisor ID</FormLabel>
+							<FormLabel>Supervisor ID2</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
@@ -108,7 +126,7 @@ export default function SupervisorForm({ initialData }: SupervisorFormProps) {
 					)}
 				/>
 				<Button type="submit" disabled={isSubmitting}>
-					{initialData ? "Update" : "Create"} Supervisor
+					{simpleSupervisor ? "Update" : "Create"} Supervisor
 				</Button>
 			</form>
 		</Form>

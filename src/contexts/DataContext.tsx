@@ -25,7 +25,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
 	const fetchRegions = async () => {
 		try {
-			const response = await fetch("/api/regions");
+			const response = await fetch("/api/admin/wt/region");
 			if (!response.ok) return;
 			const data = await response.json();
 			setRegions(data);
@@ -36,7 +36,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
 	const fetchSupervisors = async () => {
 		try {
-			const response = await fetch("/api/supervisors");
+			const response = await fetch("/api/admin/wt/supervisors");
 			if (!response.ok) return;
 			const data = await response.json();
 			setSupervisors(data);

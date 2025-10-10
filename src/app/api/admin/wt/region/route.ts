@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { connectDB } from "@/lib/db";
+import connectDB from "@/lib/db";
 import Region from "@/models/Region_archive";
 import { NextRequest, NextResponse } from "next/server";
 

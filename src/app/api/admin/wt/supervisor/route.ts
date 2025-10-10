@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { connectDB } from "@/lib/db";
+import connectDB from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Supervisor, { SupervisorDocument } from "@/models/Supervisor_archive";
 
@@ -56,66 +56,12 @@ export async function GET(req: NextRequest) {
 }
 
 // Handle POST requests
-export async function POST(req: NextRequest) {
-	const session = auth();
-	if (!session) {
-		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-	}
-
-	try {
-		// Parse the JSON body from the request
-		const { name, id, _id } = await req.json(); //Good to go
-		console.log(name, id, _id);
-
-		// Validate the input
-		if (!name) {
-			return NextResponse.json(
-				{ error: "Bad Request. name must be provided" },
-				{ status: 400 }
-			);
-		}
-
-		if (!id) {
-			return NextResponse.json(
-				{ error: "Invalid or missing supervisor ID" },
-				{ status: 400 }
-			);
-		}
-
-		if (!_id) {
-			// Establish DB connection
-			await connectDB();
-			const item = await Supervisor.insertOne({ name: name, id: id });
-
-			if (!item) {
-				return NextResponse.json(
-					{ error: "Unable to add Supervisor" },
-					{ status: 404 }
-				);
-			}
-			return NextResponse.json({ success: true, data: item });
-		}
-
-		// Establish DB connection
-		await connectDB();
-		const item = await Supervisor.findByIdAndUpdate(_id, {
-			name: name,
-			id: id,
-		});
-
-		if (!item) {
-			return NextResponse.json(
-				{ error: "Supervisor not found or update failed" },
-				{ status: 404 }
-			);
-		}
-		return NextResponse.json({ success: true, data: item });
-	} catch (error) {
-		return NextResponse.json(
-			{ error: "Failed to update Supervisor" },
-			{ status: 500 }
-		);
-	}
+export async function POST(request: Request) {
+	await connectDB();
+	const data = await request.json();
+	const supervisor = new Supervisor(data);
+	await supervisor.save();
+	return NextResponse.json(supervisor, { status: 201 });
 }
 
 // // Handle edit - PUT requests

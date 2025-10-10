@@ -1,11 +1,12 @@
 import connectDB from "@/lib/db";
-import SupervisorForm from "@/components/SupervisorForm";
-import { Supervisor } from "@/lib/types";
+import SupervisorEditForm from "@/components/wt/SupervisorEditForm";
+import { Supervisor } from "@/types/supervisor";
 
-async function getSupervisor(id: string) {
+async function getSupervisor(id: string): Promise<Supervisor | null> {
 	await connectDB();
-	const Supervisor = (await import("@/models/Supervisor_archive")).default;
-	return Supervisor.findById(id).lean();
+	const SupervisorModel = (await import("@/models/Supervisor")).default;
+	const res = await SupervisorModel.findById(id).lean();
+	return res as unknown as Supervisor | null;
 }
 
 export default async function SupervisorEditPage({
@@ -13,12 +14,23 @@ export default async function SupervisorEditPage({
 }: {
 	params: { id: string };
 }) {
-	const supervisor = await getSupervisor(params.id);
+	const { id } = await params;
+	const supervisor = await getSupervisor(id);
+
+	const simpleSupervisor = JSON.stringify(supervisor);
+	if (!supervisor) {
+		return (
+			<div className="p-6 max-w-[800px] mx-auto bg-accent">
+				<h1 className="text-2xl font-bold mb-6">Supervisor not found</h1>
+			</div>
+		);
+	}
 
 	return (
-		<div className="p-6">
-			<h1 className="text-2xl font-bold mb-6">Edit Supervisor</h1>
-			<SupervisorForm initialData={supervisor as Supervisor} />
+		<div className="p-6 max-w-[800px] mx-auto bg-accent">
+			<h1 className="text-2xl font-bold mb-6">Edit The Supervisor</h1>
+
+			<SupervisorEditForm simpleSupervisor={simpleSupervisor} />
 		</div>
 	);
 }
