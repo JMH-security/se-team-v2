@@ -1,10 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/wt/Sidebar";
-import SupervisorForm from "@/components/wt/SupervisorForm";
+import SupervisorForm from "@/components/wt/supervisor/SupervisorForm";
 import { Supervisor } from "@/types/supervisor";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+	Button,
+} from "@/components/ui/card";
+import SupervisorList from "@/components/wt/supervisor/SupervisorList";
 
 function SupervisorsContent() {
 	const [supervisors, setSupervisors] = useState<Supervisor[]>([]);
@@ -40,27 +46,8 @@ function SupervisorsContent() {
 						</CardContent>
 					</Card>
 					<Card>
-						<CardHeader className="flex items-center text-2xl">
-							<CardTitle>Supervisors List</CardTitle>
-						</CardHeader>
 						<CardContent>
-							<ul>
-								{supervisors?.map((supervisor: Supervisor) => (
-									<li
-										key={supervisor._id}
-										className="flex justify-between py-2 border-b-2 border-accent"
-									>
-										<span>{supervisor.supervisorName}</span>
-										<Button asChild>
-											<a
-												href={`/seteam/admin/wt/supervisors/${supervisor._id}`}
-											>
-												Edit
-											</a>
-										</Button>
-									</li>
-								))}
-							</ul>
+							<SupervisorList supervisors={supervisors} />
 						</CardContent>
 					</Card>
 				</div>

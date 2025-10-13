@@ -1,5 +1,5 @@
 "use client";
-
+import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { supervisorSchema } from "@/lib/schemas/supervisorSchema";
@@ -35,7 +35,7 @@ export default function SupervisorForm({ initialData }: SupervisorFormProps) {
 		},
 	});
 
-	const onSubmit = async (data: any) => {
+	const onSubmit = async (data: z.infer<typeof supervisorSchema>) => {
 		setIsSubmitting(true);
 		try {
 			const response = await fetch("/api/admin/wt/supervisors", {

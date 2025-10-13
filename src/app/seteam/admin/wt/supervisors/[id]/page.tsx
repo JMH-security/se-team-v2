@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db";
-import SupervisorEditForm from "@/components/wt/SupervisorEditForm";
+import SupervisorEditForm from "@/components/wt/supervisor/SupervisorEditForm";
 import { Supervisor } from "@/types/supervisor";
 
 async function getSupervisor(id: string): Promise<Supervisor | null> {
