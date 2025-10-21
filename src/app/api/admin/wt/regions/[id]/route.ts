@@ -1,17 +1,17 @@
-// app/api/supervisors/[id]/route.ts
+// app/api/regions/[id]/route.ts
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
-import Supervisor from "@/models/Supervisor";
+import Region from "@/models/Region";
 
 export async function GET(
 	request: Request,
 	{ params }: { params: { id: string } }
 ) {
 	await dbConnect();
-	const supervisor = await Supervisor.findById(params.id);
-	if (!supervisor)
+	const region = await Region.findById(params.id);
+	if (!region)
 		return NextResponse.json({ error: "Not found" }, { status: 404 });
-	return NextResponse.json(supervisor);
+	return NextResponse.json(region);
 }
 
 export async function PUT(
@@ -20,12 +20,10 @@ export async function PUT(
 ) {
 	await dbConnect();
 	const data = await request.json();
-	const supervisor = await Supervisor.findByIdAndUpdate(params.id, data, {
-		new: true,
-	});
-	if (!supervisor)
+	const region = await Region.findByIdAndUpdate(params.id, data, { new: true });
+	if (!region)
 		return NextResponse.json({ error: "Not found" }, { status: 404 });
-	return NextResponse.json(supervisor);
+	return NextResponse.json(region);
 }
 
 export async function DELETE(
@@ -33,8 +31,8 @@ export async function DELETE(
 	{ params }: { params: { id: string } }
 ) {
 	await dbConnect();
-	const supervisor = await Supervisor.findByIdAndDelete(params.id);
-	if (!supervisor)
+	const region = await Region.findByIdAndDelete(params.id);
+	if (!region)
 		return NextResponse.json({ error: "Not found" }, { status: 404 });
 	return NextResponse.json({ message: "Deleted" });
 }

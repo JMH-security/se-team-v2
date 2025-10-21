@@ -6,3 +6,5 @@ export const supervisorSchema = z.object({
 	supervisorEmail: z.string().email("Invalid email address"),
 	supervisorCell: z.string().optional(),
 });
+
+export type SupervisorFormData = z.infer<typeof supervisorSchema>;

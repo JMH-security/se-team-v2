@@ -1,9 +1,20 @@
 import mongoose from "mongoose";
 
-const RegionSchema = new mongoose.Schema({
-	regionId: { type: String, required: true, unique: true },
-	regionName: { type: String, required: true },
-	regionDescription: { type: String },
-});
+export interface IRegionDocument {
+	name: string;
+}
 
-export default mongoose.models.Region || mongoose.model("Region", RegionSchema);
+const RegionSchema = new Schema<IRegionDocument>(
+	{
+		regionId: { type: String, required: true, unique: true },
+		regionName: { type: String, required: true },
+		regionDescription: { type: String },
+	},
+	{
+		timestamps: true,
+	}
+);
+
+const Region =
+	mongoose.models.Region || model<IRegionDocument>("Region", RegionSchema);
+export default Region;

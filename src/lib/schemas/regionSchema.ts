@@ -5,3 +5,5 @@ export const regionSchema = z.object({
 	regionName: z.string().min(1, "Region name is required"),
 	regionDescription: z.string().optional(),
 });
+
+export type RegionFormData = z.infer<typeof regionSchema>;

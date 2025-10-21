@@ -1,13 +1,13 @@
 import mongoose, { Schema, model } from "mongoose";
 
-export interface SupervisorDocument {
+export interface ISupervisorDocument {
 	supervisorId: string;
 	supervisorName: string;
 	supervisorEmail: string;
 	supervisorCell: string;
 }
 
-const SupervisorSchema = new Schema<SupervisorDocument>(
+const SupervisorSchema = new Schema<ISupervisorDocument>(
 	{
 		supervisorId: { type: String, required: true },
 		supervisorName: { type: String, required: true },
@@ -21,5 +21,5 @@ const SupervisorSchema = new Schema<SupervisorDocument>(
 
 const Supervisor =
 	mongoose.models.Supervisor ||
-	model<SupervisorDocument>("Supervisor", SupervisorSchema);
+	model<ISupervisorDocument>("Supervisor", SupervisorSchema);
 export default Supervisor;
