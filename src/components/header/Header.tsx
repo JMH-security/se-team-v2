@@ -28,7 +28,7 @@ export default async function Header() {
 
 	return (
 		<>
-			<div className="flex flex-row grow bg-foreground text-background">
+			<div className="flex flex-row grow bg-foreground text-background px-4 py-2">
 				{session ? (
 					<div className="flex flex-row grow">
 						<div className="flex flex-row grow">

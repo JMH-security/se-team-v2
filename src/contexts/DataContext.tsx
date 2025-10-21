@@ -7,8 +7,8 @@ import {
 	useEffect,
 	ReactNode,
 } from "react";
-import { Region } from "@/types/region";
-import { Supervisor } from "@/types/supervisor";
+import { Region } from "../types/region";
+import { Supervisor } from "../types/supervisor";
 
 interface DataContextType {
 	regions: Region[];
@@ -51,7 +51,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	return (
-		<DataContext.Provider
+		<DataContext
 			value={{
 				regions,
 				supervisors,
@@ -60,7 +60,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 			}}
 		>
 			{children}
-		</DataContext.Provider>
+		</DataContext>
 	);
 }
 

@@ -4,9 +4,25 @@ import Supervisor from "@/models/Supervisor";
 import { supervisorSchema } from "@/lib/schemas/supervisorSchema";
 
 export async function GET() {
-	await connectDB();
-	const supervisors = await Supervisor.find().lean();
-	return NextResponse.json(supervisors);
+	try {
+		await connectDB();
+
+		const supervisors = await Supervisor.find().lean();
+		console.log("api fetch", supervisors);
+		if (!supervisors) {
+			return NextResponse.json(
+				{ message: "No supervisors found" },
+				{ status: 404 }
+			);
+		}
+		return NextResponse.json(supervisors, { status: 200 });
+	} catch (error) {
+		console.error("GET error:", error);
+		return NextResponse.json(
+			{ error: "Internal Server Error" },
+			{ status: 500 }
+		);
+	}
 }
 
 export async function POST(request: Request) {
