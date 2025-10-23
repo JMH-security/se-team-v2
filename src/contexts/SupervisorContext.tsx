@@ -8,15 +8,25 @@ import React, {
 	useEffect,
 	ReactNode,
 } from "react";
-import { ISupervisorDocument } from "@/models/Supervisor";
+import { Supervisor } from "@/types/supervisor";
 
 interface SupervisorContextType {
-	supervisors: ISupervisorDocument[];
+	supervisors: Supervisor[];
 	fetchSupervisors: () => Promise<void>;
-	createSupervisor: (data: { name: string; email: string }) => Promise<void>;
+	createSupervisor: (data: {
+		supervisorId: string;
+		supervisorName: string;
+		supervisorEmail: string;
+		supervisorCell?: string;
+	}) => Promise<void>;
 	updateSupervisor: (
 		id: string,
-		data: { name: string; email: string }
+		data: {
+			supervisorId?: string;
+			supervisorName?: string;
+			supervisorEmail?: string;
+			supervisorCell?: string;
+		}
 	) => Promise<void>;
 	deleteSupervisor: (id: string) => Promise<void>;
 }
@@ -26,7 +36,7 @@ const SupervisorContext = createContext<SupervisorContextType | undefined>(
 );
 
 export function SupervisorProvider({ children }: { children: ReactNode }) {
-	const [supervisors, setSupervisors] = useState<ISupervisorDocument[]>([]);
+	const [supervisors, setSupervisors] = useState<Supervisor[]>([]);
 
 	const fetchSupervisors = async () => {
 		const res = await fetch("/api/admin/wt/supervisors");
@@ -36,33 +46,49 @@ export function SupervisorProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
-	const createSupervisor = async (data: { name: string; email: string }) => {
+	const createSupervisor = async (data: {
+		supervisorId: string;
+		supervisorName: string;
+		supervisorEmail: string;
+		supervisorCell?: string;
+	}) => {
 		const res = await fetch("/api/admin/wt/supervisors", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),
 		});
-		if (res.ok) {
-			fetchSupervisors();
+		if (!res.ok) {
+			const text = await res.text().catch(() => "");
+			throw new Error(`createSupervisor failed: ${res.status} ${text}`);
 		}
+		await fetchSupervisors();
 	};
 
 	const updateSupervisor = async (
 		id: string,
-		data: { name: string; email: string }
+		data: {
+			supervisorId?: string;
+			supervisorName?: string;
+			supervisorEmail?: string;
+			supervisorCell?: string;
+		}
 	) => {
 		const res = await fetch(`/api/admin/wt/supervisors/${id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),
 		});
-		if (res.ok) {
-			fetchSupervisors();
+		if (!res.ok) {
+			const text = await res.text().catch(() => "");
+			throw new Error(`updateSupervisor failed: ${res.status} ${text}`);
 		}
+		await fetchSupervisors();
 	};
 
 	const deleteSupervisor = async (id: string) => {
-		const res = await fetch(`/api/supervisors/${id}`, { method: "DELETE" });
+		const res = await fetch(`/api/admin/wt/supervisors/${id}`, {
+			method: "DELETE",
+		});
 		if (res.ok) {
 			fetchSupervisors();
 		}

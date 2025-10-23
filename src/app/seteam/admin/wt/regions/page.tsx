@@ -2,13 +2,15 @@
 "use client";
 
 import { useRegion } from "@/contexts/RegionContext";
-import RegionForm from "@/components/RegionForm";
+import RegionForm from "@/components/wt/region/RegionForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Item, ItemContent } from "@/components/ui/item";
 
 export default function RegionsPage() {
 	const { regions, deleteRegion } = useRegion();
 	const [editingId, setEditingId] = useState<string | null>(null);
+	console.log(regions);
 
 	return (
 		<div className="container mx-auto p-4">
@@ -17,7 +19,11 @@ export default function RegionsPage() {
 			<ul className="mt-4 space-y-2">
 				{regions.map((reg) => (
 					<li key={reg._id} className="flex justify-between items-center">
-						<span>{reg.name}</span>
+						<Item>
+							<ItemContent>
+								<span>{reg.name}</span>
+							</ItemContent>
+						</Item>
 						<div>
 							<Button variant="outline" onClick={() => setEditingId(reg._id)}>
 								Edit

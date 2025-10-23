@@ -1,12 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 export interface IRegionDocument {
-	name: string;
+	regionId: string;
+	regionName: string;
+	regionDescription: string;
 }
 
 const RegionSchema = new Schema<IRegionDocument>(
 	{
-		regionId: { type: String, required: true, unique: true },
+		regionId: { type: String, required: true },
 		regionName: { type: String, required: true },
 		regionDescription: { type: String },
 	},

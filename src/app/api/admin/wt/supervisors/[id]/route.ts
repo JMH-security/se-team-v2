@@ -20,7 +20,8 @@ export async function PUT(
 ) {
 	await dbConnect();
 	const data = await request.json();
-	const supervisor = await Supervisor.findByIdAndUpdate(params.id, data, {
+	const ps = await params;
+	const supervisor = await Supervisor.findByIdAndUpdate(ps.id, data, {
 		new: true,
 	});
 	if (!supervisor)
@@ -33,7 +34,8 @@ export async function DELETE(
 	{ params }: { params: { id: string } }
 ) {
 	await dbConnect();
-	const supervisor = await Supervisor.findByIdAndDelete(params.id);
+	const ps = await params;
+	const supervisor = await Supervisor.findByIdAndDelete(ps.id);
 	if (!supervisor)
 		return NextResponse.json({ error: "Not found" }, { status: 404 });
 	return NextResponse.json({ message: "Deleted" });

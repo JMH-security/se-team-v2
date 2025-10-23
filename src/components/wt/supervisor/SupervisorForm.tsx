@@ -18,15 +18,10 @@ import {
 	SupervisorFormData,
 } from "@/lib/schemas/supervisorSchema";
 import { useSupervisor } from "@/contexts/SupervisorContext";
+import { Supervisor } from "@/types/supervisor";
 
 interface SupervisorFormProps {
-	supervisor?: {
-		_id: string;
-		supervisorId: string;
-		supervisorName: string;
-		supervisorEmail: string;
-		supervisorCell: string;
-	};
+	supervisor?: Supervisor;
 	onSuccess?: () => void;
 }
 
@@ -47,12 +42,24 @@ export default function SupervisorForm({
 	});
 
 	const onSubmit = async (data: SupervisorFormData) => {
-		if (supervisor) {
-			await updateSupervisor(supervisor._id, data);
-		} else {
-			await createSupervisor(data);
+		try {
+			if (supervisor) {
+				await updateSupervisor(supervisor._id, data);
+			} else {
+				await createSupervisor(data);
+				// reset form only after successful create
+				form.reset({
+					supervisorId: "",
+					supervisorName: "",
+					supervisorEmail: "",
+					supervisorCell: "",
+				});
+			}
+			if (onSuccess) onSuccess();
+		} catch (err) {
+			// keep form values for correction
+			console.error("Supervisor submit failed", err);
 		}
-		if (onSuccess) onSuccess();
 	};
 
 	return (
