@@ -15,10 +15,10 @@ import {
 } from "@/components/ui/form";
 import { regionSchema, RegionFormData } from "@/lib/schemas/regionSchema";
 import { useRegion } from "@/contexts/RegionContext";
-import { Region } from "@/types/region";
+import { TRegion } from "@/types/region";
 
 interface RegionFormProps {
-	region?: Region;
+	region?: TRegion;
 	onSuccess?: () => void;
 }
 

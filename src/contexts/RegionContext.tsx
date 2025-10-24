@@ -8,8 +8,8 @@ import React, {
 	useEffect,
 	ReactNode,
 } from "react";
-import { IRegionDocument } from "@/models/Region";
 import { RegionFormData } from "@/lib/schemas/regionSchema";
+import { TRegion } from "@/types/region";
 
 type TUpdateRegion = {
 	regionId: string;
@@ -18,7 +18,7 @@ type TUpdateRegion = {
 };
 
 interface RegionContextType {
-	regions: IRegionDocument[];
+	regions: TRegion[];
 	fetchRegions: () => Promise<void>;
 	createRegion: (data: RegionFormData) => Promise<void>;
 	updateRegion: (id: string, data: TUpdateRegion) => Promise<void>;
@@ -28,7 +28,7 @@ interface RegionContextType {
 const RegionContext = createContext<RegionContextType | undefined>(undefined);
 
 export function RegionProvider({ children }: { children: ReactNode }) {
-	const [regions, setRegions] = useState<IRegionDocument[]>([]);
+	const [regions, setRegions] = useState<TRegion[]>([]);
 
 	const fetchRegions = async () => {
 		const res = await fetch("/api/admin/wt/regions");

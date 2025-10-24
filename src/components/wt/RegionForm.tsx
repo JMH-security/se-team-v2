@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { regionSchema } from "@/lib/schemas/regionSchema";
-import { Region } from "@/types/region";
+import { TRegion } from "@/types/region";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,7 +19,7 @@ import { useData } from "@/contexts/DataContext";
 import { useState } from "react";
 
 interface RegionFormProps {
-	initialData?: Region;
+	initialData?: TRegion;
 }
 
 export default function RegionForm({ initialData }: RegionFormProps) {

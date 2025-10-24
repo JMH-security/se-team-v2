@@ -23,9 +23,11 @@ const SETEAMHOME = async () => {
 	return (
 		<>
 			{session ? (
-				<div className="flex flex-col items-center m-4">
-					<h1 className="text-6xl font-extrabold">SECURITY ENGINEERS</h1>
-					<h2 className="text-4xl font-extrabold text-zinc-400">
+				<div className="flex flex-col items-center justify-center m-4">
+					<h1 className="text-6xl font-extrabold text-center">
+						SECURITY ENGINEERS
+					</h1>
+					<h2 className="text-4xl font-extrabold text-center text-zinc-400">
 						TEAM APP HOME
 					</h2>
 					<div className="mt-24">

@@ -7,7 +7,7 @@ const LoginForm = () => {
 			<form action={doExternalLogin}>
 				<div className="flex flex-col justify-center items-center m-4 bg-gray-500 border border-gray-100 rounded-lg p-6">
 					SIGN-IN
-					<div className="flex flex-wrap">
+					<div className="flex flex-wrap items-center justify-center">
 						<Button
 							className="btn btn-accent p-2 m-3 min-w-[150px]"
 							type="submit"

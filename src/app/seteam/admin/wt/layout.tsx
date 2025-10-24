@@ -9,7 +9,7 @@ export default async function AdminLayout({
 	return (
 		<SupervisorProvider>
 			<RegionProvider>
-				<div className="bg-white">{children}</div>
+				<>{children}</>
 			</RegionProvider>
 		</SupervisorProvider>
 	);

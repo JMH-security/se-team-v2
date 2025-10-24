@@ -15,6 +15,10 @@ interface SupervisorContextType {
 	fetchSupervisors: () => Promise<void>;
 	createSupervisor: (data: {
 		supervisorId: string;
+		supervisorDescription?: string;
+		supervisorGroup1?: string;
+		supervisorGroup2?: string;
+		supervisorGroup3?: string;
 		supervisorName: string;
 		supervisorEmail: string;
 		supervisorCell?: string;
@@ -23,6 +27,10 @@ interface SupervisorContextType {
 		id: string,
 		data: {
 			supervisorId?: string;
+			supervisorDescription?: string;
+			supervisorGroup1?: string;
+			supervisorGroup2?: string;
+			supervisorGroup3?: string;
 			supervisorName?: string;
 			supervisorEmail?: string;
 			supervisorCell?: string;
@@ -48,6 +56,10 @@ export function SupervisorProvider({ children }: { children: ReactNode }) {
 
 	const createSupervisor = async (data: {
 		supervisorId: string;
+		supervisorDescription?: string;
+		supervisorGroup1?: string;
+		supervisorGroup2?: string;
+		supervisorGroup3?: string;
 		supervisorName: string;
 		supervisorEmail: string;
 		supervisorCell?: string;
@@ -68,6 +80,10 @@ export function SupervisorProvider({ children }: { children: ReactNode }) {
 		id: string,
 		data: {
 			supervisorId?: string;
+			supervisorDescription?: string;
+			supervisorGroup1?: string;
+			supervisorGroup2?: string;
+			supervisorGroup3?: string;
 			supervisorName?: string;
 			supervisorEmail?: string;
 			supervisorCell?: string;

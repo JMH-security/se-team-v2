@@ -4,7 +4,7 @@ import { Region } from "@/lib/types";
 
 async function getRegion(id: string) {
 	await connectDB();
-	const Region = (await import("@/models/Region_archive")).default;
+	const Region = (await import("@/models/Region")).default;
 	return Region.findById(id).lean();
 }
 

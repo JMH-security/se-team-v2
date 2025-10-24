@@ -1,4 +1,4 @@
-export interface Region {
+export interface TRegion {
 	_id: string;
 	regionId: string;
 	regionName: string;
