@@ -96,7 +96,11 @@ export default function RegionForm({ region, onSuccess }: RegionFormProps) {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">{region ? "Update" : "Create"}</Button>
+				<div>
+					<Button className="mb-4" type="submit">
+						{region ? "Update" : "Create"}
+					</Button>
+				</div>
 			</form>
 		</Form>
 	);

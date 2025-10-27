@@ -27,7 +27,7 @@ export default function SupervisorsPage() {
 
 	return (
 		<div className="container mx-auto text-center p-4">
-			<div className="container max-w-[800px] border-2 border-red-400 p-4 m-4">
+			<div className="container max-w-[800px] p-4 m-4 bg-primary/10 rounded-2xl">
 				{editingId === null && (
 					<h1 className="text-2xl font-bold mb-4">Add a Supervisor</h1>
 				)}
@@ -47,7 +47,7 @@ export default function SupervisorsPage() {
 					</div>
 				)}
 			</div>
-			<div className="container max-w-[800px] border-2 border-red-400 p-4 m-4">
+			<div className="container max-w-[800px] p-4 m-4 bg-primary/10 rounded-2xl">
 				<ul className="mt-4 space-y-2">
 					{supervisors.map((sup) => (
 						<li key={sup._id} className="flex justify-between items-center">
