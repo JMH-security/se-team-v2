@@ -11,7 +11,7 @@ import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { Region } from "@/types/regions";
 import { Supervisor } from "@/types/supervisor_archive";
 import { Branch } from "@/types/branch";
-import { SalesTaxStateId } from "@/types/salestaxstateid";
+import { SalesTaxStateId } from "@/types/salestaxstate";
 import { Customer } from "@/types/customer";
 import { Job } from "@/types/job";
 

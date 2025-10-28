@@ -6,7 +6,7 @@ import { Region } from "@/types/regions";
 import { Supervisor } from "@/types/supervisor_archive";
 import { Branch } from "@/types/branch";
 import { entityConfig } from "@/components/wt/entityConfig";
-import { SalesTaxStateId } from "@/types/salestaxstateid";
+import { SalesTaxStateId } from "@/types/salestaxstate";
 //import styles from "./page.module.css";
 
 interface FormState {
@@ -122,31 +122,23 @@ const jobSchema = yup.object().shape({
 	state: yup.string().required("State is required"),
 	zip: yup.string().required("Zip is required"),
 	sameAsServiceAddress: yup.boolean(),
-	taxAddress1: yup
-		.string()
-		.when("sameAsServiceAddress", {
-			is: false,
-			then: (schema) => schema.required("Tax Street Address is required"),
-		}),
+	taxAddress1: yup.string().when("sameAsServiceAddress", {
+		is: false,
+		then: (schema) => schema.required("Tax Street Address is required"),
+	}),
 	taxAddress2: yup.string(),
-	taxCity: yup
-		.string()
-		.when("sameAsServiceAddress", {
-			is: false,
-			then: (schema) => schema.required("Tax City is required"),
-		}),
-	taxState: yup
-		.string()
-		.when("sameAsServiceAddress", {
-			is: false,
-			then: (schema) => schema.required("Tax State is required"),
-		}),
-	taxZip: yup
-		.string()
-		.when("sameAsServiceAddress", {
-			is: false,
-			then: (schema) => schema.required("Tax Zip is required"),
-		}),
+	taxCity: yup.string().when("sameAsServiceAddress", {
+		is: false,
+		then: (schema) => schema.required("Tax City is required"),
+	}),
+	taxState: yup.string().when("sameAsServiceAddress", {
+		is: false,
+		then: (schema) => schema.required("Tax State is required"),
+	}),
+	taxZip: yup.string().when("sameAsServiceAddress", {
+		is: false,
+		then: (schema) => schema.required("Tax Zip is required"),
+	}),
 });
 
 const JobForm: React.FC<JobsProps> = ({ customer }) => {

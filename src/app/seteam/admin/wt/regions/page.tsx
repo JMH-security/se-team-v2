@@ -93,6 +93,7 @@ export default function RegionsPage() {
 								</Button>
 								<Button
 									variant="destructive"
+									size="sm"
 									onClick={() => deleteRegion(reg._id)}
 								>
 									Delete

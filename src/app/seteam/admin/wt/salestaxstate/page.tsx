@@ -1,8 +1,8 @@
-// app/seteam/admin/wt/taxesInsurances/page.tsx
+// app/seteam/admin/wt/salesTaxStates/page.tsx
 "use client";
 
-import { useTaxesInsurance } from "@/contexts/TaxesInsuranceContext";
-import TaxesInsuranceForm from "@/components/wt/taxesInsurance/TaxesInsuranceForm";
+import { useSalesTaxState } from "@/contexts/SalesTaxStateContext";
+import SalesTaxStateForm from "@/components/wt/salesTaxState/SalesTaxStateForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import {
@@ -12,29 +12,27 @@ import {
 	ItemTitle,
 } from "@/components/ui/item";
 
-export default function TaxesInsurancesPage() {
-	const { taxesInsurances, deleteTaxesInsurance } = useTaxesInsurance();
+export default function SalesTaxStatesPage() {
+	const { salesTaxStates, deleteSalesTaxState } = useSalesTaxState();
 	const [editingId, setEditingId] = useState<string | null>(null);
 
 	return (
 		<div className="container mx-auto text-center p-4 m-4 max-w-[800px]">
 			<div className="bg-primary/10 rounded-2xl px-4">
 				{editingId === null && (
-					<h1 className="text-2xl font-bold mb-4">Add Taxes Insurance Group</h1>
+					<h1 className="text-2xl font-bold mb-4">Add Sales Tax State</h1>
 				)}
 				{editingId && (
-					<h1 className="text-2xl font-bold mb-4">
-						Edit Taxes Insurance Group
-					</h1>
+					<h1 className="text-2xl font-bold mb-4">Edit Sales Tax State</h1>
 				)}
 				{editingId === null && (
-					<TaxesInsuranceForm onSuccess={() => setEditingId(null)} />
+					<SalesTaxStateForm onSuccess={() => setEditingId(null)} />
 				)}
 				{editingId && (
 					<div className="mt-4">
-						<h2>Edit TaxesInsurance</h2>
-						<TaxesInsuranceForm
-							taxesInsurance={taxesInsurances.find((r) => r._id === editingId)}
+						<h2>Edit SalesTaxState</h2>
+						<SalesTaxStateForm
+							salesTaxState={salesTaxStates.find((r) => r._id === editingId)}
 							onSuccess={() => setEditingId(null)}
 						/>
 					</div>
@@ -48,35 +46,37 @@ export default function TaxesInsurancesPage() {
 						</ItemContent>
 					</Item>
 					<Item className="flex-4">
-						<ItemTitle>Taxes & Insurance Group</ItemTitle>
+						<ItemTitle>Sales Tax State</ItemTitle>
 					</Item>
 				</div>
 
 				<ul className="mt-4 space-y-2">
-					{taxesInsurances.map((reg) => (
+					{salesTaxStates.map((reg) => (
 						<li key={reg._id} className="flex justify-between items-center">
 							<div className="flex flex-wrap  w-full">
 								<div className="flex grow ">
 									<Item className="flex-1">
 										<ItemContent>
-											<ItemTitle>{reg.taxesInsuranceId}</ItemTitle>
+											<ItemTitle>{reg.salesTaxStateId}</ItemTitle>
 										</ItemContent>
 									</Item>
 									<Item className="flex-3">
-										<ItemDescription>{reg.taxesInsuranceName}</ItemDescription>
+										<ItemDescription>{reg.salesTaxStateName}</ItemDescription>
 									</Item>
 								</div>
-								<div className="flex justify-end items-center ">
+								<div className="flex justify-end items-center">
 									<Button
+										className="mx-2"
 										variant="outline"
 										onClick={() => setEditingId(reg._id)}
 									>
 										Edit
 									</Button>
 									<Button
-										variant="destructive"
+										className="mx-2"
 										size="sm"
-										onClick={() => deleteTaxesInsurance(reg._id)}
+										variant="destructive"
+										onClick={() => deleteSalesTaxState(reg._id)}
 									>
 										Delete
 									</Button>

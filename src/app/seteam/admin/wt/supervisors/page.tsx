@@ -4,7 +4,7 @@
 import { useSupervisor } from "@/contexts/SupervisorContext";
 import SupervisorForm from "@/components/wt/supervisor/SupervisorForm";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
 	Item,
 	ItemContent,
@@ -15,15 +15,6 @@ import {
 export default function SupervisorsPage() {
 	const { supervisors, deleteSupervisor } = useSupervisor();
 	const [editingId, setEditingId] = useState<string | null>(null);
-	const [isNarrow, setIsNarrow] = useState<boolean>(false);
-
-	useEffect(() => {
-		const checkWidth = () => setIsNarrow(window.innerWidth < 500);
-		// set initial
-		checkWidth();
-		window.addEventListener("resize", checkWidth);
-		return () => window.removeEventListener("resize", checkWidth);
-	}, []);
 
 	return (
 		<div className="container mx-auto text-center p-4">
@@ -74,6 +65,7 @@ export default function SupervisorsPage() {
 								</Button>
 								<Button
 									variant="destructive"
+									size="sm"
 									className="mx-2"
 									onClick={() => deleteSupervisor(sup._id)}
 								>

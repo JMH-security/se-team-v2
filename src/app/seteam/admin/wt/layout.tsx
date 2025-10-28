@@ -1,6 +1,7 @@
 import { SupervisorProvider } from "@/contexts/SupervisorContext";
 import { RegionProvider } from "@/contexts/RegionContext";
 import { TaxesInsuranceProvider } from "@/contexts/TaxesInsuranceContext";
+import { SalesTaxStateProvider } from "@/contexts/SalesTaxStateContext";
 
 export default async function AdminLayout({
 	children,
@@ -8,12 +9,14 @@ export default async function AdminLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<TaxesInsuranceProvider>
-			<SupervisorProvider>
-				<RegionProvider>
-					<>{children}</>
-				</RegionProvider>
-			</SupervisorProvider>
-		</TaxesInsuranceProvider>
+		<SalesTaxStateProvider>
+			<TaxesInsuranceProvider>
+				<SupervisorProvider>
+					<RegionProvider>
+						<>{children}</>
+					</RegionProvider>
+				</SupervisorProvider>
+			</TaxesInsuranceProvider>
+		</SalesTaxStateProvider>
 	);
 }
