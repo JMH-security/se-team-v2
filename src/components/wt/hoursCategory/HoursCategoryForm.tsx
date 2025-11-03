@@ -79,7 +79,7 @@ export default function HoursCategoryForm({
 					name="hoursCategoryName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>State</FormLabel>
+							<FormLabel>Hours Category Description</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>

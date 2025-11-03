@@ -20,17 +20,17 @@ export default function HoursCategorysPage() {
 		<div className="container mx-auto text-center p-4 m-4 max-w-[800px]">
 			<div className="bg-primary/10 rounded-2xl px-4">
 				{editingId === null && (
-					<h1 className="text-2xl font-bold mb-4">Add Hours Rule</h1>
+					<h1 className="text-2xl font-bold mb-4">Add Hours Category</h1>
 				)}
 				{editingId && (
-					<h1 className="text-2xl font-bold mb-4">Edit Hours Rule</h1>
+					<h1 className="text-2xl font-bold mb-4">Edit Hours Category</h1>
 				)}
 				{editingId === null && (
 					<HoursCategoryForm onSuccess={() => setEditingId(null)} />
 				)}
 				{editingId && (
 					<div className="mt-4">
-						<h2>Edit HoursCategory</h2>
+						<h2>Edit Hours Category</h2>
 						<HoursCategoryForm
 							hoursCategory={hoursCategorys.find((r) => r._id === editingId)}
 							onSuccess={() => setEditingId(null)}
@@ -46,7 +46,7 @@ export default function HoursCategorysPage() {
 						</ItemContent>
 					</Item>
 					<Item className="flex-4">
-						<ItemTitle>Hours Rule Name</ItemTitle>
+						<ItemTitle>Hours Category Description</ItemTitle>
 					</Item>
 				</div>
 
