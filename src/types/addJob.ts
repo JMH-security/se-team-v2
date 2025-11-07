@@ -1,15 +1,16 @@
-type JobAddTiers = {
+type AddJobTiers = {
 	tierID: number;
 	tierValue: string;
 	tierValueDescription: string;
 };
 
-type JobAddCustomFields = {
+type AddJobCustomFields = {
 	fieldNumber: number;
 	value: string;
 };
 
-type TJobAdd = {
+type TAddJob = {
+	_id: string;
 	jobNumber: string;
 	jobId: string | null;
 	jobDescription: string;
@@ -48,9 +49,9 @@ type TJobAdd = {
 		longitude: string | null;
 		locationCode: string | null;
 	} | null;
-	jobTiers: JobAddTiers[];
-	customFields: JobAddCustomFields[];
+	jobTiers?: AddJobTiers[];
+	customFields?: AddJobCustomFields[];
 	parentJobNumber: string | null;
 };
 
-export type { TJobAdd, JobAddTiers, JobAddCustomFields };
+export type { TAddJob, AddJobTiers, AddJobCustomFields };

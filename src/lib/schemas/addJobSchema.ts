@@ -5,16 +5,18 @@ export const addJobTierSchema = z.object({
 		.number()
 		.int()
 		.min(1, "tierID must be an integer between 1 and 24")
-		.max(24, "tierID must be an integer between 1 and 24"),
-	tierValue: z.string(),
+		.max(24, "tierID must be an integer between 1 and 24")
+		.optional(),
+	tierValue: z.string().optional(),
 	tierValueDescription: z
 		.string()
-		.min(4, "tierValueDescription must be longer than 3 characters"),
+		.min(4, "tierValueDescription must be longer than 3 characters")
+		.optional(),
 });
 
 export const addJobCustomFieldSchema = z.object({
-	fieldNumber: z.number(),
-	value: z.string(),
+	fieldNumber: z.number().optional(),
+	value: z.string().optional(),
 });
 
 export const addJobAddressSchema = z
@@ -43,11 +45,12 @@ export const addJobTaxAddressSchema = z
 	.optional();
 
 export const addJobSchema = z.object({
-	jobNumber: z.string().min(1),
+	_id: z.string().uuid().optional(),
+	jobNumber: z.string().min(1).optional(),
 	jobId: z.string().nullable().optional(),
-	jobDescription: z.string().min(1),
-	locationId: z.number(),
-	companyNumber: z.number(),
+	jobDescription: z.string().min(1).optional(),
+	locationId: z.number().optional(),
+	companyNumber: z.number().optional(),
 	hoursRuleId: z.number().nullable().optional(),
 	jobAttention: z.string().nullable().optional(),
 	dateToStart: z.string().nullable().optional(),

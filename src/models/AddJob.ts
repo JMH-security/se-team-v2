@@ -30,7 +30,7 @@ export interface AddJobDocument {
 	jobId?: string | null;
 	jobDescription: string;
 	locationId: number;
-	companyNumber: number;
+	companyNumber: string;
 	hoursRuleId?: number | null;
 	jobAttention?: string | null;
 	dateToStart?: string | null;
@@ -58,9 +58,9 @@ const AddJobSchema = new mongoose.Schema<AddJobDocument>(
 	{
 		jobNumber: { type: String, required: true },
 		jobId: { type: String, required: false },
-		jobDescription: { type: String, required: true },
-		locationId: { type: Number, required: true },
-		companyNumber: { type: Number, required: true },
+		jobDescription: { type: String, required: false },
+		locationId: { type: Number, required: false },
+		companyNumber: { type: String, required: false },
 		hoursRuleId: { type: Number, required: false },
 		jobAttention: { type: String, required: false },
 		dateToStart: { type: String, required: false },
@@ -96,15 +96,15 @@ const AddJobSchema = new mongoose.Schema<AddJobDocument>(
 		},
 		jobTiers: [
 			{
-				tierID: { type: Number, required: true },
-				tierValue: { type: String, required: true },
-				tierValueDescription: { type: String, required: true },
+				tierID: { type: Number, required: false },
+				tierValue: { type: String, required: false },
+				tierValueDescription: { type: String, required: false },
 			},
 		],
 		customFields: [
 			{
-				fieldNumber: { type: Number, required: true },
-				value: { type: String, required: true },
+				fieldNumber: { type: Number, required: false },
+				value: { type: String, required: false },
 			},
 		],
 		parentJobNumber: { type: String, required: false },
