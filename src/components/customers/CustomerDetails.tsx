@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Customer } from "@/types/customer";
 import Invoices from "@/components/customers/CustomerInvoiceList";
 import { Button } from "../ui/button";
-import { AddJobForm } from "@/components/jobCreate/AddJobForm barebones";
+
 import { useParams } from "next/navigation";
-import JobForm from "@/components/jobs/JobForm";
+import AddJobForm from "@/components/job/AddJobForm";
 
 interface CustomerDetailsProps {
 	customer: Customer;
@@ -17,9 +17,7 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 	const [showJobAddForm, setShowJobAddForm] = useState(false);
 	console.log("customer details", customer);
 	const params = useParams();
-	const cust1 = params.customerNumber;
-	const cust2 = customer.CustomerID;
-	cust1 === cust2 ? console.log("match") : console.log("no match");
+	const custId = params.CustomerID;
 	return (
 		<div className="p-6">
 			<div className="bg-gp text-primary p-6 rounded-lg mb-6">
@@ -69,7 +67,7 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 			{showInvoices && (
 				<Invoices customerNumber={customer.CustomerNumber?.toString() || ""} />
 			)}
-			{showJobAddForm && <JobForm customer={customer} />}
+			{showJobAddForm && <AddJobForm customer={custId} />}
 			<div className="m-4"></div>
 		</div>
 	);

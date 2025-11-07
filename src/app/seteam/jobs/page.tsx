@@ -12,7 +12,7 @@ export default async function WtJobs() {
 	try {
 		const headerValues = {
 			"Ocp-apim-subscription-key": process.env.WT_SUB_KEY || "",
-			TenantID: process.env.WT_TENANT_PROD_ID || "",
+			TenantID: process.env.WT_TENANT_DEV_ID || "",
 		};
 
 		const res = await fetch(`${process.env.NXT_GET_ALL_JOBS}`, {
