@@ -12,9 +12,9 @@ import { Tier5FormData } from "@/lib/schemas/tiers/tier5Schema";
 import { TTier5 } from "@/types/tiers";
 
 type TUpdateTier5 = {
-	tier5Id: string;
-	tier5Name: string;
-	tier5Description?: string;
+	_id?: string;
+	tierValue: string;
+	tierValueDescription: string;
 };
 
 interface Tier5ContextType {

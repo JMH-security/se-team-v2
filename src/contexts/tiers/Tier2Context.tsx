@@ -12,9 +12,9 @@ import { Tier2FormData } from "@/lib/schemas/tiers/tier2Schema";
 import { TTier2 } from "@/types/tiers";
 
 type TUpdateTier2 = {
-	tier2Id: string;
-	tier2Name: string;
-	tier2Description?: string;
+	_id?: string;
+	tierValue: string;
+	tierValueDescription?: string;
 };
 
 interface Tier2ContextType {
