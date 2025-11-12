@@ -1,35 +1,26 @@
 import connectDB from "@/lib/db";
 import { Counter } from "@/models/Counter";
+import { ICounter } from "@/types/counter";
 
-/**
- * Return the next job index.
- * Behavior:
- * - If no counter exists, create it so the first returned index is minJob.
- * - If a counter exists but its index < minJob, bump it so the next returned index is minJob.
- * - Otherwise, atomically increment and return the new index.
- * NEED TO WORK ON THIS SOME - A.I. DID THIS.
- */
-export async function getNextJobNumber(): Promise<number> {
+//This function creates the next job number.
+export async function getNextJobNumber(): Promise<ICounter> {
 	await connectDB();
-	const minJob = 2000;
+	const minJob = 100000;
 
 	try {
 		// Try to get the counter document
-		const existing = (await Counter.findOne({ _id: "jobCounter" }).lean()) as {
-			index?: number;
-			prefix?: string;
-		} | null;
+		const existing = (await Counter.findOne({
+			_id: "jobCounter",
+		}).lean()) as ICounter;
 
 		if (!existing) {
-			// Create the counter document directly to avoid update-operator conflicts
 			try {
 				const created = await Counter.create({
 					_id: "jobCounter",
 					prefix: "JNA-",
 					index: minJob,
 				});
-				console.log("Created counter document:", created);
-				return created.index;
+				return created;
 			} catch (err: unknown) {
 				// If another process created the counter concurrently, fall through to the increment step
 				const e = err as { code?: number };
@@ -46,7 +37,7 @@ export async function getNextJobNumber(): Promise<number> {
 		// If counter exists but is below minJob, set it to (minJob) so the next increment returns minJob
 		const existingIndex = existing?.index ?? 0;
 		const existingPrefix = existing?.prefix ?? "JNA-";
-
+		console.log("exIndex:", existingIndex, " exPrefix:", existingPrefix);
 		if (existingIndex < minJob) {
 			// Set to minJob-1 so the following increment returns minJob
 			const setResult = await Counter.findByIdAndUpdate(
@@ -63,9 +54,9 @@ export async function getNextJobNumber(): Promise<number> {
 			{ $inc: { index: 1 } },
 			{ new: true }
 		).exec();
-		console.log("Increment result:", updated);
+		console.log("Incremented to:", updated);
 
-		return (updated && (updated as { index?: number }).index) || minJob;
+		return updated as ICounter;
 	} catch (error) {
 		console.error("Error getting next job number:", error);
 		throw error;
@@ -73,11 +64,12 @@ export async function getNextJobNumber(): Promise<number> {
 }
 
 // Convenience wrapper used by the API route
-export async function addCounterIndex(): Promise<{ jobIndex: number }> {
+export async function addCounterIndex(): Promise<ICounter> {
 	await connectDB();
+	console.log("Running addCounterIndex");
 	try {
 		const jobNumberIndex = await getNextJobNumber();
-		return { jobIndex: jobNumberIndex };
+		return jobNumberIndex;
 	} catch (error) {
 		console.error("Error Getting Job Index", error);
 		throw error;

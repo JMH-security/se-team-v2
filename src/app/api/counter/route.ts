@@ -11,8 +11,8 @@ export async function POST() {
 
 		console.log("jobNumIndex:", jobNumIndex);
 
-		const prefix = "JNA-";
-		const jobNumber = prefix.concat(jobNumIndex.jobIndex.toString());
+		const prefix = jobNumIndex.prefix || "JNA-";
+		const jobNumber = prefix.concat(jobNumIndex.index.toString());
 		return NextResponse.json({ success: true, newJob: jobNumber });
 	} catch (error) {
 		console.error("Error adding job:", error);
