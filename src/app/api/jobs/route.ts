@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import AddJob from "@/models/AddJob";
-// import { jobFormSchema } from "@/lib/formSchemas/jobSchema";
 import { addJobSchema } from "@/lib/schemas/addJobSchema";
-// import { v4 as uuidv4 } from "uuid";
+import { addCounterIndex } from "@/helpers/counterHelper";
+import { ICounter } from "@/types/counter";
 
 export async function GET() {
 	try {
@@ -22,14 +22,12 @@ export async function GET() {
 export async function POST(request: Request) {
 	try {
 		await connectDB();
-		const body = await request.json();
-		console.log("In the API POST Route body:", body);
-		const parsed = addJobSchema.parse({ ...body });
-		//const parsed = addJobSchema.parse({ ...body, JobId: uuidv4() });
+		const body: ICounter = await request.json();
+		const newJob = await addCounterIndex();
+		const newJobNumber = newJob.prefix + newJob.index.toString();
+		const parsed = addJobSchema.parse({ ...body, jobNumber: newJobNumber });
 		const job = new AddJob(parsed);
 		await job.save();
-		console.log("Job created:", job);
-
 		return NextResponse.json(job, { status: 201 });
 	} catch (error) {
 		console.error(error);

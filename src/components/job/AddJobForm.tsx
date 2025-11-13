@@ -3,9 +3,12 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams } from "next/navigation";
+//import { useParams } from "next/navigation";
+import AddJobFormTiers from "@/components/job/AddJobFormTiers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
 	Select,
 	SelectTrigger,
@@ -25,15 +28,33 @@ import {
 import { addJobSchema, AddJobFormData } from "@/lib/schemas/addJobSchema";
 import { useAddJob } from "@/contexts/AddJobContext";
 import { TAddJob } from "@/types/addJob";
+import { Customer } from "@/types/customer";
+import {
+	TTier1,
+	TTier2,
+	TTier3,
+	TTier4,
+	TTier5,
+	TTier6,
+	TTier7,
+} from "@/types/tiers";
 import { useHoursRule } from "@/contexts/HoursRuleContext";
 import { useHoursCategory } from "@/contexts/HoursCategoryContext";
 import { useSupervisor } from "@/contexts/SupervisorContext";
 import { useSalesTaxState } from "@/contexts/SalesTaxStateContext";
-import { useJobPayrollTaxState } from "@/contexts/JobPayrollTaxStateContext";
+import { useTier1 } from "@/contexts/tiers/Tier1Context";
+import { useTier2 } from "@/contexts/tiers/Tier2Context";
+import { useTier3 } from "@/contexts/tiers/Tier3Context";
+import { useTier4 } from "@/contexts/tiers/Tier4Context";
+import { useTier5 } from "@/contexts/tiers/Tier5Context";
+import { useTier6 } from "@/contexts/tiers/Tier6Context";
+import { useTier7 } from "@/contexts/tiers/Tier7Context";
+
+// import { useJobPayrollTaxState } from "@/contexts/JobPayrollTaxStateContext";
 import { useTaxesInsurance } from "@/contexts/TaxesInsuranceContext";
 
 interface AddJobFormProps {
-	customer?: string;
+	customer?: Customer;
 	addJob?: TAddJob;
 	onSuccess?: () => void;
 }
@@ -43,15 +64,21 @@ export default function AddJobForm({
 	addJob,
 	onSuccess,
 }: AddJobFormProps) {
-	const params = useParams();
-	const routeCustomerId = params?.customerNumber ?? undefined;
 	const { createAddJob, updateAddJob } = useAddJob();
 	const { hoursRules } = useHoursRule();
 	const { hoursCategorys } = useHoursCategory();
 	const { supervisors } = useSupervisor();
 	const { salesTaxStates } = useSalesTaxState();
-	const { jobPayrollTaxStates } = useJobPayrollTaxState();
+	// jobPayrollTaxStates not used in this form currently
+	// const { jobPayrollTaxStates } = useJobPayrollTaxState();
 	const { taxesInsurances } = useTaxesInsurance();
+	const { tier1s } = useTier1();
+	const { tier2s } = useTier2();
+	// const { tier3 } = useTier3();
+	// const { tier4 } = useTier4();
+	// const { tier5 } = useTier5();
+	// const { tier6 } = useTier6();
+	// const { tier7 } = useTier7();
 
 	const form = useForm<AddJobFormData>({
 		resolver: zodResolver(addJobSchema),
@@ -62,7 +89,7 @@ export default function AddJobForm({
 			jobDescription: addJob?.jobDescription || "",
 			locationId: addJob?.locationId || undefined,
 			companyNumber: addJob?.companyNumber ?? undefined,
-			hoursRuleId: addJob?.hoursRuleId ?? null,
+			hoursRuleId: addJob?.hoursRuleId ?? undefined,
 			jobAttention: addJob?.jobAttention ?? null,
 			dateToStart: addJob?.dateToStart ?? null,
 			typeId: addJob?.typeId ?? null,
@@ -83,23 +110,63 @@ export default function AddJobForm({
 			jobTiers: addJob?.jobTiers ?? [],
 			customFields: addJob?.customFields ?? [],
 			parentJobNumber: addJob?.parentJobNumber ?? null,
+			//tier1Value: addJob?.tier1Value ?? null,
 		},
 	});
 
 	const onSubmit = async (data: AddJobFormData) => {
+		// Set Job to Active (typeId = 1) and Company Number to 1
+		console.log("tier 1", tier1s);
+		console.log("CUSTOMER?", customer);
+		console.log("FORM DATA:", data);
+		data.jobTiers = data.jobTiers ?? [];
 		data.typeId = 1;
 		data.companyNumber = 1;
-		data.customFields.push({ fieldNumber: 2, value: routeCustomerId });
+
+		//Add customer data into custom fields
+		data.customFields = data.customFields ?? [];
+		data.customFields.push({
+			fieldNumber: 2,
+			value: customer?.CustomerID?.toString() || "",
+		});
+		data.customFields.push({
+			fieldNumber: 3,
+			value: customer?.CustomerName || "",
+		});
+		data.customFields.push({
+			fieldNumber: 4,
+			value: customer?.CustomerNumber?.toString() || "",
+		});
+
+		///TIER CONSTRUCTION*********************************************
+		//Tier 1
+		const tier1Selected = data.tier1Value ?? "1";
+		const tier1Match = tier1s.find((t) => t._id === tier1Selected);
+		data.jobTiers.push({
+			tierValue: tier1Match?.tierValue ?? "",
+			tierValueDescription: tier1Match?.tierValueDescription ?? "",
+		});
+		//Tier 2
+		const tier2Selected = data.tier2Value ?? "1";
+		const tier2Match = tier2s.find((t) => t._id === tier2Selected);
+		data.jobTiers.push({
+			tierValue: tier2Match?.tierValue ?? "",
+			tierValueDescription: tier2Match?.tierValueDescription ?? "",
+		});
+
+		//// END TIER CONSTRUCTION*********************************************
+
+		// use proper property names expected by schema
 		data.address = {
-			jobaddress1: "123 Main st",
-			jobaddress2: "",
-			city: "Anytown",
-			state: "CA",
-			zip: "12345",
+			jobAddress1: "123 Main st",
+			jobAddress2: "",
+			jobCity: "Anytown",
+			jobState: "CA",
+			jobZip: "12345",
 		};
 		data.taxAddress = {
-			taxAddress1: "123 Main st",
-			taxAddress2: "",
+			address1: "123 Main st",
+			address2: "",
 			city: "Anytown",
 			state: "CA",
 			zip: "12345",
@@ -114,7 +181,7 @@ export default function AddJobForm({
 					jobDescription: "",
 					jobAttention: "",
 					companyNumber: undefined,
-					hoursRuleId: null,
+					hoursRuleId: undefined,
 					supervisorId: null,
 					taxesInsuranceId: null,
 					salesTaxStateId: null,
@@ -123,7 +190,8 @@ export default function AddJobForm({
 					address: null,
 					taxAddress: null,
 					jobTiers: [],
-					customFields: [{ fieldNumber: 1, value: customer || "" }],
+					customFields: [],
+					tier1Value: null,
 				});
 			}
 			if (onSuccess) onSuccess();
@@ -134,270 +202,360 @@ export default function AddJobForm({
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-				<FormField
-					control={form.control}
-					name="jobNumber"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Number</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+			<div className="container p-4">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="grid 
+        lg:grid-cols-8 
+        grid-cols-4 
+        gap-4 
+        auto-rows-min 
+        grid-auto-rows-min-content"
+				>
+					<div className="col-span-2 lg:col-span-2">
+						<FormField
+							control={form.control}
+							name="jobNumber"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Job Number</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+					<div className="col-span-2 lg:col-span-6">
+						<FormField
+							control={form.control}
+							name="jobAttention"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Job Attention</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+					<div className="col-span-full row-span-2">
+						<FormField
+							control={form.control}
+							name="jobDescription"
+							render={({ field }) => (
+								<FormItem className="">
+									<FormLabel className="">Job Description</FormLabel>
+									<FormControl className="">
+										<Textarea className="" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 
-				<FormField
-					control={form.control}
-					name="jobDescription"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Description</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+					{/***********************  Selector Section *************************/}
+					<div className="grid lg:grid-cols-2 grid-cols-1 col-span-full gap-4 p-2 border border-slate-600 rounded-md">
+						<div className="row-start-1 flex items-center justify-center mx-auto">
+							<Label className="text-lg text-secondary">SELECT OPTIONS</Label>
+						</div>
 
-				<FormField
-					control={form.control}
-					name="jobAttention"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Attention</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				{/**************************** HARD CODING COMPANY NUMBER TO 1 *******************************/}
-				{/* <FormField
-					control={form.control}
-					name="companyNumber"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Company Number</FormLabel>
-							<FormControl>
-								<Input
-									type="number"
-									value={field.value ?? ""}
-									onChange={(e) =>
-										field.onChange(
-											e.target.value ? Number(e.target.value) : undefined
-										)
-									}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/> */}
-				{/**************************** HARD CODED COMPANY NUMBER TO 1 *******************************/}
+						<div className="row-start-2">
+							<FormField
+								control={form.control}
+								name="hoursRuleId"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Hours Rule</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) =>
+													field.onChange(v ? Number(v) : null)
+												}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Hours Rule" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{hoursRules.map((r) => (
+															<SelectItem
+																key={r._id}
+																value={r.hoursRuleId.toString()}
+															>
+																{r.hoursRuleName}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className="row-start-3 lg:row-start-2">
+							<FormField
+								control={form.control}
+								name="hoursCategoryID"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Hours Category</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) =>
+													field.onChange(v ? Number(v) : null)
+												}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Hours Category" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{hoursCategorys.map((h) => (
+															<SelectItem
+																key={h._id}
+																value={h.hoursCategoryId.toString()}
+															>
+																{h.hoursCategoryName}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className="row-start-6 lg:row-start-4 col-start-1">
+							<FormField
+								control={form.control}
+								name="supervisorId"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Supervisor</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) =>
+													field.onChange(v ? Number(v) : null)
+												}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Supervisor" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{supervisors.map((s) => (
+															<SelectItem
+																key={s._id}
+																value={s.supervisorId.toString()}
+															>
+																{s.supervisorName}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className="row-start-4 lg:row-start-3">
+							<FormField
+								control={form.control}
+								name="taxesInsuranceId"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Taxes / Insurance</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) =>
+													field.onChange(v ? Number(v) : null)
+												}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Taxes/Insurance" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{taxesInsurances.map((t) => (
+															<SelectItem
+																key={t._id}
+																value={t.taxesInsuranceId.toString()}
+															>
+																{t.taxesInsuranceName}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						{/***********************  Sales Tax State ID Field *************************/}
+						<div className="lg:row-start-3 row-start-5">
+							<FormField
+								control={form.control}
+								name="salesTaxStateId"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Sales Tax State</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) =>
+													field.onChange(v ? Number(v) : null)
+												}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Sales Tax State" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{salesTaxStates.map((s) => (
+															<SelectItem
+																key={s._id}
+																value={s.salesTaxStateId.toString()}
+															>
+																{s.salesTaxStateName}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+					</div>
 
-				<FormField
-					control={form.control}
-					name="hoursRuleId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Hours Rule</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Hours Rule" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{hoursRules.map((r) => (
-												<SelectItem
-													key={r._id}
-													value={r.hoursRuleId.toString()}
-												>
-													{r.hoursRuleName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+					{/***********************   TIER   ***************************/}
+					<div className="grid grid-cols-1">
+						<div className="row-start-1 flex items-center justify-center mx-auto">
+							<FormField
+								control={form.control}
+								name="tier1Value"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Customer Industry Type</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) => field.onChange(v ? v : null)}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Customer Industry Type" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{tier1s.map((t1: TTier1) => (
+															<SelectItem key={t1._id} value={t1._id}>
+																{t1.tierValue} - {t1.tierValueDescription}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
 
-				<FormField
-					control={form.control}
-					name="supervisorId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Supervisor</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Supervisor" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{supervisors.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.supervisorId.toString()}
-												>
-													{s.supervisorName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+						<div className="lg:row-start-3 row-start-5">
+							<FormField
+								control={form.control}
+								name="tier2Value"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Type of Service</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) => field.onChange(v ? v : null)}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Type of Service" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{tier2s.map((t2: TTier2) => (
+															<SelectItem key={t2._id} value={t2._id}>
+																{t2.tierValue} - {t2.tierValueDescription}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+					</div>
 
-				<FormField
-					control={form.control}
-					name="taxesInsuranceId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Taxes / Insurance</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Taxes/Insurance" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{taxesInsurances.map((t) => (
-												<SelectItem
-													key={t._id}
-													value={t.taxesInsuranceId.toString()}
-												>
-													{t.taxesInsuranceName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				{/***********************  Sales Tax State ID Field *************************/}
-
-				<FormField
-					control={form.control}
-					name="salesTaxStateId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Sales Tax State</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Sales Tax State" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{salesTaxStates.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.salesTaxStateId.toString()}
-												>
-													{s.salesTaxStateName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				{/***********************  END OF Sales Tax State ID Field *************************/}
-
-				{/***********************  Hours Category Field *************************/}
-
-				<FormField
-					control={form.control}
-					name="hoursCategoryId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Hours Category</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Hours Category" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{hoursCategorys.map((h) => (
-												<SelectItem
-													key={h._id}
-													value={h.hoursCategoryId.toString()}
-												>
-													{h.hoursCategoryName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				{/***********************  END OF Sales Tax State ID Field *************************/}
-
-				<div>
-					<Button className="mb-4" type="submit">
-						{addJob ? "Update" : "Create"}
-					</Button>
-				</div>
-			</form>
+					{/***********************   END OF TIERS ***************************/}
+					<div className="">
+						<Button className="mb-4" type="submit">
+							{addJob ? "Update Job" : "Create New Job"}
+						</Button>
+					</div>
+				</form>
+			</div>
 		</Form>
 	);
 }

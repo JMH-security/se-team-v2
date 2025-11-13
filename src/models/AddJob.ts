@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getNextJobNumber } from "@/helpers/counterHelper";
 
 interface JobAddTier {
 	tierID: number;
@@ -111,6 +112,14 @@ const AddJobSchema = new mongoose.Schema<AddJobDocument>(
 	},
 	{ timestamps: true }
 );
+
+AddJobSchema.pre<AddJobDocument>("save", async function (next) {
+	if (!this.jobNumber) {
+		const nextJobNum = await getNextJobNumber();
+		this.jobNumber = nextJobNum.toString();
+	}
+	next();
+});
 
 const AddJob =
 	mongoose.models?.AddJob ||

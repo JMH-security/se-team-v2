@@ -16,7 +16,7 @@ type TAddJob = {
 	jobDescription: string;
 	locationId: number;
 	companyNumber: number;
-	hoursRuleId: number | null;
+	hoursRuleId: number;
 	jobAttention: string | null;
 	dateToStart: string | null;
 	typeId: number | null;
@@ -40,18 +40,16 @@ type TAddJob = {
 		jobZip: string | null;
 	} | null;
 	taxAddress: {
-		jobAddress1: string | null;
-		jobAddress2: string | null;
-		jobCity: string | null;
-		jobState: string | null;
-		jobZip: string | null;
-		latitude: string | null;
-		longitude: string | null;
-		locationCode: string | null;
+		address1: string | null;
+		address2: string | null;
+		city: string | null;
+		state: string | null;
+		zip: string | null;
 	} | null;
 	jobTiers?: AddJobTiers[];
 	customFields?: AddJobCustomFields[];
 	parentJobNumber: string | null;
+	tier1Value: string | null;
 };
 
 export type { TAddJob, AddJobTiers, AddJobCustomFields };

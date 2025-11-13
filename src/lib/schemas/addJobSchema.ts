@@ -32,26 +32,23 @@ export const addJobAddressSchema = z
 
 export const addJobTaxAddressSchema = z
 	.object({
-		jobAddress1: z.string().nullable().optional(),
-		jobAddress2: z.string().nullable().optional(),
-		jobCity: z.string().nullable().optional(),
-		jobState: z.string().nullable().optional(),
-		jobZip: z.string().nullable().optional(),
-		latitude: z.string().nullable().optional(),
-		longitude: z.string().nullable().optional(),
-		locationCode: z.string().nullable().optional(),
+		address1: z.string().nullable().optional(),
+		address2: z.string().nullable().optional(),
+		city: z.string().nullable().optional(),
+		state: z.string().nullable().optional(),
+		zip: z.string().nullable().optional(),
 	})
 	.nullable()
 	.optional();
 
 export const addJobSchema = z.object({
 	_id: z.string().uuid().optional(),
-	jobNumber: z.string().min(1).optional(),
+	jobNumber: z.string().optional(),
 	jobId: z.string().nullable().optional(),
 	jobDescription: z.string().min(1).optional(),
 	locationId: z.number().optional(),
 	companyNumber: z.number().optional(),
-	hoursRuleId: z.number().nullable().optional(),
+	hoursRuleId: z.number({ message: "Must Select Hours Rule" }),
 	jobAttention: z.string().nullable().optional(),
 	dateToStart: z.string().nullable().optional(),
 	typeId: z.number().nullable().optional(),
@@ -72,6 +69,13 @@ export const addJobSchema = z.object({
 	jobTiers: z.array(addJobTierSchema).optional(),
 	customFields: z.array(addJobCustomFieldSchema).optional(),
 	parentJobNumber: z.string().nullable().optional(),
+	tier1Value: z.string().nullable().optional(),
+	tier2Value: z.string().nullable().optional(),
+	tier3Value: z.string().nullable().optional(),
+	tier4Value: z.string().nullable().optional(),
+	tier5Value: z.string().nullable().optional(),
+	tier6Value: z.string().nullable().optional(),
+	tier7Value: z.string().nullable().optional(),
 });
 
 export type AddJobFormData = z.infer<typeof addJobSchema>;

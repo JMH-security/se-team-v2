@@ -18,9 +18,8 @@ export async function GET() {
 			headers: headerValues,
 		});
 		const wtJobs: JobData = await res.json();
-
 		const data: Job[] = wtJobs.data[0].results;
-		console.log(data[0]);
+		const jobCount = data.length;
 
 		// Collect all locationId values and keep only unique entries
 		const allLocationIds = data
@@ -137,6 +136,7 @@ export async function GET() {
 			jobPayrollTaxStateIdsCount,
 			//uniqueHoursCategoryIDs,
 			hoursCategoryIDsCount,
+			jobCount,
 		});
 	} catch (error) {
 		console.error("Error:", error);
