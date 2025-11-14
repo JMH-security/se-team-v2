@@ -3,6 +3,8 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+//import { useParams } from "next/navigation";
+import AddJobFormTiers from "@/components/job/AddJobFormTiers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -72,11 +74,11 @@ export default function AddJobForm({
 	const { taxesInsurances } = useTaxesInsurance();
 	const { tier1s } = useTier1();
 	const { tier2s } = useTier2();
-	const { tier3s } = useTier3();
-	const { tier4s } = useTier4();
-	const { tier5s } = useTier5();
-	const { tier6s } = useTier6();
-	const { tier7s } = useTier7();
+	// const { tier3 } = useTier3();
+	// const { tier4 } = useTier4();
+	// const { tier5 } = useTier5();
+	// const { tier6 } = useTier6();
+	// const { tier7 } = useTier7();
 
 	const form = useForm<AddJobFormData>({
 		resolver: zodResolver(addJobSchema),
@@ -150,46 +152,6 @@ export default function AddJobForm({
 		data.jobTiers.push({
 			tierValue: tier2Match?.tierValue ?? "",
 			tierValueDescription: tier2Match?.tierValueDescription ?? "",
-		});
-
-		//Tier 3
-		const tier3Selected = data.tier3Value ?? "1";
-		const tier3Match = tier3s.find((t) => t._id === tier3Selected);
-		data.jobTiers.push({
-			tierValue: tier3Match?.tierValue ?? "",
-			tierValueDescription: tier3Match?.tierValueDescription ?? "",
-		});
-
-		//Tier 4
-		const tier4Selected = data.tier4Value ?? "1";
-		const tier4Match = tier4s.find((t) => t._id === tier4Selected);
-		data.jobTiers.push({
-			tierValue: tier4Match?.tierValue ?? "",
-			tierValueDescription: tier4Match?.tierValueDescription ?? "",
-		});
-
-		//Tier5
-		const tier5Selected = data.tier5Value ?? "1";
-		const tier5Match = tier5s.find((t) => t._id === tier5Selected);
-		data.jobTiers.push({
-			tierValue: tier5Match?.tierValue ?? "",
-			tierValueDescription: tier5Match?.tierValueDescription ?? "",
-		});
-
-		//Tier 6
-		const tier6Selected = data.tier6Value ?? "1";
-		const tier6Match = tier6s.find((t) => t._id === tier6Selected);
-		data.jobTiers.push({
-			tierValue: tier6Match?.tierValue ?? "",
-			tierValueDescription: tier6Match?.tierValueDescription ?? "",
-		});
-
-		//Tier 7
-		const tier7Selected = data.tier7Value ?? "1";
-		const tier7Match = tier7s.find((t) => t._id === tier7Selected);
-		data.jobTiers.push({
-			tierValue: tier7Match?.tierValue ?? "",
-			tierValueDescription: tier7Match?.tierValueDescription ?? "",
 		});
 
 		//// END TIER CONSTRUCTION*********************************************
@@ -512,8 +474,7 @@ export default function AddJobForm({
 					</div>
 
 					{/***********************   TIER   ***************************/}
-
-					<div className="row-start-6 grid grid-cols-1 space-x-2">
+					<div className="grid grid-cols-1">
 						<div className="row-start-1 flex items-center justify-center mx-auto">
 							<FormField
 								control={form.control}
@@ -550,7 +511,7 @@ export default function AddJobForm({
 							/>
 						</div>
 
-						<div className="row-start-1 flex items-center justify-center mx-auto">
+						<div className="lg:row-start-3 row-start-5">
 							<FormField
 								control={form.control}
 								name="tier2Value"
@@ -574,186 +535,6 @@ export default function AddJobForm({
 														{tier2s.map((t2: TTier2) => (
 															<SelectItem key={t2._id} value={t2._id}>
 																{t2.tierValue} - {t2.tierValueDescription}
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<div className="row-start-1 flex items-center justify-center mx-auto">
-							<FormField
-								control={form.control}
-								name="tier3Value"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Tier3</FormLabel>
-										<FormControl>
-											<Select
-												value={
-													field.value !== null && field.value !== undefined
-														? String(field.value)
-														: ""
-												}
-												onValueChange={(v) => field.onChange(v ? v : null)}
-											>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Uniform Security Type" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														{tier3s.map((t3: TTier3) => (
-															<SelectItem key={t3._id} value={t3._id}>
-																{t3.tierValue} - {t3.tierValueDescription}
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<div className="row-start-1 flex items-center justify-center mx-auto">
-							<FormField
-								control={form.control}
-								name="tier4Value"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Tier4</FormLabel>
-										<FormControl>
-											<Select
-												value={
-													field.value !== null && field.value !== undefined
-														? String(field.value)
-														: ""
-												}
-												onValueChange={(v) => field.onChange(v ? v : null)}
-											>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Tier4" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														{tier4s.map((t4: TTier4) => (
-															<SelectItem key={t4._id} value={t4._id}>
-																{t4.tierValue} - {t4.tierValueDescription}
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<div className="row-start-1 flex items-center justify-center mx-auto">
-							<FormField
-								control={form.control}
-								name="tier5Value"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Tier5</FormLabel>
-										<FormControl>
-											<Select
-												value={
-													field.value !== null && field.value !== undefined
-														? String(field.value)
-														: ""
-												}
-												onValueChange={(v) => field.onChange(v ? v : null)}
-											>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Tier5" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														{tier5s.map((t5: TTier5) => (
-															<SelectItem key={t5._id} value={t5._id}>
-																{t5.tierValue} - {t5.tierValueDescription}
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<div className="row-start-1 flex items-center justify-center mx-auto">
-							<FormField
-								control={form.control}
-								name="tier6Value"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Tier6</FormLabel>
-										<FormControl>
-											<Select
-												value={
-													field.value !== null && field.value !== undefined
-														? String(field.value)
-														: ""
-												}
-												onValueChange={(v) => field.onChange(v ? v : null)}
-											>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Tier6" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														{tier6s.map((t6: TTier6) => (
-															<SelectItem key={t6._id} value={t6._id}>
-																{t6.tierValue} - {t6.tierValueDescription}
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<div className="row-start-1 flex items-center justify-center mx-auto">
-							<FormField
-								control={form.control}
-								name="tier7Value"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Tier7</FormLabel>
-										<FormControl>
-											<Select
-												value={
-													field.value !== null && field.value !== undefined
-														? String(field.value)
-														: ""
-												}
-												onValueChange={(v) => field.onChange(v ? v : null)}
-											>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Tier7" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														{tier7s.map((t7: TTier7) => (
-															<SelectItem key={t7._id} value={t7._id}>
-																{t7.tierValue} - {t7.tierValueDescription}
 															</SelectItem>
 														))}
 													</SelectGroup>
