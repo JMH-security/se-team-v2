@@ -191,17 +191,17 @@ export default function AddJobForm({
       tierValue: tier7Match?.tierValue ?? "",
       tierValueDescription: tier7Match?.tierValueDescription ?? "",
     });
-
+    console.log(data.address?.jobAddress1);
     //// END TIER CONSTRUCTION*********************************************
 
     // use proper property names expected by schema
-    data.address = {
-      jobAddress1: "123 Main st",
-      jobAddress2: "",
-      jobCity: "Anytown",
-      jobState: "CA",
-      jobZip: "12345",
-    };
+    // data.address = {
+    //   jobAddress1: address.jobAddress1,
+    //   jobAddress2: "",
+    //   jobCity: "Anytown",
+    //   jobState: "CA",
+    //   jobZip: "12345",
+    // };
     data.taxAddress = {
       address1: "123 Main st",
       address2: "",
@@ -300,6 +300,99 @@ export default function AddJobForm({
                 </FormItem>
               )}
             />
+          </div>
+
+          {/***********************  Address Section *************************/}
+          {/* data.address = {
+      jobAddress1: "123 Main st",
+      jobAddress2: "",
+      jobCity: "Anytown",
+      jobState: "CA",
+      jobZip: "12345",
+    }; */}
+
+          <div className="grid lg:grid-cols-2 grid-cols-1 col-span-full gap-4 p-2 border border-slate-600 rounded-md">
+            <div className="row-start-1 flex items-center justify-center mx-auto">
+              <Label className="text-lg text-secondary">
+                Job Service Address
+              </Label>
+            </div>
+
+            <div className="row-start-2">
+              <FormField
+                control={form.control}
+                name="address.jobAddress1"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street Address</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-3 lg:row-start-2">
+              <FormField
+                control={form.control}
+                name="address.jobAddress2"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address Line 2</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-4 lg:row-start-3">
+              <FormField
+                control={form.control}
+                name="address.jobCity"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-5 lg:row-start-3">
+              <FormField
+                control={form.control}
+                name="address.jobState"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>State</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-6 lg:row-start-4">
+              <FormField
+                control={form.control}
+                name="address.jobZip"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Zip Code</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
           {/***********************  Selector Section *************************/}
