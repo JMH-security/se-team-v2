@@ -114,12 +114,11 @@ export default function AddJobForm({
 
   const onSubmit = async (data: AddJobFormData) => {
     // Set Job to Active (typeId = 1) and Company Number to 1
-    console.log("tier 1", tier1s);
-    console.log("CUSTOMER?", customer);
-    console.log("FORM DATA:", data);
+
     data.jobTiers = data.jobTiers ?? [];
     data.typeId = 1;
     data.companyNumber = 1;
+    data.taxAddress = {};
 
     //Add customer data into custom fields
     data.customFields = data.customFields ?? [];
@@ -194,21 +193,16 @@ export default function AddJobForm({
     console.log(data.address?.jobAddress1);
     //// END TIER CONSTRUCTION*********************************************
 
-    // use proper property names expected by schema
-    // data.address = {
-    //   jobAddress1: address.jobAddress1,
-    //   jobAddress2: "",
-    //   jobCity: "Anytown",
-    //   jobState: "CA",
-    //   jobZip: "12345",
-    // };
+    //*****************  This is not working *************************************
+
     data.taxAddress = {
-      address1: "123 Main st",
-      address2: "",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
+      address1: data.address?.jobAddress1,
+      address2: data.address?.jobAddress2,
+      city: data.address?.jobCity,
+      state: data.address?.jobState,
+      zip: data.address?.jobZip,
     };
+
     try {
       if (addJob) {
         await updateAddJob(addJob._id, data);
