@@ -190,17 +190,23 @@ export default function AddJobForm({
       tierValue: tier7Match?.tierValue ?? "",
       tierValueDescription: tier7Match?.tierValueDescription ?? "",
     });
-    console.log(data.address?.jobAddress1);
+    // remove temporary tier selection values
+    delete data.tier1Value;
+    delete data.tier2Value;
+    delete data.tier3Value;
+    delete data.tier4Value;
+    delete data.tier5Value;
+    delete data.tier6Value;
+    delete data.tier7Value;
     //// END TIER CONSTRUCTION*********************************************
 
     //*****************  This is not working *************************************
-
     data.taxAddress = {
-      address1: data.address?.jobAddress1,
-      address2: data.address?.jobAddress2,
-      city: data.address?.jobCity,
-      state: data.address?.jobState,
-      zip: data.address?.jobZip,
+      address1: data.address?.jobAddress1 || null,
+      address2: data.address?.jobAddress2 || null,
+      city: data.address?.jobCity || null,
+      state: data.address?.jobState || null,
+      zip: data.address?.jobZip || null,
     };
 
     try {
