@@ -78,6 +78,11 @@ export default function AddJobForm({
   const { tier6s } = useTier6();
   const { tier7s } = useTier7();
 
+  const phoneChoice = [
+    { value: 1, description: "Cell Phone" },
+    { value: 2, description: "Standard Phone" },
+  ];
+
   const form = useForm<AddJobFormData>({
     resolver: zodResolver(addJobSchema),
     defaultValues: {
@@ -302,14 +307,74 @@ export default function AddJobForm({
             />
           </div>
 
-          {/***********************  Address Section *************************/}
-          {/* data.address = {
-      jobAddress1: "123 Main st",
-      jobAddress2: "",
-      jobCity: "Anytown",
-      jobState: "CA",
-      jobZip: "12345",
-    }; */}
+          {/* ***********************  Contact Info Section *************************/}
+
+          <div className="grid lg:grid-cols-2 grid-cols-1 col-span-full gap-4 p-2 border border-slate-600 rounded-md">
+            <div className="row-start-1 flex items-center justify-center mx-auto">
+              <Label className="text-lg text-secondary">Job Contact Info</Label>
+            </div>
+
+            <div className="row-start-2">
+              <FormField
+                control={form.control}
+                name="phone1"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone 1</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-3 lg:row-start-2">
+              <FormField
+                control={form.control}
+                name="phone1Description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Type</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={
+                          field.value !== null && field.value !== undefined
+                            ? String(field.value)
+                            : ""
+                        }
+                        onValueChange={(v) =>
+                          field.onChange(v ? Number(v) : null)
+                        }
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Phone Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {phoneChoice.map((p) => (
+                              <SelectItem
+                                key={p.value}
+                                value={p.value.toString()}
+                              >
+                                {p.description}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="row-start-4 lg:row-start-3"></div>
+            <div className="row-start-5 lg:row-start-3"></div>
+            <div className="row-start-6 lg:row-start-4"></div>
+          </div>
+
+          {/*********************** End contact info Section *************************/}
 
           <div className="grid lg:grid-cols-2 grid-cols-1 col-span-full gap-4 p-2 border border-slate-600 rounded-md">
             <div className="row-start-1 flex items-center justify-center mx-auto">
