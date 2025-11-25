@@ -76,6 +76,7 @@ export const addJobSchema = z.object({
 	tier5Value: z.string().nullable().optional(),
 	tier6Value: z.string().nullable().optional(),
 	tier7Value: z.string().nullable().optional(),
+	jobContactEmail: z.string().email().nullable().optional(),
 });
 
 export type AddJobFormData = z.infer<typeof addJobSchema>;
