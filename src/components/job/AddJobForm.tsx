@@ -105,8 +105,8 @@ export default function AddJobForm({
 			supervisorId: addJob?.supervisorId ?? null,
 			taxesInsuranceId: addJob?.taxesInsuranceId ?? null,
 			salesTaxStateId: addJob?.salesTaxStateId ?? null,
-			jobPayrollTaxStateID: addJob?.jobPayrollTaxStateID ?? null,
-			hoursCategoryID: addJob?.hoursCategoryID ?? null,
+			jobPayrollTaxStateId: addJob?.jobPayrollTaxStateId ?? null,
+			hoursCategoryId: addJob?.hoursCategoryId ?? null,
 			notes: addJob?.notes ?? null,
 			address: addJob?.address ?? null,
 			taxAddress: addJob?.taxAddress ?? null,
@@ -233,8 +233,8 @@ export default function AddJobForm({
 					supervisorId: null,
 					taxesInsuranceId: null,
 					salesTaxStateId: null,
-					jobPayrollTaxStateID: null,
-					hoursCategoryID: null,
+					jobPayrollTaxStateId: null,
+					hoursCategoryId: null,
 					address: {
 						jobAddress1: "",
 						jobAddress2: "",
@@ -598,7 +598,7 @@ export default function AddJobForm({
 						<div className="row-start-3 lg:row-start-2">
 							<FormField
 								control={form.control}
-								name="hoursCategoryID"
+								name="hoursCategoryId"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Hours Category</FormLabel>

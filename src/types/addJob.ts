@@ -29,8 +29,8 @@ type TAddJob = {
 	supervisorId: number | null;
 	taxesInsuranceId: number | null;
 	salesTaxStateId: number | null;
-	jobPayrollTaxStateID: number | null;
-	hoursCategoryID: number | null;
+	jobPayrollTaxStateId: number | null;
+	hoursCategoryId: number | null;
 	notes: string | null;
 	address: {
 		jobAddress1: string;
