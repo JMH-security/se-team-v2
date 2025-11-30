@@ -14,6 +14,7 @@ interface TWtJobTier {
 interface WTApiResponse {
   success: boolean;
   data?: any;
+  jobNumber?: string;
   error?: string;
 }
 
@@ -63,15 +64,12 @@ export async function POST(request: Request) {
 
     // Build the winTeam object
     const wtJobToAdd = {} as any;
-
-    // Create the tax address object
     wtJobToAdd.TaxAddress = {};
     wtJobToAdd.TaxAddress.Address1 = mgoJobAdd.address.jobAddress1;
     wtJobToAdd.TaxAddress.Address2 = mgoJobAdd.address.jobAddress2;
     wtJobToAdd.TaxAddress.City = mgoJobAdd.address.jobCity;
     wtJobToAdd.TaxAddress.State = mgoJobAdd.address.jobState;
     wtJobToAdd.TaxAddress.Zip = Number(mgoJobAdd.address.jobZip);
-
     wtJobToAdd.JobNumber = mgoJobAdd.jobNumber;
     wtJobToAdd.JobDescription = mgoJobAdd.jobDescription;
     wtJobToAdd.LocationId = 210;
@@ -94,15 +92,11 @@ export async function POST(request: Request) {
     wtJobToAdd.HoursCategoryId = mgoJobAdd.hoursCategoryId;
 
     if (wtJobToAdd) {
-      console.log("SENDING JOB TO WINTEAM...");
       const toAddBody = JSON.stringify(wtJobToAdd);
-      console.log("JOB BODY OBJECT:", toAddBody);
-
       const headerValues = {
         "Ocp-apim-subscription-key": process.env.WT_SUB_KEY || "",
         TenantId: process.env.WT_TENANT_DEV_ID || "",
       };
-      //apim.myteamsoftware.com/wtnextgen/jobs/v2/api/jobs/
       const res = await fetch(`${process.env.NXT_JOB_URL}`, {
         method: "POST",
         headers: headerValues,
@@ -114,7 +108,24 @@ export async function POST(request: Request) {
         throw new Error(`WinTeam API error: ${res.status} - ${error}`);
       } else {
         const addedJob: WTApiResponse = await res.json();
-        console.log("WinTeam API response status:", addedJob);
+
+        // Fetch jobID from WinTeam after save
+        const res2 = await fetch(
+          `${process.env.NXT_JOB_URL}?searchFieldName=jobNumber&searchText=${addedJob.jobNumber}`,
+          {
+            method: "GET",
+            headers: headerValues,
+          }
+        );
+
+        const fetchedJob: WTApiResponse = await res2.json();
+        const wtJobID = fetchedJob.data[0].results[0].jobId;
+        // Update MongoDB with WinTeam JobID
+        const jobUpdate = await AddJob.updateOne(
+          { jobNumber: mgoJobAdd.jobNumber },
+          { $set: { jobId: wtJobID } }
+        );
+        console.log("Updated MongoDB with WinTeam JobID:", jobUpdate);
         return NextResponse.json(addedJob, { status: 201 });
       }
     } else {
