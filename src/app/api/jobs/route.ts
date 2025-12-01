@@ -119,6 +119,7 @@ export async function POST(request: Request) {
         );
 
         const fetchedJob: WTApiResponse = await res2.json();
+        const fetchedJobData = fetchedJob.data[0].results[0];
         const wtJobID = fetchedJob.data[0].results[0].jobId;
         // Update MongoDB with WinTeam JobID
         const jobUpdate = await AddJob.updateOne(
@@ -126,7 +127,7 @@ export async function POST(request: Request) {
           { $set: { jobId: wtJobID } }
         );
         console.log("Updated MongoDB with WinTeam JobID:", jobUpdate);
-        return NextResponse.json(addedJob, { status: 201 });
+        return NextResponse.json(fetchedJobData, { status: 201 });
       }
     } else {
       return NextResponse.json(
