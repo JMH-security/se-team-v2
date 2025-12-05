@@ -34,7 +34,13 @@ export function Tier7Provider({ children }: { children: ReactNode }) {
 		const res = await fetch("/api/admin/wt/tier/tier7");
 		if (res.ok) {
 			const data = await res.json();
-			setTier7s(data);
+			setTier7s(
+				data.sort((a: TTier7, b: TTier7) => {
+					const aValue = parseInt(a.tierValue, 10);
+					const bValue = parseInt(b.tierValue, 10);
+					return aValue - bValue;
+				})
+			);
 		}
 	};
 

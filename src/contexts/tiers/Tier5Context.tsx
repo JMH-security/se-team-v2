@@ -34,7 +34,13 @@ export function Tier5Provider({ children }: { children: ReactNode }) {
 		const res = await fetch("/api/admin/wt/tier/tier5");
 		if (res.ok) {
 			const data = await res.json();
-			setTier5s(data);
+			setTier5s(
+				data.sort((a: TTier5, b: TTier5) => {
+					const aValue = parseInt(a.tierValue, 10);
+					const bValue = parseInt(b.tierValue, 10);
+					return aValue - bValue;
+				})
+			);
 		}
 	};
 

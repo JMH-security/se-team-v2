@@ -34,7 +34,13 @@ export function Tier4Provider({ children }: { children: ReactNode }) {
 		const res = await fetch("/api/admin/wt/tier/tier4");
 		if (res.ok) {
 			const data = await res.json();
-			setTier4s(data);
+			setTier4s(
+				data.sort((a: TTier4, b: TTier4) => {
+					const aValue = parseInt(a.tierValue, 10);
+					const bValue = parseInt(b.tierValue, 10);
+					return aValue - bValue;
+				})
+			);
 		}
 	};
 

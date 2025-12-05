@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 
 import { useParams } from "next/navigation";
 import AddJobForm from "@/components/job/AddJobForm";
+import CustomerJobsForm from "../customerJobs/CustomerJobsForm";
 
 interface CustomerDetailsProps {
 	customer: Customer;
@@ -38,8 +39,8 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 					</div>
 					<div>
 						{customer.CustomFields?.map((field) => (
-							<p key={field.fieldNumber}>
-								Field {field.fieldNumber}: {field.value}
+							<p key={field.FieldNumber}>
+								Field {field.FieldNumber}: {field.Value}
 							</p>
 						))}
 					</div>
@@ -63,11 +64,15 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 					{showInvoices ? "Close Invoices" : "Invoices"}
 				</Button>
 			</div>
+			<CustomerJobsForm
+				custNum={customer.CustomerNumber?.toString()}
+				custId={customer.CustomerID?.toString()}
+			/>
 
 			{showInvoices && (
 				<Invoices customerNumber={customer.CustomerNumber?.toString() || ""} />
 			)}
-			{showJobAddForm && <AddJobForm customer={customer} />}
+			{showJobAddForm && <AddJobForm customer={customer} addJob={undefined} />}
 			<div className="m-4"></div>
 		</div>
 	);

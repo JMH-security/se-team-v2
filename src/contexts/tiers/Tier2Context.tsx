@@ -34,7 +34,13 @@ export function Tier2Provider({ children }: { children: ReactNode }) {
 		const res = await fetch("/api/admin/wt/tier/tier2");
 		if (res.ok) {
 			const data = await res.json();
-			setTier2s(data);
+			setTier2s(
+				data.sort((a: TTier2, b: TTier2) => {
+					const aValue = parseInt(a.tierValue, 10);
+					const bValue = parseInt(b.tierValue, 10);
+					return aValue - bValue;
+				})
+			);
 		}
 	};
 

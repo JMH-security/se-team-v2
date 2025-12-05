@@ -34,7 +34,13 @@ export function Tier6Provider({ children }: { children: ReactNode }) {
 		const res = await fetch("/api/admin/wt/tier/tier6");
 		if (res.ok) {
 			const data = await res.json();
-			setTier6s(data);
+			setTier6s(
+				data.sort((a: TTier6, b: TTier6) => {
+					const aValue = parseInt(a.tierValue, 10);
+					const bValue = parseInt(b.tierValue, 10);
+					return aValue - bValue;
+				})
+			);
 		}
 	};
 
