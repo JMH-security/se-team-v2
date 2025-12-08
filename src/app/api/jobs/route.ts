@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import AddJob from "@/models/AddJob";
+import CustomerJobs from "@/models/CustomerJobs";
 import { addJobSchema } from "@/lib/schemas/addJobSchema";
+import { customerJobsSchema } from "@/lib/schemas/customerJobs";
 import { addCounterIndex } from "@/helpers/counterHelper";
 import { ICounter } from "@/types/counter";
 import { TAddJob } from "@/types/addJob";
@@ -45,6 +47,25 @@ export async function POST(request: Request) {
 		const job = new AddJob(parsed);
 		const mgoJobAdd = await job.save();
 		console.log("Saved Job to MongoDB:", mgoJobAdd);
+
+		//*****GET CUSTOMER DETAILS */
+		const cjIdValue = mgoJobAdd.customFields.find(
+			(field: any) => field.fieldNumber === 2
+		)?.value;
+		const customerToAddJob = cjIdValue
+			? await CustomerJobs.findOne({ customerId: cjIdValue })
+			: null;
+		console.log("Customer to add job to:", customerToAddJob);
+		if (customerToAddJob) {
+			customerToAddJob.customerJobsList.push({
+				jobId: mgoJobAdd._id.toString(),
+				jobNumber: mgoJobAdd.jobNumber,
+			});
+			const updatedCustWithJobs = await customerToAddJob.save();
+			console.log(updatedCustWithJobs);
+		}
+
+		// const customerJobs = await CustomerJobs.create(data);
 
 		// **************** Prepare the job object to send to WinTeam ****************
 

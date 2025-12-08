@@ -99,7 +99,7 @@ export default function SupervisorForm({
 						name="supervisorDescription"
 						render={({ field }) => (
 							<FormItem className="grow">
-								<FormLabel>Supervisor Description</FormLabel>
+								<FormLabel>Supervisor Code</FormLabel>
 								<FormControl>
 									<Input {...field} />
 								</FormControl>
