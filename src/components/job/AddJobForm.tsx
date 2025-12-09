@@ -50,7 +50,7 @@ import { useTier5 } from "@/contexts/tiers/Tier5Context";
 import { useTier6 } from "@/contexts/tiers/Tier6Context";
 import { useTier7 } from "@/contexts/tiers/Tier7Context";
 
-// import { useJobPayrollTaxState } from "@/contexts/JobPayrollTaxStateContext";
+import { useJobPayrollTaxState } from "@/contexts/JobPayrollTaxStateContext";
 import { useTaxesInsurance } from "@/contexts/TaxesInsuranceContext";
 
 interface AddJobFormProps {
@@ -71,7 +71,7 @@ export default function AddJobForm({
 	const { supervisors } = useSupervisor();
 	const { salesTaxStates } = useSalesTaxState();
 	// jobPayrollTaxStates not used in this form currently
-	// const { jobPayrollTaxStates } = useJobPayrollTaxState();
+	const { jobPayrollTaxStates } = useJobPayrollTaxState();
 	const { taxesInsurances } = useTaxesInsurance();
 	const { tier1s } = useTier1();
 	const { tier2s } = useTier2();
@@ -111,7 +111,7 @@ export default function AddJobForm({
 			supervisorId: addJob?.supervisorId ?? null,
 			taxesInsuranceId: addJob?.taxesInsuranceId ?? null,
 			salesTaxStateId: addJob?.salesTaxStateId ?? null,
-			jobPayrollTaxStateId: addJob?.jobPayrollTaxStateId ?? null,
+			jobPayrollTaxStateId: addJob?.jobPayrollTaxStateId ?? 1,
 			hoursCategoryId: addJob?.hoursCategoryId ?? null,
 			notes: addJob?.notes ?? null,
 			address: addJob?.address ?? null,
@@ -234,7 +234,7 @@ export default function AddJobForm({
 		};
 
 		data.jobPayrollTaxStateId = data.salesTaxStateId;
-		data.JobPayrollTaxStateID = 1;
+		data.jobPayrollTaxStateId = 1;
 
 		setIsSubmitting(true);
 		try {
@@ -692,46 +692,7 @@ export default function AddJobForm({
 										)}
 									/>
 								</div>
-								<div className="row-start-6 lg:row-start-4 col-start-1">
-									<FormField
-										control={form.control}
-										name="supervisorId"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Supervisor</FormLabel>
-												<FormControl>
-													<Select
-														value={
-															field.value !== null && field.value !== undefined
-																? String(field.value)
-																: ""
-														}
-														onValueChange={(v) =>
-															field.onChange(v ? Number(v) : null)
-														}
-													>
-														<SelectTrigger className="w-full">
-															<SelectValue placeholder="Supervisor" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectGroup>
-																{supervisors.map((s) => (
-																	<SelectItem
-																		key={s._id}
-																		value={s.supervisorId.toString()}
-																	>
-																		{s.supervisorName}
-																	</SelectItem>
-																))}
-															</SelectGroup>
-														</SelectContent>
-													</Select>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
+
 								<div className="row-start-4 lg:row-start-3">
 									<FormField
 										control={form.control}
@@ -802,6 +763,88 @@ export default function AddJobForm({
 																		value={s.salesTaxStateId.toString()}
 																	>
 																		{s.salesTaxStateName}
+																	</SelectItem>
+																))}
+															</SelectGroup>
+														</SelectContent>
+													</Select>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+
+								<div className="row-start-6 lg:row-start-4 col-start-1">
+									<FormField
+										control={form.control}
+										name="supervisorId"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Supervisor</FormLabel>
+												<FormControl>
+													<Select
+														value={
+															field.value !== null && field.value !== undefined
+																? String(field.value)
+																: ""
+														}
+														onValueChange={(v) =>
+															field.onChange(v ? Number(v) : null)
+														}
+													>
+														<SelectTrigger className="w-full">
+															<SelectValue placeholder="Supervisor" />
+														</SelectTrigger>
+														<SelectContent>
+															<SelectGroup>
+																{supervisors.map((s) => (
+																	<SelectItem
+																		key={s._id}
+																		value={s.supervisorId.toString()}
+																	>
+																		{s.supervisorName}
+																	</SelectItem>
+																))}
+															</SelectGroup>
+														</SelectContent>
+													</Select>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+
+								<div className="row-start-6 lg:row-start-4 col-start-2">
+									<FormField
+										control={form.control}
+										name="jobPayrollTaxStateId"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Payroll Tax State</FormLabel>
+												<FormControl>
+													<Select
+														value={
+															field.value !== null && field.value !== undefined
+																? String(field.value)
+																: ""
+														}
+														onValueChange={(v) =>
+															field.onChange(v ? Number(v) : null)
+														}
+													>
+														<SelectTrigger className="w-full">
+															<SelectValue placeholder="Payroll Tax State" />
+														</SelectTrigger>
+														<SelectContent>
+															<SelectGroup>
+																{jobPayrollTaxStates.map((s) => (
+																	<SelectItem
+																		key={s._id}
+																		value={s.jobPayrollTaxStateId.toString()}
+																	>
+																		{s.jobPayrollTaxStateName}
 																	</SelectItem>
 																))}
 															</SelectGroup>
