@@ -816,7 +816,7 @@ export default function AddJobForm({
 									/>
 								</div>
 
-								<div className="row-start-6 lg:row-start-4 col-start-2">
+								<div className="row-start-7 lg:row-start-4 lg:col-start-2">
 									<FormField
 										control={form.control}
 										name="jobPayrollTaxStateId"
