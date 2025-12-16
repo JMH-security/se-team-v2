@@ -91,6 +91,9 @@ export async function POST(request: Request) {
 		wtJobToAdd.TaxAddress.City = mgoJobAdd.address.jobCity;
 		wtJobToAdd.TaxAddress.State = mgoJobAdd.address.jobState;
 		wtJobToAdd.TaxAddress.Zip = Number(mgoJobAdd.address.jobZip);
+		wtJobToAdd.TaxAddress.Latitude = "33.513791";
+		wtJobToAdd.TaxAddress.Longitude = "-86.811432";
+		wtJobToAdd.TaxAddress.LocationCode = "01-073-158174";
 		wtJobToAdd.JobNumber = mgoJobAdd.jobNumber;
 		wtJobToAdd.JobDescription = mgoJobAdd.jobDescription;
 		wtJobToAdd.LocationId = 210;
@@ -101,7 +104,7 @@ export async function POST(request: Request) {
 		wtJobToAdd.TypeId = mgoJobAdd.typeId;
 		wtJobToAdd.SupervisorId = mgoJobAdd.supervisorId;
 		wtJobToAdd.SalesTaxStateId = mgoJobAdd.salesTaxStateId;
-		wtJobToAdd.JobPayrollTaxStateId = mgoJobAdd.jobPayrollTaxStateId;
+		wtJobToAdd.JobPayrollTaxStateId = mgoJobAdd.jobPayrollTaxStateId || 1;
 		wtJobToAdd.HoursCategoryId = mgoJobAdd.hoursCategoryId;
 		wtJobToAdd.JobTiers = wtAddTiers;
 		wtJobToAdd.TaxesInsuranceId = mgoJobAdd.taxesInsuranceId;
