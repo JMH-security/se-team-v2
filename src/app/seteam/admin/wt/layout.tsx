@@ -5,6 +5,7 @@ import { SalesTaxStateProvider } from "@/contexts/SalesTaxStateContext";
 import { JobPayrollTaxStateProvider } from "@/contexts/JobPayrollTaxStateContext";
 import { HoursRuleProvider } from "@/contexts/HoursRuleContext";
 import { HoursCategoryProvider } from "@/contexts/HoursCategoryContext";
+import { LocationProvider } from "@/contexts/LocationContext";
 
 export default async function AdminLayout({
 	children,
@@ -12,20 +13,22 @@ export default async function AdminLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<HoursCategoryProvider>
-			<HoursRuleProvider>
-				<JobPayrollTaxStateProvider>
-					<SalesTaxStateProvider>
-						<TaxesInsuranceProvider>
-							<SupervisorProvider>
-								<RegionProvider>
-									<>{children}</>
-								</RegionProvider>
-							</SupervisorProvider>
-						</TaxesInsuranceProvider>
-					</SalesTaxStateProvider>
-				</JobPayrollTaxStateProvider>
-			</HoursRuleProvider>
-		</HoursCategoryProvider>
+		<LocationProvider>
+			<HoursCategoryProvider>
+				<HoursRuleProvider>
+					<JobPayrollTaxStateProvider>
+						<SalesTaxStateProvider>
+							<TaxesInsuranceProvider>
+								<SupervisorProvider>
+									<RegionProvider>
+										<>{children}</>
+									</RegionProvider>
+								</SupervisorProvider>
+							</TaxesInsuranceProvider>
+						</SalesTaxStateProvider>
+					</JobPayrollTaxStateProvider>
+				</HoursRuleProvider>
+			</HoursCategoryProvider>
+		</LocationProvider>
 	);
 }

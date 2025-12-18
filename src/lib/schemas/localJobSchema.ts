@@ -41,6 +41,9 @@ export const localJobTaxAddressSchema = z
 		city: z.string().nullable().optional(),
 		state: z.string().nullable().optional(),
 		zip: z.string().nullable().optional(),
+		latitude: z.string().nullable().optional(),
+		longitude: z.string().nullable().optional(),
+		locationCode: z.string().nullable().optional(),
 	})
 	.nullable()
 	.optional();
@@ -48,7 +51,7 @@ export const localJobTaxAddressSchema = z
 export const localJobPosts = {
 	postId: z.string(),
 	postName: z.string(),
-	postHPW: z.number().nonnegative(),
+	postHpw: z.number().nonnegative(),
 	postBillRate: z
 		.number()
 		.multipleOf(0.01, { message: "Currency Value; At most 2 decimal values" })
@@ -60,9 +63,9 @@ export const localJobPosts = {
 };
 
 export const localJobSchema = z.object({
-	_id: z.string().uuid().optional(),
+	_id: z.string().optional(),
 	jobNumber: z.string().optional(),
-	jobId: z.string().nullable(),
+	jobId: z.string().optional(),
 	jobDescription: z.string().min(1, { message: "Enter Job Name/Description" }),
 	customerNumber: z.string({ message: "Customer Number required" }),
 	customerId: z.string({ message: "Customer ID required" }),
@@ -93,31 +96,27 @@ export const localJobSchema = z.object({
 		.date({ message: "Enter Valid Start Date" })
 		.min(new Date(), { message: "Start Date cannot be in the past" }),
 	typeId: z.number({ message: "Set Job Active" }),
-	phone1: z
-		.string()
-		.regex(USPhoneRegex, { message: "Invalid US phone number format." }),
+	phone1: z.string().refine((val) => val === "" || USPhoneRegex.test(val), {
+		message: "Invalid US phone number format.",
+	}),
 	phone1Description: z.string().nullable().optional(),
-	phone2: z
-		.string()
-		.regex(USPhoneRegex, { message: "Invalid US phone number format." }),
+	phone2: z.string().refine((val) => val === "" || USPhoneRegex.test(val), {
+		message: "Invalid US phone number format.",
+	}),
 	phone2Description: z.string().nullable().optional(),
-	phone3: z
-		.string()
-		.regex(USPhoneRegex, { message: "Invalid US phone number format." }),
+	phone3: z.string().refine((val) => val === "" || USPhoneRegex.test(val), {
+		message: "Invalid US phone number format.",
+	}),
 	phone3Description: z.string().nullable().optional(),
 	notes: z.string(),
 	address: localJobAddressSchema,
 	taxAddress: localJobTaxAddressSchema,
-	tier1Value: localJobTierSchema.shape.tierValue,
-	tier2Value: localJobTierSchema.shape.tierValue,
-	tier3Value: localJobTierSchema.shape.tierValue,
-	tier4Value: localJobTierSchema.shape.tierValue,
-	tier5Value: localJobTierSchema.shape.tierValue,
-	tier6Value: localJobTierSchema.shape.tierValue,
-	tier7Value: localJobTierSchema.shape.tierValue,
 	customFields: z.array(localJobCustomFieldSchema).optional(),
+	jobTiers: z.array(localJobTierSchema).optional(),
+	tier1Value: z.string().optional(),
+	tier1: localJobTierSchema.optional(),
 	posts: z.array(z.object(localJobPosts)).optional(),
-	hpw: z.number().nonnegative(),
+	totalHpw: z.number().nonnegative(),
 });
 
 export type LocalJobFormData = z.infer<typeof localJobSchema>;

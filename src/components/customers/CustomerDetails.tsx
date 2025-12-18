@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { useParams } from "next/navigation";
 import AddJobForm from "@/components/job/AddJobForm";
 import CustomerJobsForm from "../customerJobs/CustomerJobsForm";
+import LocalJobForm from "../localJob/LocalJobForm";
 
 interface CustomerDetailsProps {
 	customer: Customer;
@@ -74,6 +75,11 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 			)}
 			{showJobAddForm && <AddJobForm customer={customer} addJob={undefined} />}
 			<div className="m-4"></div>
+			<LocalJobForm
+				customer={customer}
+				localJob={undefined}
+				onSuccess={() => {}}
+			/>
 		</div>
 	);
 }

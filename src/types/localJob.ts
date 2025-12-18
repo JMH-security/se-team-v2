@@ -12,23 +12,23 @@ type CustomFields = {
 type TPosts = {
 	postId: number;
 	postName: string;
-	postHPW: number;
+	postHpw: number;
 	postBillRate: number;
 	postWageRate: number;
-	monPostStartTime: string | null;
-	monPostEndTime: string | null;
-	tuesPostStartTime: string | null;
-	tuesPostEndTime: string | null;
-	wedPostStartTime: string | null;
-	wedPostEndTime: string | null;
-	thursPostStartTime: string | null;
-	thursPostEndTime: string | null;
-	friPostStartTime: string | null;
-	friPostEndTime: string | null;
-	satPostStartTime: string | null;
-	satPostEndTime: string | null;
-	sunPostStartTime: string | null;
-	sunPostEndTime: string | null;
+	// monPostStartTime: string | null;
+	// monPostEndTime: string | null;
+	// tuesPostStartTime: string | null;
+	// tuesPostEndTime: string | null;
+	// wedPostStartTime: string | null;
+	// wedPostEndTime: string | null;
+	// thursPostStartTime: string | null;
+	// thursPostEndTime: string | null;
+	// friPostStartTime: string | null;
+	// friPostEndTime: string | null;
+	// satPostStartTime: string | null;
+	// satPostEndTime: string | null;
+	// sunPostStartTime: string | null;
+	// sunPostEndTime: string | null;
 };
 
 type TLocalJob = {
@@ -36,6 +36,8 @@ type TLocalJob = {
 	jobNumber: string;
 	jobId: string | null;
 	jobDescription: string;
+	customerNumber: string;
+	customerId: string;
 	locationId: number;
 	hoursRuleId: number | null;
 	hoursCategoryId: number | null;
@@ -70,14 +72,7 @@ type TLocalJob = {
 	jobTiers: JobTiers[];
 	customFields: CustomFields[];
 	posts: TPosts[];
-	hpw: number;
-	tier1Value: string;
-	tier2Value: string;
-	tier3Value: string;
-	tier4Value: string;
-	tier5Value: string;
-	tier6Value: string;
-	tier7Value: string;
+	totalHpw: number;
 };
 
 export type { TLocalJob, TPosts, JobTiers, CustomFields };

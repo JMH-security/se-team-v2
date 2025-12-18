@@ -13,6 +13,7 @@ import { Tier5Provider } from "@/contexts/tiers/Tier5Context";
 import { Tier6Provider } from "@/contexts/tiers/Tier6Context";
 import { Tier7Provider } from "@/contexts/tiers/Tier7Context";
 import { CustomerJobsProvider } from "@/contexts/CustomerJobsContext";
+import { LocalJobProvider } from "@/contexts/localJobContext";
 
 export default async function CustomerLayout({
 	children,
@@ -21,35 +22,37 @@ export default async function CustomerLayout({
 }) {
 	return (
 		<>
-			<CustomerJobsProvider>
-				<Tier7Provider>
-					<Tier6Provider>
-						<Tier5Provider>
-							<Tier4Provider>
-								<Tier3Provider>
-									<Tier2Provider>
-										<Tier1Provider>
-											<TaxesInsuranceProvider>
-												<JobPayrollTaxStateProvider>
-													<SalesTaxStateProvider>
-														<SupervisorProvider>
-															<HoursCategoryProvider>
-																<HoursRuleProvider>
-																	<AddJobProvider>{children}</AddJobProvider>
-																</HoursRuleProvider>
-															</HoursCategoryProvider>
-														</SupervisorProvider>
-													</SalesTaxStateProvider>
-												</JobPayrollTaxStateProvider>
-											</TaxesInsuranceProvider>
-										</Tier1Provider>
-									</Tier2Provider>
-								</Tier3Provider>
-							</Tier4Provider>
-						</Tier5Provider>
-					</Tier6Provider>
-				</Tier7Provider>
-			</CustomerJobsProvider>
+			<LocalJobProvider>
+				<CustomerJobsProvider>
+					<Tier7Provider>
+						<Tier6Provider>
+							<Tier5Provider>
+								<Tier4Provider>
+									<Tier3Provider>
+										<Tier2Provider>
+											<Tier1Provider>
+												<TaxesInsuranceProvider>
+													<JobPayrollTaxStateProvider>
+														<SalesTaxStateProvider>
+															<SupervisorProvider>
+																<HoursCategoryProvider>
+																	<HoursRuleProvider>
+																		<AddJobProvider>{children}</AddJobProvider>
+																	</HoursRuleProvider>
+																</HoursCategoryProvider>
+															</SupervisorProvider>
+														</SalesTaxStateProvider>
+													</JobPayrollTaxStateProvider>
+												</TaxesInsuranceProvider>
+											</Tier1Provider>
+										</Tier2Provider>
+									</Tier3Provider>
+								</Tier4Provider>
+							</Tier5Provider>
+						</Tier6Provider>
+					</Tier7Provider>
+				</CustomerJobsProvider>
+			</LocalJobProvider>
 		</>
 	);
 }
