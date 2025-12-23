@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // Regex that allows common US formats (spaces, hyphens, parentheses are optional)
 const USPhoneRegex =
-	/^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$/;
+	/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 
 export const localJobCustomFieldSchema = z.object({
 	fieldNumber: z.number().optional(),
@@ -96,7 +96,7 @@ export const localJobSchema = z.object({
 		.date({ message: "Enter Valid Start Date" })
 		.min(new Date(), { message: "Start Date cannot be in the past" }),
 	typeId: z.number({ message: "Set Job Active" }),
-	phone1: z.string().refine((val) => val === "" || USPhoneRegex.test(val), {
+	phone1: z.string().refine((val) => USPhoneRegex.test(val), {
 		message: "Invalid US phone number format.",
 	}),
 	phone1Description: z.string().nullable().optional(),
@@ -114,6 +114,12 @@ export const localJobSchema = z.object({
 	customFields: z.array(localJobCustomFieldSchema).optional(),
 	jobTiers: z.array(localJobTierSchema).optional(),
 	tier1Value: z.string().optional(),
+	tier2Value: z.string().optional(),
+	tier3Value: z.string().optional(),
+	tier4Value: z.string().optional(),
+	tier5Value: z.string().optional(),
+	tier6Value: z.string().optional(),
+	tier7Value: z.string().optional(),
 	tier1: localJobTierSchema.optional(),
 	posts: z.array(z.object(localJobPosts)).optional(),
 	totalHpw: z.number().nonnegative(),
