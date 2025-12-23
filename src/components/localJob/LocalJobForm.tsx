@@ -77,7 +77,6 @@ export default function LocalJobForm({
 		{ value: 2, description: "Standard Phone" },
 	];
 	const params = useParams();
-	console.log("LocalJobForm params:", params);
 
 	const form = useForm<LocalJobFormData>({
 		resolver: zodResolver(localJobSchema),
@@ -87,8 +86,8 @@ export default function LocalJobForm({
 			jobNumber: localJob?.jobNumber || "",
 			jobId: localJob?.jobId || "",
 			jobDescription: localJob?.jobDescription || "",
-			customerNumber: (params.customerNumber as string) || "",
-			customerId: localJob?.customerId || "",
+			customerNumber: localJob?.customerNumber || "",
+			customerId: (params.customerNumber as string) || "",
 			locationId: localJob?.locationId || 0,
 			hoursRuleId: localJob?.hoursRuleId || 1,
 			hoursCategoryId: localJob?.hoursCategoryId || 1,
@@ -135,6 +134,12 @@ export default function LocalJobForm({
 			value: params.customerNumber as string,
 		});
 		data.totalHpw.toString();
+		if (!data.customerNumber || data.customerNumber === "") {
+			data.customerNumber = params.customerNumber as string;
+		}
+		if (!data.jobId || data.jobId === "") {
+			data.jobId = "TEMP-JOB-ID";
+		}
 
 		try {
 			// Build jobTiers array from tier selections
@@ -202,29 +207,35 @@ export default function LocalJobForm({
 					});
 				}
 			}
-
+			delete data.tier1Value;
+			delete data.tier2Value;
+			delete data.tier3Value;
+			delete data.tier4Value;
+			delete data.tier5Value;
+			delete data.tier6Value;
+			delete data.tier7Value;
 			// Create payload without tier1Value
-			const payload = {
-				...data,
-				jobTiers: jobTiersArray,
-			};
-			const { ...payloadWithoutTier1 } = payload;
-			delete payloadWithoutTier1.tier1Value;
+			// const payload = {
+			// 	...data,
+			// 	jobTiers: jobTiersArray,
+			// };
+			// const { ...payloadWithoutTier1 } = payload;
+			// delete payloadWithoutTier1.tier1Value;
 			console.log("Job Tiers Array:", jobTiersArray);
-			console.log("Payload to submit:", payloadWithoutTier1);
+			data.jobTiers = jobTiersArray;
 
 			if (localJob) {
-				await updateLocalJob(localJob._id, payloadWithoutTier1);
+				await updateLocalJob(localJob._id, data);
 			} else {
-				await createLocalJob(payloadWithoutTier1);
+				await createLocalJob(data);
 				// only reset after successful create
 				form.reset({
 					_id: "",
 					jobNumber: "",
 					jobId: "",
 					jobDescription: "",
-					customerNumber: (params.customerNumber as string) || "",
-					customerId: "",
+					customerNumber: "",
+					customerId: (params.customerNumber as string) || "",
 					locationId: 0,
 					hoursRuleId: 1,
 					hoursCategoryId: 1,
