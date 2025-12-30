@@ -20,10 +20,10 @@ interface CustomerDetailsProps {
 export function CustomerDetails({ customer }: CustomerDetailsProps) {
   const [showInvoices, setShowInvoices] = useState(false);
   const [showJobAddForm, setShowJobAddForm] = useState(false);
+
   const { localJobs, fetchLocalJobs, deleteLocalJob, updateLocalJob } =
     useLocalJob();
 
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [isNarrow, setIsNarrow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -90,14 +90,11 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
       {showInvoices && (
         <Invoices customerNumber={customer.CustomerNumber?.toString() || ""} />
       )}
-      {showJobAddForm && <AddJobForm customer={customer} addJob={undefined} />}
+
       <div className="m-4"></div>
-      <LocalJobForm
-        customer={customer}
-        localJob={undefined}
-        onSuccess={() => {}}
-      />
+
       <LocalJobList
+			displayJobForm={showJobAddForm}
         localJobs={localJobs}
         deleteLocalJob={deleteLocalJob}
         updateLocalJob={updateLocalJob}
