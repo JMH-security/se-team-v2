@@ -120,7 +120,13 @@ export default function LocalJobForm({
 					postWageRate: p.postWageRate,
 				})) ?? [],
 			totalHpw: localJob?.totalHpw || 0,
-			tier1Value: "",
+			tier1Value: localJob?.tier1Value || "",
+			tier2Value: localJob?.tier2Value || "",
+			tier3Value: localJob?.tier3Value || "",
+			tier4Value: localJob?.tier4Value || "",
+			tier5Value: localJob?.tier5Value || "",
+			tier6Value: localJob?.tier6Value || "",
+			tier7Value: localJob?.tier7Value || "",
 		},
 	});
 
@@ -207,24 +213,11 @@ export default function LocalJobForm({
 					});
 				}
 			}
-			delete data.tier1Value;
-			delete data.tier2Value;
-			delete data.tier3Value;
-			delete data.tier4Value;
-			delete data.tier5Value;
-			delete data.tier6Value;
-			delete data.tier7Value;
-			// Create payload without tier1Value
-			// const payload = {
-			// 	...data,
-			// 	jobTiers: jobTiersArray,
-			// };
-			// const { ...payloadWithoutTier1 } = payload;
-			// delete payloadWithoutTier1.tier1Value;
 			console.log("Job Tiers Array:", jobTiersArray);
 			data.jobTiers = jobTiersArray;
 
 			if (localJob) {
+				console.log("There is a localJob updating: ", localJob);
 				await updateLocalJob(localJob._id, data);
 			} else {
 				await createLocalJob(data);
@@ -260,6 +253,12 @@ export default function LocalJobForm({
 					posts: [],
 					totalHpw: 0,
 					tier1Value: "",
+					tier2Value: "",
+					tier3Value: "",
+					tier4Value: "",
+					tier5Value: "",
+					tier6Value: "",
+					tier7Value: "",
 				});
 			}
 			if (onSuccess) onSuccess();

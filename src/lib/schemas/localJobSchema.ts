@@ -120,7 +120,6 @@ export const localJobSchema = z.object({
 	tier5Value: z.string().optional(),
 	tier6Value: z.string().optional(),
 	tier7Value: z.string().optional(),
-	tier1: localJobTierSchema.optional(),
 	posts: z.array(z.object(localJobPosts)).optional(),
 	totalHpw: z.number().nonnegative(),
 });

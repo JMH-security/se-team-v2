@@ -68,6 +68,13 @@ export interface ILocalJobDocument {
 	customFields: localJobCustomField[];
 	posts: TPosts[];
 	totalHpw: number;
+	tier1Value?: string;
+	tier2Value?: string;
+	tier3Value?: string;
+	tier4Value?: string;
+	tier5Value?: string;
+	tier6Value?: string;
+	tier7Value?: string;
 }
 
 const LocalJobSchema = new Schema<ILocalJobDocument>(
@@ -134,6 +141,13 @@ const LocalJobSchema = new Schema<ILocalJobDocument>(
 			},
 		],
 		totalHpw: { type: Number, required: true },
+		tier1Value: { type: String, required: false },
+		tier2Value: { type: String, required: false },
+		tier3Value: { type: String, required: false },
+		tier4Value: { type: String, required: false },
+		tier5Value: { type: String, required: false },
+		tier6Value: { type: String, required: false },
+		tier7Value: { type: String, required: false },
 	},
 	{
 		timestamps: true,

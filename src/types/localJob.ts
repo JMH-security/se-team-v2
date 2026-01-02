@@ -33,7 +33,7 @@ type TPosts = {
 
 type TLocalJob = {
 	_id: string;
-	jobNumber: string;
+	jobNumber: string | null;
 	jobId: string | null;
 	jobDescription: string;
 	customerNumber: string;
@@ -73,6 +73,13 @@ type TLocalJob = {
 	customFields: CustomFields[];
 	posts: TPosts[];
 	totalHpw: number;
+	tier1Value?: string;
+	tier2Value?: string;
+	tier3Value?: string;
+	tier4Value?: string;
+	tier5Value?: string;
+	tier6Value?: string;
+	tier7Value?: string;
 };
 
 export type { TLocalJob, TPosts, JobTiers, CustomFields };
