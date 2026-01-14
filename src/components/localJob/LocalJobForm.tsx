@@ -409,237 +409,243 @@ export default function LocalJobForm({
 					)}
 				/>
 
-				<FormField
-					control={form.control}
-					name="tier1Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier1s.map((t1: TTier1) => (
-												<SelectItem key={t1._id} value={t1._id}>
-													{t1.tierValue} - {t1.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier2Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier2s.map((t2: TTier1) => (
-												<SelectItem key={t2._id} value={t2._id}>
-													{t2.tierValue} - {t2.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier3Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier3s.map((t3: TTier1) => (
-												<SelectItem key={t3._id} value={t3._id}>
-													{t3.tierValue} - {t3.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier4Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier4s.map((t4: TTier1) => (
-												<SelectItem key={t4._id} value={t4._id}>
-													{t4.tierValue} - {t4.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier5Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier5s.map((t5: TTier1) => (
-												<SelectItem key={t5._id} value={t5._id}>
-													{t5.tierValue} - {t5.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier6Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier6s.map((t6: TTier1) => (
-												<SelectItem key={t6._id} value={t6._id}>
-													{t6.tierValue} - {t6.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="tier7Value"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Customer Industry Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? v : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Customer Industry Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{tier7s.map((t7: TTier1) => (
-												<SelectItem key={t7._id} value={t7._id}>
-													{t7.tierValue} - {t7.tierValueDescription}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<div className="border border-gray-300 rounded-lg p-4">
+					<h2 className="text-xl font-medium text-secondary mb-4">Job Tiers</h2>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						<FormField
+							control={form.control}
+							name="tier1Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Customer Industry Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier1s.map((t1: TTier1) => (
+														<SelectItem key={t1._id} value={t1._id}>
+															{t1.tierValue} - {t1.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier2Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Service Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier2s.map((t2: TTier1) => (
+														<SelectItem key={t2._id} value={t2._id}>
+															{t2.tierValue} - {t2.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier3Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Security Officer Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier3s.map((t3: TTier1) => (
+														<SelectItem key={t3._id} value={t3._id}>
+															{t3.tierValue} - {t3.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier4Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Service Duration</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier4s.map((t4: TTier1) => (
+														<SelectItem key={t4._id} value={t4._id}>
+															{t4.tierValue} - {t4.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier5Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Region</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier5s.map((t5: TTier1) => (
+														<SelectItem key={t5._id} value={t5._id}>
+															{t5.tierValue} - {t5.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier6Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Branch</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier6s.map((t6: TTier1) => (
+														<SelectItem key={t6._id} value={t6._id}>
+															{t6.tierValue} - {t6.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="tier7Value"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Zone</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v ? v : null)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Customer Industry Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{tier7s.map((t7: TTier1) => (
+														<SelectItem key={t7._id} value={t7._id}>
+															{t7.tierValue} - {t7.tierValueDescription}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+				</div>
+
 				<FormField
 					control={form.control}
 					name="hoursRuleId"
