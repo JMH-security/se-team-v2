@@ -922,7 +922,10 @@ export default function LocalJobForm({
 											<SelectContent>
 												<SelectGroup>
 													{phoneChoice.map((p) => (
-														<SelectItem key={p.value} value={p.value.toString()}>
+														<SelectItem
+															key={p.value}
+															value={p.value.toString()}
+														>
 															{p.description}
 														</SelectItem>
 													))}
@@ -983,7 +986,10 @@ export default function LocalJobForm({
 											<SelectContent>
 												<SelectGroup>
 													{phoneChoice.map((p) => (
-														<SelectItem key={p.value} value={p.value.toString()}>
+														<SelectItem
+															key={p.value}
+															value={p.value.toString()}
+														>
 															{p.description}
 														</SelectItem>
 													))}
@@ -1044,7 +1050,10 @@ export default function LocalJobForm({
 											<SelectContent>
 												<SelectGroup>
 													{phoneChoice.map((p) => (
-														<SelectItem key={p.value} value={p.value.toString()}>
+														<SelectItem
+															key={p.value}
+															value={p.value.toString()}
+														>
 															{p.description}
 														</SelectItem>
 													))}
