@@ -172,6 +172,7 @@ export default function LocalJobForm({
 			customer?.CustomerNumber?.toString() || ""
 		);
 		upsertCustomField(data.customFields, 5, data?.jobContactEmail || "");
+
 		data.totalHpw.toString();
 		if (!data.customerNumber || data.customerNumber === "") {
 			data.customerNumber = params.customerNumber as string;
