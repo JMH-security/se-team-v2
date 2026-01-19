@@ -98,6 +98,7 @@ export default function LocalJobForm({
 			jobPayrollTaxStateId: localJob?.jobPayrollTaxStateId || 1,
 			supervisorId: localJob?.supervisorId || 1,
 			jobAttention: localJob?.jobAttention || "",
+			jobContactEmail: localJob?.jobContactEmail || "",
 			dateToStart: localJob?.dateToStart
 				? new Date(localJob.dateToStart)
 				: new Date(Date.now() + 86400000),
@@ -1102,26 +1103,49 @@ export default function LocalJobForm({
 							)}
 						/>
 					</div>
-					<FormField
-						control={form.control}
-						name="jobAttention"
-						render={({ field }) => (
-							<FormItem className="mt-4">
-								<FormLabel>Job Primary Contact</FormLabel>
-								<FormControl>
-									<Input
-										value={field.value ?? ""}
-										onChange={(e) => field.onChange(e.target.value)}
-										onBlur={field.onBlur}
-										name={field.name}
-										ref={field.ref}
-										placeholder="Full Name"
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+						<FormField
+							control={form.control}
+							name="jobAttention"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Job Primary Contact</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											placeholder="Full Name"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="jobContactEmail"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Job Contact Email</FormLabel>
+									<FormControl>
+										<Input
+											type="email"
+											value={field.value ?? ""}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											placeholder="email@example.com"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 				</div>
 
 				<div className="border border-gray-300 rounded-lg p-4">

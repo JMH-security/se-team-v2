@@ -92,6 +92,7 @@ export const localJobSchema = z.object({
 		.nullable()
 		.optional(),
 	jobAttention: z.string({ message: "Enter Job Contact Person Name" }).min(4),
+	jobContactEmail: z.string({ message: "Enter Job Contact Email" }).email({ message: "Enter a valid email address" }),
 	dateToStart: z.coerce
 		.date({ message: "Enter Valid Start Date" })
 		.min(new Date(), { message: "Start Date cannot be in the past" }),
