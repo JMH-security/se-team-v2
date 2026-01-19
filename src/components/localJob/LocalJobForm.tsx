@@ -1177,10 +1177,30 @@ export default function LocalJobForm({
 						</div>
 					</div>
 				</div>
-				<div>
+				<div className="flex gap-4">
 					<Button className="m-4" type="submit">
 						{localJob ? "Update Job" : "Create Job"}
 					</Button>
+					{localJob && form.formState.isDirty && (
+						<Button
+							className="m-4"
+							type="button"
+							variant="outline"
+							onClick={() => form.reset()}
+						>
+							Cancel
+						</Button>
+					)}
+					{!form.formState.isDirty && (
+						<Button
+							className="m-4"
+							type="button"
+							variant="secondary"
+							onClick={() => onSuccess?.()}
+						>
+							Close
+						</Button>
+					)}
 				</div>
 			</form>
 		</Form>
