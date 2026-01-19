@@ -46,15 +46,12 @@ export async function POST(request: Request) {
 			const newJobNumber = newJob.prefix + newJob.index.toString();
 			body.jobNumber = newJobNumber;
 		}
-		console.log("Job number assigned:", body.jobNumber);
 		const parsed = localJobSchema.parse({ ...body });
-
 		console.log("Parsed Job Data:", parsed);
-		console.log("Composing new Job...");
+
 		// Remove _id if it's empty or undefined - let MongoDB auto-generate it
 		const { _id, ...jobData } = parsed;
 		const job = new LocalJob(jobData);
-		console.log("New Job Instance to save....", job);
 		const mgoLocalJob = await job.save();
 		console.log("Saved Job to MongoDB:", mgoLocalJob);
 

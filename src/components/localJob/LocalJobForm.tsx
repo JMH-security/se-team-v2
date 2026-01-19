@@ -56,6 +56,7 @@ interface LocalJobFormProps {
 }
 
 export default function LocalJobForm({
+	customer,
 	localJob,
 	onSuccess,
 }: LocalJobFormProps) {
@@ -140,10 +141,24 @@ export default function LocalJobForm({
 		data.posts = [];
 		data.taxAddress = {};
 		data.customFields = data.customFields ?? [];
-		data.customFields.push({
-			fieldNumber: 2,
-			value: params.customerNumber as string,
-		});
+		data.customFields.push(
+			{
+				fieldNumber: 2,
+				value: params.customerNumber as string,
+			},
+			{
+				fieldNumber: 3,
+				value: customer?.CustomerName,
+			},
+			{
+				fieldNumber: 4,
+				value: customer?.CustomerNumber?.toString() || "",
+			},
+			{
+				fieldNumber: 5,
+				value: data?.jobContactEmail || "",
+			}
+		);
 		data.totalHpw.toString();
 		if (!data.customerNumber || data.customerNumber === "") {
 			data.customerNumber = params.customerNumber as string;
