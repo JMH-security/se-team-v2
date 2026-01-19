@@ -399,6 +399,42 @@ export default function LocalJobForm({
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name="supervisorId"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>SE Supervisor</FormLabel>
+							<FormControl>
+								<Select
+									value={
+										field.value !== null && field.value !== undefined
+											? String(field.value)
+											: ""
+									}
+									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
+								>
+									<SelectTrigger className="w-full">
+										<SelectValue placeholder="Supervisor" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											{supervisors.map((s) => (
+												<SelectItem
+													key={s._id}
+													value={s.supervisorId.toString()}
+												>
+													{s.supervisorName}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
 				<FormField
 					control={form.control}
@@ -788,43 +824,6 @@ export default function LocalJobForm({
 													value={s.salesTaxStateId.toString()}
 												>
 													{s.salesTaxStateName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="supervisorId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Supervisor</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Supervisor" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{supervisors.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.supervisorId.toString()}
-												>
-													{s.supervisorName}
 												</SelectItem>
 											))}
 										</SelectGroup>
