@@ -271,51 +271,56 @@ export default function LocalJobForm({
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-				<FormField
-					control={form.control}
-					name="_id"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Local Job Id</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="jobNumber"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Number</FormLabel>
-							<FormControl>
-								<Input
-									value={field.value ?? ""}
-									onChange={(e) => field.onChange(e.target.value)}
-									onBlur={field.onBlur}
-									name={field.name}
-									ref={field.ref}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="jobId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>WinTeam Job Id</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				{localJob && (
+					<>
+						<FormField
+							control={form.control}
+							name="_id"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Local Job Id</FormLabel>
+									<FormControl>
+										<Input {...field} readOnly className="bg-muted" />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="jobNumber"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Job Number</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											readOnly
+											className="bg-muted"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="jobId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>WinTeam Job Id</FormLabel>
+									<FormControl>
+										<Input {...field} readOnly className="bg-muted" />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</>
+				)}
 				<FormField
 					control={form.control}
 					name="totalHpw"
