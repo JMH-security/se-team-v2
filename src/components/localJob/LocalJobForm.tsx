@@ -422,55 +422,36 @@ export default function LocalJobForm({
 							)}
 						/>
 					</div>
+					<div className="mt-4 gap-4">
+						<FormField
+							control={form.control}
+							name="jobDescription"
+							render={({ field }) => (
+								<FormItem className="">
+									<FormLabel className="">Job Description</FormLabel>
+									<FormControl className="">
+										<Textarea className="" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="notes"
+							render={({ field }) => (
+								<FormItem className="mt-4">
+									<FormLabel>Job Details</FormLabel>
+									<FormControl>
+										<Textarea {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 				</div>
 
-				<FormField
-					control={form.control}
-					name="jobDescription"
-					render={({ field }) => (
-						<FormItem className="">
-							<FormLabel className="">Job Description</FormLabel>
-							<FormControl className="">
-								<Textarea className="" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="notes"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Details</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="jobAttention"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Job Primary Contact</FormLabel>
-							<FormControl>
-								<Input
-									value={field.value ?? ""}
-									onChange={(e) => field.onChange(e.target.value)}
-									onBlur={field.onBlur}
-									name={field.name}
-									ref={field.ref}
-									placeholder="Full Name"
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
 				<div className="border border-gray-300 rounded-lg p-4">
 					<h2 className="text-xl font-medium text-secondary mb-4">Job Tiers</h2>
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -710,190 +691,203 @@ export default function LocalJobForm({
 					</div>
 				</div>
 
-				<FormField
-					control={form.control}
-					name="hoursRuleId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Hours Rule</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Hours Rule" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{hoursRules.map((r) => (
-												<SelectItem
-													key={r._id}
-													value={r.hoursRuleId.toString()}
-												>
-													{r.hoursRuleName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="hoursCategoryId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Hours Category</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Hours Category" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{hoursCategorys.map((h) => (
-												<SelectItem
-													key={h._id}
-													value={h.hoursCategoryId.toString()}
-												>
-													{h.hoursCategoryName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="taxesInsuranceId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Taxes / Insurance</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Taxes/Insurance" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{taxesInsurances.map((t) => (
-												<SelectItem
-													key={t._id}
-													value={t.taxesInsuranceId.toString()}
-												>
-													{t.taxesInsuranceName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="salesTaxStateId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Sales Tax State</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Sales Tax State" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{salesTaxStates.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.salesTaxStateId.toString()}
-												>
-													{s.salesTaxStateName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="jobPayrollTaxStateId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Payroll Tax State</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Payroll Tax State" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{jobPayrollTaxStates.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.jobPayrollTaxStateId.toString()}
-												>
-													{s.jobPayrollTaxStateName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<div className="border border-gray-300 rounded-lg p-4">
+					<h2 className="text-xl font-medium text-secondary mb-4">
+						Hours & Taxes
+					</h2>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						<FormField
+							control={form.control}
+							name="hoursRuleId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Hours Rule</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Hours Rule" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{hoursRules.map((r) => (
+														<SelectItem
+															key={r._id}
+															value={r.hoursRuleId.toString()}
+														>
+															{r.hoursRuleName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="hoursCategoryId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Hours Category</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Hours Category" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{hoursCategorys.map((h) => (
+														<SelectItem
+															key={h._id}
+															value={h.hoursCategoryId.toString()}
+														>
+															{h.hoursCategoryName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="taxesInsuranceId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Taxes / Insurance</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Taxes/Insurance" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{taxesInsurances.map((t) => (
+														<SelectItem
+															key={t._id}
+															value={t.taxesInsuranceId.toString()}
+														>
+															{t.taxesInsuranceName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="salesTaxStateId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Sales Tax State</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Sales Tax State" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{salesTaxStates.map((s) => (
+														<SelectItem
+															key={s._id}
+															value={s.salesTaxStateId.toString()}
+														>
+															{s.salesTaxStateName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="jobPayrollTaxStateId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Payroll Tax State</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Payroll Tax State" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{jobPayrollTaxStates.map((s) => (
+														<SelectItem
+															key={s._id}
+															value={s.jobPayrollTaxStateId.toString()}
+														>
+															{s.jobPayrollTaxStateName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+				</div>
 
 				<div className="border border-gray-300 rounded-lg p-4">
 					<h2 className="text-xl font-medium text-secondary mb-4">
@@ -1093,6 +1087,26 @@ export default function LocalJobForm({
 							)}
 						/>
 					</div>
+					<FormField
+						control={form.control}
+						name="jobAttention"
+						render={({ field }) => (
+							<FormItem className="mt-4">
+								<FormLabel>Job Primary Contact</FormLabel>
+								<FormControl>
+									<Input
+										value={field.value ?? ""}
+										onChange={(e) => field.onChange(e.target.value)}
+										onBlur={field.onBlur}
+										name={field.name}
+										ref={field.ref}
+										placeholder="Full Name"
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</div>
 
 				<div className="border border-gray-300 rounded-lg p-4">
