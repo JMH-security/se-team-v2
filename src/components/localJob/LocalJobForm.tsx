@@ -362,7 +362,7 @@ export default function LocalJobForm({
 											}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Supervisor" />
+												<SelectValue placeholder="Select Job Supervisor" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -382,6 +382,23 @@ export default function LocalJobForm({
 								</FormItem>
 							)}
 						/>
+
+						<FormField
+							control={form.control}
+							name="dateToStart"
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Calendar22
+											value={field.value}
+											calLabel="Job Start Date"
+											onChange={field.onChange}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 						<FormField
 							control={form.control}
 							name="typeId"
@@ -395,20 +412,7 @@ export default function LocalJobForm({
 											}
 										/>
 									</FormControl>
-									<FormLabel>Active</FormLabel>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="dateToStart"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Date To Start</FormLabel>
-									<FormControl>
-										<Calendar22 value={field.value} onChange={field.onChange} />
-									</FormControl>
+									<FormLabel>Active Status</FormLabel>
 									<FormMessage />
 								</FormItem>
 							)}
