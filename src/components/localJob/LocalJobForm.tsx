@@ -868,203 +868,202 @@ export default function LocalJobForm({
 					)}
 				/>
 
-				<FormField
-					control={form.control}
-					name="phone1"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone 1</FormLabel>
-							<FormControl>
-								<Input
-									value={field.value ?? ""}
-									onChange={(e) => {
-										const value = e.target.value.replace(/\D/g, "");
-										if (value.length <= 10) {
-											field.onChange(value);
-										}
-									}}
-									onBlur={field.onBlur}
-									name={field.name}
-									ref={field.ref}
-									placeholder="1234567890"
-									maxLength={10}
-									pattern="\d{10}"
-									title="Please enter a 10-digit phone number"
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="phone1Description"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Phone Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{phoneChoice.map((p) => (
-												<SelectItem key={p.value} value={p.value.toString()}>
-													{p.description}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="phone2"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone 2</FormLabel>
-							<FormControl>
-								<Input
-									value={field.value ?? ""}
-									onChange={(e) => {
-										const value = e.target.value.replace(/\D/g, "");
-										if (value.length <= 10) {
-											field.onChange(value);
-										}
-									}}
-									onBlur={field.onBlur}
-									name={field.name}
-									ref={field.ref}
-									placeholder="1234567890"
-									maxLength={10}
-									pattern="\d{10}"
-									title="Please enter a 10-digit phone number"
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="phone2Description"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Phone Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{phoneChoice.map((p) => (
-												<SelectItem key={p.value} value={p.value.toString()}>
-													{p.description}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="phone3"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone 2</FormLabel>
-							<FormControl>
-								<Input
-									value={field.value ?? ""}
-									onChange={(e) => {
-										const value = e.target.value.replace(/\D/g, "");
-										if (value.length <= 10) {
-											field.onChange(value);
-										}
-									}}
-									onBlur={field.onBlur}
-									name={field.name}
-									ref={field.ref}
-									placeholder="1234567890"
-									maxLength={10}
-									pattern="\d{10}"
-									title="Please enter a 10-digit phone number"
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="phone3Description"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Phone Type</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Phone Type" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{phoneChoice.map((p) => (
-												<SelectItem key={p.value} value={p.value.toString()}>
-													{p.description}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<div className="grid lg:grid-cols-2 grid-cols-1 col-span-full gap-4 p-2 border border-slate-600 rounded-md">
-					<div className="row-start-1 flex items-center justify-center mx-auto">
-						<Label className="text-lg text-secondary">
-							Job Service Address
-						</Label>
+				<div className="border border-gray-300 rounded-lg p-4">
+					<h2 className="text-xl font-medium text-secondary mb-4">
+						Phone Numbers
+					</h2>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						<FormField
+							control={form.control}
+							name="phone1"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Contact Phone Number</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onChange={(e) => {
+												const value = e.target.value.replace(/\D/g, "");
+												if (value.length <= 10) {
+													field.onChange(value);
+												}
+											}}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											placeholder="1234567890"
+											maxLength={10}
+											pattern="\d{10}"
+											title="Please enter a 10-digit phone number"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone1Description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Phone Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Phone Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{phoneChoice.map((p) => (
+														<SelectItem key={p.value} value={p.value.toString()}>
+															{p.description}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone2"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>AP Contact Phone Number</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onChange={(e) => {
+												const value = e.target.value.replace(/\D/g, "");
+												if (value.length <= 10) {
+													field.onChange(value);
+												}
+											}}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											placeholder="1234567890"
+											maxLength={10}
+											pattern="\d{10}"
+											title="Please enter a 10-digit phone number"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone2Description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Phone Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Phone Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{phoneChoice.map((p) => (
+														<SelectItem key={p.value} value={p.value.toString()}>
+															{p.description}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone3"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Other Phone</FormLabel>
+									<FormControl>
+										<Input
+											value={field.value ?? ""}
+											onChange={(e) => {
+												const value = e.target.value.replace(/\D/g, "");
+												if (value.length <= 10) {
+													field.onChange(value);
+												}
+											}}
+											onBlur={field.onBlur}
+											name={field.name}
+											ref={field.ref}
+											placeholder="1234567890"
+											maxLength={10}
+											pattern="\d{10}"
+											title="Please enter a 10-digit phone number"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone3Description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Phone Type</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) => field.onChange(v)}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Phone Type" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{phoneChoice.map((p) => (
+														<SelectItem key={p.value} value={p.value.toString()}>
+															{p.description}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
+				</div>
 
-					<div className="row-start-2">
+				<div className="border border-gray-300 rounded-lg p-4">
+					<h2 className="text-xl font-medium text-secondary mb-4">
+						Job Service Address
+					</h2>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 						<FormField
 							control={form.control}
 							name="address.jobAddress1"
@@ -1084,8 +1083,6 @@ export default function LocalJobForm({
 								</FormItem>
 							)}
 						/>
-					</div>
-					<div className="row-start-3 lg:row-start-2">
 						<FormField
 							control={form.control}
 							name="address.jobAddress2"
@@ -1105,8 +1102,6 @@ export default function LocalJobForm({
 								</FormItem>
 							)}
 						/>
-					</div>
-					<div className="row-start-4 lg:row-start-3">
 						<FormField
 							control={form.control}
 							name="address.jobCity"
@@ -1126,54 +1121,51 @@ export default function LocalJobForm({
 								</FormItem>
 							)}
 						/>
-					</div>
-					<div className="row-start-5 lg:row-start-3">
-						<FormField
-							control={form.control}
-							name="address.jobState"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>State</FormLabel>
-									<FormControl>
-										<Input
-											value={field.value ?? ""}
-											onChange={(e) => field.onChange(e.target.value)}
-											onBlur={field.onBlur}
-											name={field.name}
-											ref={field.ref}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<div className="row-start-6 lg:row-start-4">
-						<FormField
-							control={form.control}
-							name="address.jobZip"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Zip Code</FormLabel>
-									<FormControl>
-										<Input
-											value={field.value ?? ""}
-											onChange={(e) => field.onChange(e.target.value)}
-											onBlur={field.onBlur}
-											name={field.name}
-											ref={field.ref}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+							<FormField
+								control={form.control}
+								name="address.jobState"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>State</FormLabel>
+										<FormControl>
+											<Input
+												value={field.value ?? ""}
+												onChange={(e) => field.onChange(e.target.value)}
+												onBlur={field.onBlur}
+												name={field.name}
+												ref={field.ref}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="address.jobZip"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Zip Code</FormLabel>
+										<FormControl>
+											<Input
+												value={field.value ?? ""}
+												onChange={(e) => field.onChange(e.target.value)}
+												onBlur={field.onBlur}
+												name={field.name}
+												ref={field.ref}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
 					</div>
 				</div>
-
 				<div>
-					<Button className="mb-4" type="submit">
-						{localJob ? "Update" : "Create"}
+					<Button className="m-4" type="submit">
+						{localJob ? "Update Job" : "Create Job"}
 					</Button>
 				</div>
 			</form>
