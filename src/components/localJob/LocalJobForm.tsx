@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 
 // UI Components
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -321,36 +322,99 @@ export default function LocalJobForm({
 						/>
 					</>
 				)}
-				<FormField
-					control={form.control}
-					name="totalHpw"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Total HPW</FormLabel>
-							<FormControl>
-								<Input
-									{...field}
-									type="number"
-									onChange={(e) => field.onChange(e.target.valueAsNumber)}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="typeId"
-					render={({ field }) => (
-						<FormItem className="">
-							<FormLabel className="hidden">Active / Inactive</FormLabel>
-							<FormControl className="">
-								<Textarea className="" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<div className="border border-gray-300 rounded-lg p-4">
+					<h2 className="text-xl font-medium text-secondary mb-4">
+						Job Details
+					</h2>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						<FormField
+							control={form.control}
+							name="totalHpw"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Total HPW</FormLabel>
+									<FormControl>
+										<Input
+											{...field}
+											type="number"
+											onChange={(e) => field.onChange(e.target.valueAsNumber)}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="supervisorId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>SE Supervisor</FormLabel>
+									<FormControl>
+										<Select
+											value={
+												field.value !== null && field.value !== undefined
+													? String(field.value)
+													: ""
+											}
+											onValueChange={(v) =>
+												field.onChange(v ? Number(v) : null)
+											}
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Supervisor" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{supervisors.map((s) => (
+														<SelectItem
+															key={s._id}
+															value={s.supervisorId.toString()}
+														>
+															{s.supervisorName}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="typeId"
+							render={({ field }) => (
+								<FormItem className="flex flex-row items-center space-x-3 space-y-0 pt-8">
+									<FormControl>
+										<Checkbox
+											checked={field.value === 1}
+											onCheckedChange={(checked) =>
+												field.onChange(checked ? 1 : 0)
+											}
+										/>
+									</FormControl>
+									<FormLabel>Active</FormLabel>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="dateToStart"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Date To Start</FormLabel>
+									<FormControl>
+										<Calendar22 value={field.value} onChange={field.onChange} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+				</div>
 
 				<FormField
 					control={form.control}
@@ -399,57 +463,6 @@ export default function LocalJobForm({
 						</FormItem>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name="supervisorId"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>SE Supervisor</FormLabel>
-							<FormControl>
-								<Select
-									value={
-										field.value !== null && field.value !== undefined
-											? String(field.value)
-											: ""
-									}
-									onValueChange={(v) => field.onChange(v ? Number(v) : null)}
-								>
-									<SelectTrigger className="w-full">
-										<SelectValue placeholder="Supervisor" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{supervisors.map((s) => (
-												<SelectItem
-													key={s._id}
-													value={s.supervisorId.toString()}
-												>
-													{s.supervisorName}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
-				<FormField
-					control={form.control}
-					name="dateToStart"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Date To Start</FormLabel>
-							<FormControl>
-								<Calendar22 value={field.value} onChange={field.onChange} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-
 				<div className="border border-gray-300 rounded-lg p-4">
 					<h2 className="text-xl font-medium text-secondary mb-4">Job Tiers</h2>
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
