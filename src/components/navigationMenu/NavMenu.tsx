@@ -79,6 +79,11 @@ function NavMenu(role) {
                                                 WinTeam Admin
                                             </NavigationMenuLink>
                                         </Link>
+                                        <Link href="/seteam/admin/wt/vendors" legacyBehavior passHref>
+                                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                                Add Vendor
+                                            </NavigationMenuLink>
+                                        </Link>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
                             </NavigationMenuList>
