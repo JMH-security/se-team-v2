@@ -131,6 +131,10 @@ export default function LocalJobForm({
 		},
 	});
 
+	const tier6Value = form.watch("tier6Value");
+	const selectedTier6 = tier6s.find((t6) => t6._id === tier6Value);
+	const showTier7 = selectedTier6?.tierValue === "1";
+
 	const onSubmit = async (data: LocalJobFormData) => {
 		console.log("LocalJobForm onSubmit data:", data);
 		data.posts = [];
@@ -519,7 +523,7 @@ export default function LocalJobForm({
 											onValueChange={(v) => field.onChange(v ? v : null)}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
+												<SelectValue placeholder="Service Type" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -552,7 +556,7 @@ export default function LocalJobForm({
 											onValueChange={(v) => field.onChange(v ? v : null)}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
+												<SelectValue placeholder="Security Officer Type" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -585,7 +589,7 @@ export default function LocalJobForm({
 											onValueChange={(v) => field.onChange(v ? v : null)}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
+												<SelectValue placeholder="Service Duration" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -618,7 +622,7 @@ export default function LocalJobForm({
 											onValueChange={(v) => field.onChange(v ? v : null)}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
+												<SelectValue placeholder="Region" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -651,7 +655,7 @@ export default function LocalJobForm({
 											onValueChange={(v) => field.onChange(v ? v : null)}
 										>
 											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
+												<SelectValue placeholder="Branch" />
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
@@ -668,39 +672,41 @@ export default function LocalJobForm({
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name="tier7Value"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Zone</FormLabel>
-									<FormControl>
-										<Select
-											value={
-												field.value !== null && field.value !== undefined
-													? String(field.value)
-													: ""
-											}
-											onValueChange={(v) => field.onChange(v ? v : null)}
-										>
-											<SelectTrigger className="w-full">
-												<SelectValue placeholder="Customer Industry Type" />
-											</SelectTrigger>
-											<SelectContent>
-												<SelectGroup>
-													{tier7s.map((t7: TTier1) => (
-														<SelectItem key={t7._id} value={t7._id}>
-															{t7.tierValue} - {t7.tierValueDescription}
-														</SelectItem>
-													))}
-												</SelectGroup>
-											</SelectContent>
-										</Select>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						{showTier7 && (
+							<FormField
+								control={form.control}
+								name="tier7Value"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Zone</FormLabel>
+										<FormControl>
+											<Select
+												value={
+													field.value !== null && field.value !== undefined
+														? String(field.value)
+														: ""
+												}
+												onValueChange={(v) => field.onChange(v ? v : null)}
+											>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Select Zone" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{tier7s.map((t7: TTier1) => (
+															<SelectItem key={t7._id} value={t7._id}>
+																{t7.tierValue} - {t7.tierValueDescription}
+															</SelectItem>
+														))}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						)}
 					</div>
 				</div>
 

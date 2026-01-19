@@ -14,17 +14,18 @@ import {
 
 interface Calendar22Props {
 	value?: Date;
+	calLabel: string;
 	onChange?: (date: Date | undefined) => void;
 }
 
-export function Calendar22({ value, onChange }: Calendar22Props) {
+export function Calendar22({ value, calLabel, onChange }: Calendar22Props) {
 	const [open, setOpen] = React.useState(false);
 	const date = value;
 
 	return (
 		<div className="flex flex-col gap-3">
 			<Label htmlFor="date" className="px-1">
-				Select Date
+				{calLabel}
 			</Label>
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
