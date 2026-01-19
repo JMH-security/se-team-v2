@@ -1,3 +1,9 @@
+type TCustomer = {
+	customerId: string;
+	customerNumber: string;
+	customerName: string;
+};
+
 type JobTiers = {
 	tierId: number;
 	tierValue: string;
@@ -80,6 +86,7 @@ type TLocalJob = {
 	tier5Value?: string;
 	tier6Value?: string;
 	tier7Value?: string;
+	customer?: TCustomer;
 };
 
 export type { TLocalJob, TPosts, JobTiers, CustomFields };
