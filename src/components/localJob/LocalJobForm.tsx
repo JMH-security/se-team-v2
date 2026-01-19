@@ -142,28 +142,36 @@ export default function LocalJobForm({
 		data.posts = [];
 		data.taxAddress = {};
 
-		if (data.customFields) {
-			data.customFields.push(
-				{
-					fieldNumber: 2,
-					value: params.customerNumber as string,
-				},
-				{
-					fieldNumber: 3,
-					value: customer?.CustomerName || "",
-				},
-				{
-					fieldNumber: 4,
-					value: customer?.CustomerNumber?.toString() || "",
-				},
-				{
-					fieldNumber: 5,
-					value: data?.jobContactEmail || "",
-				}
+		// Helper function to upsert custom fields by fieldNumber
+		const upsertCustomField = (
+			fields: { fieldNumber?: number; value?: string }[],
+			fieldNumber: number,
+			value: string
+		) => {
+			const existingIndex = fields.findIndex(
+				(f) => f.fieldNumber === fieldNumber
 			);
-		} else {
+			if (existingIndex >= 0) {
+				fields[existingIndex].value = value;
+			} else {
+				fields.push({ fieldNumber, value });
+			}
+		};
+
+		// Initialize customFields if not present
+		if (!data.customFields) {
 			data.customFields = [];
 		}
+
+		// Upsert each custom field by fieldNumber
+		upsertCustomField(data.customFields, 2, params.customerNumber as string);
+		upsertCustomField(data.customFields, 3, customer?.CustomerName || "");
+		upsertCustomField(
+			data.customFields,
+			4,
+			customer?.CustomerNumber?.toString() || ""
+		);
+		upsertCustomField(data.customFields, 5, data?.jobContactEmail || "");
 		data.totalHpw.toString();
 		if (!data.customerNumber || data.customerNumber === "") {
 			data.customerNumber = params.customerNumber as string;
