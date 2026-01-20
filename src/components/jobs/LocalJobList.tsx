@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Item, ItemContent, ItemDescription, ItemTitle } from "../ui/item";
 import LocalJobForm from "../localJob/LocalJobForm";
+import { Customer } from "@/types/customer";
 
 function LocalJobList({
 	localJobs,
@@ -12,6 +13,7 @@ function LocalJobList({
 	displayJobForm,
 }: {
 	localJobs: any[];
+	customer: Customer;
 	deleteLocalJob: (id: string) => void;
 	updateLocalJob: (id: string) => void;
 	displayJobForm: boolean;
@@ -19,7 +21,19 @@ function LocalJobList({
 	const [editingId, setEditingId] = useState<string | null>(null);
 	const [showLocalJobForm, setShowLocalJobForm] = useState(false);
 	const [isNarrow, setIsNarrow] = useState<boolean>(false);
-	console.log("LocalJobList localJobs:", localJobs, customer);
+
+	// Filter localJobs to only show jobs for this customer
+	const filteredLocalJobs = useMemo(() => {
+		return localJobs.filter((job) => job.customerId === customer.CustomerID);
+	}, [localJobs, customer.CustomerID]);
+
+	console.log(
+		"LocalJobList localJobs:",
+		localJobs,
+		"filtered:",
+		filteredLocalJobs,
+		customer,
+	);
 
 	return (
 		<div className="container mx-auto text-center p-4 m-4 max-w-[800px]">
@@ -40,7 +54,7 @@ function LocalJobList({
 					<div className="text-2xl font-bold">
 						<h2 className="m-4">EDIT JOB</h2>
 						<LocalJobForm
-							localJob={localJobs.find((job) => job._id === editingId)}
+							localJob={filteredLocalJobs.find((job) => job._id === editingId)}
 							customer={customer}
 							onSuccess={() => {
 								setEditingId(null);
@@ -64,7 +78,7 @@ function LocalJobList({
 				</div>
 
 				<ul className="mt-4 space-y-2">
-					{localJobs.map((job) => (
+					{filteredLocalJobs.map((job) => (
 						<li key={job._id} className="flex justify-between items-center">
 							<div className="flex">
 								<Item className="w-48 flex-none">

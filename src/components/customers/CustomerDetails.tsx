@@ -7,8 +7,6 @@ import Invoices from "@/components/customers/CustomerInvoiceList";
 import { Button } from "../ui/button";
 
 import { useParams } from "next/navigation";
-import AddJobForm from "@/components/job/AddJobForm";
-import CustomerJobsForm from "../customerJobs/CustomerJobsForm";
 import LocalJobForm from "../localJob/LocalJobForm";
 import LocalJobList from "../jobs/LocalJobList";
 import { useLocalJob } from "@/contexts/localJobContext";
