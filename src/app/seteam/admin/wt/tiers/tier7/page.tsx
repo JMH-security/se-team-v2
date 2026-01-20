@@ -5,6 +5,7 @@ import { useTier7 } from "@/contexts/tiers/Tier7Context";
 import Tier7Form from "@/components/wt/tiers/Tier7Form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import Link from "next/link";
 import {
 	Item,
 	ItemContent,
@@ -18,6 +19,11 @@ export default function Tier7sPage() {
 
 	return (
 		<div className="container mx-auto text-center p-4 m-4 max-w-[800px]">
+			<div className="mb-4 text-left">
+				<Link href="/seteam/admin/wt">
+					<Button variant="outline">Back to WT Admin</Button>
+				</Link>
+			</div>
 			<div className="bg-primary/10 rounded-2xl px-4">
 				{editingId === null && (
 					<h1 className="text-2xl font-bold mb-4">Add Tier 7 Options</h1>

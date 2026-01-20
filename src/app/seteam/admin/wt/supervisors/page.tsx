@@ -5,6 +5,7 @@ import { useSupervisor } from "@/contexts/SupervisorContext";
 import SupervisorForm from "@/components/wt/supervisor/SupervisorForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import Link from "next/link";
 import {
 	Item,
 	ItemContent,
@@ -18,6 +19,11 @@ export default function SupervisorsPage() {
 
 	return (
 		<div className="container mx-auto text-center p-4">
+			<div className="mb-4 text-left max-w-[800px] mx-auto">
+				<Link href="/seteam/admin/wt">
+					<Button variant="outline">Back to WT Admin</Button>
+				</Link>
+			</div>
 			<div className="container max-w-[800px] p-4 m-4 bg-primary/10 rounded-2xl">
 				{editingId === null && (
 					<h1 className="text-2xl font-bold mb-4">Add a Supervisor</h1>
