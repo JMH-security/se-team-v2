@@ -54,7 +54,6 @@ export async function POST(request: Request) {
 		const job = new LocalJob(jobData);
 		const mgoLocalJob = await job.save();
 
-
 		//  THIS SECTION ADDED JOBLIST TO SEPARATE CUSTOMERJOBS COLLECTION - NOT IN USE
 		// console.log("Saved Job to MongoDB");
 
@@ -73,7 +72,7 @@ export async function POST(request: Request) {
 		// 	});
 		// 	const updatedCustWithJobs = await customerToAddJob.save();
 		// 	console.log(updatedCustWithJobs);
-		}
+		//}
 
 		// BEGIN WINTEAM ADD SECTION
 		// **************** Prepare the job object to send to WinTeam ****************
