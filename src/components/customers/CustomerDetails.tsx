@@ -34,7 +34,12 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 		return () => window.removeEventListener("resize", checkWidth);
 	}, []);
 
-	console.log("customer details", customer, "localJobs", localJobs);
+	console.log(
+		"customer details",
+		customer.CustomerNumber,
+		"# of localJobs",
+		localJobs.length,
+	);
 	const params = useParams();
 	const custId = params.CustomerID;
 	return (
@@ -82,10 +87,6 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 					{showInvoices ? "Close Invoices" : "Invoices"}
 				</Button>
 			</div>
-			<CustomerJobsForm
-				custNum={customer.CustomerNumber?.toString()}
-				custId={customer.CustomerID?.toString()}
-			/>
 
 			{showInvoices && (
 				<Invoices customerNumber={customer.CustomerNumber?.toString() || ""} />

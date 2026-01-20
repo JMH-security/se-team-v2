@@ -100,12 +100,16 @@ export default function AddVendor({ vendor, onSuccess }: AddVendorProps) {
 				: "/api/admin/wt/vendors";
 			const method = vendor ? "PUT" : "POST";
 
+			// Remove _id when creating a new vendor (let MongoDB generate it)
+			const { _id, ...dataWithoutId } = data;
+			const payload = vendor ? data : dataWithoutId;
+
 			const response = await fetch(url, {
 				method,
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify(payload),
 			});
 
 			const result = await response.json();

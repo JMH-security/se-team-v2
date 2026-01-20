@@ -68,8 +68,12 @@ export async function POST(request: Request) {
 			);
 		}
 
+		// Remove empty _id to let MongoDB generate one
+		const { _id, ...vendorData } = validationResult.data;
+		const dataToCreate = _id ? validationResult.data : vendorData;
+
 		// Create vendor in MongoDB
-		const vendor = await Vendor.create(validationResult.data);
+		const vendor = await Vendor.create(dataToCreate);
 
 		// Prepare payload for WinTeam API
 		const winTeamPayload: TWinTeamVendorPayload = {

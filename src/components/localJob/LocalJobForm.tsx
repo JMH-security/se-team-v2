@@ -138,7 +138,7 @@ export default function LocalJobForm({
 	const showTier7 = selectedTier6?.tierValue === "1";
 
 	const onSubmit = async (data: LocalJobFormData) => {
-		console.log("LocalJobForm onSubmit data:", data);
+		console.log("LocalJobForm onSubmit data:", data, customer);
 		data.posts = [];
 		data.taxAddress = {};
 
@@ -146,10 +146,10 @@ export default function LocalJobForm({
 		const upsertCustomField = (
 			fields: { fieldNumber?: number; value?: string }[],
 			fieldNumber: number,
-			value: string
+			value: string,
 		) => {
 			const existingIndex = fields.findIndex(
-				(f) => f.fieldNumber === fieldNumber
+				(f) => f.fieldNumber === fieldNumber,
 			);
 			if (existingIndex >= 0) {
 				fields[existingIndex].value = value;
@@ -169,13 +169,13 @@ export default function LocalJobForm({
 		upsertCustomField(
 			data.customFields,
 			4,
-			customer?.CustomerNumber?.toString() || ""
+			customer?.CustomerNumber?.toString() || "",
 		);
 		upsertCustomField(data.customFields, 5, data?.jobContactEmail || "");
 
 		data.totalHpw.toString();
 		if (!data.customerNumber || data.customerNumber === "") {
-			data.customerNumber = params.customerNumber as string;
+			data.customerNumber = customer?.CustomerNumber?.toString() || "";
 		}
 		if (!data.jobId || data.jobId === "") {
 			data.jobId = "TEMP-JOB-ID";

@@ -24,23 +24,21 @@ function LocalJobList({
 	return (
 		<div className="container mx-auto text-center p-4 m-4 max-w-[800px]">
 			<div className="bg-primary/10 rounded-2xl px-4">
-				<h1>{displayJobForm ? "Add a Job" : "Jobs List"}</h1>
-				{editingId === null && (
-					<h1 className="text-2xl font-bold mb-4">Add a Job</h1>
-				)}
-				{editingId && <h1 className="text-2xl font-bold mb-4">Edit Job</h1>}
 				{editingId === null && displayJobForm && (
-					<LocalJobForm
-						customer={customer}
-						onSuccess={() => {
-							setEditingId(null);
-							setShowLocalJobForm(false);
-						}}
-					/>
+					<div className="text-2xl font-bold">
+						<h2 className="m-4">ADD A JOB</h2>
+						<LocalJobForm
+							customer={customer}
+							onSuccess={() => {
+								setEditingId(null);
+								setShowLocalJobForm(false);
+							}}
+						/>
+					</div>
 				)}
 				{editingId && (
-					<div className="mt-4">
-						<h2>Edit Job</h2>
+					<div className="text-2xl font-bold">
+						<h2 className="m-4">EDIT JOB</h2>
 						<LocalJobForm
 							localJob={localJobs.find((job) => job._id === editingId)}
 							customer={customer}
