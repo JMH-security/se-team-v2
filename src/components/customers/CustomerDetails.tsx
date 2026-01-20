@@ -16,6 +16,7 @@ interface CustomerDetailsProps {
 }
 
 export function CustomerDetails({ customer }: CustomerDetailsProps) {
+	const [showLocalJobs, setShowLocalJobs] = useState(false);
 	const [showInvoices, setShowInvoices] = useState(false);
 	const [showJobAddForm, setShowJobAddForm] = useState(false);
 
@@ -69,15 +70,21 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 			</div>
 
 			<div className="flex gap-4">
-				<Button className="bg-secondary text-black px-6 py-2 rounded">
-					View Jobs
-				</Button>
 				<Button
-					onClick={() => setShowJobAddForm(!showJobAddForm)}
+					onClick={() => setShowLocalJobs(!showLocalJobs)}
 					className="bg-secondary text-black px-6 py-2 rounded"
 				>
-					Add New Job
+					View Jobs
 				</Button>
+				{showLocalJobs && (
+					<Button
+						onClick={() => setShowJobAddForm(!showJobAddForm)}
+						className="bg-secondary text-black px-6 py-2 rounded"
+					>
+						Add New Job
+					</Button>
+				)}
+
 				<Button
 					onClick={() => setShowInvoices(!showInvoices)}
 					className="bg-secondary text-black px-6 py-2 rounded"
@@ -92,13 +99,15 @@ export function CustomerDetails({ customer }: CustomerDetailsProps) {
 
 			<div className="m-4"></div>
 
-			<LocalJobList
-				customer={customer}
-				displayJobForm={showJobAddForm}
-				localJobs={localJobs}
-				deleteLocalJob={deleteLocalJob}
-				updateLocalJob={(id: string) => {}}
-			/>
+			{showLocalJobs && (
+				<LocalJobList
+					customer={customer}
+					displayJobForm={showJobAddForm}
+					localJobs={localJobs}
+					deleteLocalJob={deleteLocalJob}
+					updateLocalJob={(id: string) => {}}
+				/>
+			)}
 		</div>
 	);
 }
