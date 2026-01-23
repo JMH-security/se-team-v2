@@ -19,6 +19,67 @@ interface WTApiResponse {
 	error?: string;
 }
 
+interface JobAddress {
+	JobAddress1: string;
+	JobAddress2: string;
+	JobCity: string;
+	JobState: string;
+	JobZip: number;
+}
+
+interface TaxAddress {
+	Address1: string;
+	Address2: string;
+	City: string;
+	State: string;
+	Zip: number;
+	Latitude?: number;
+	Longitude?: number;
+	LocationCode?: string;
+}
+
+interface AddressValidationResult {
+	isValid: boolean;
+	errors: string[];
+}
+
+function validateAddress(address: JobAddress, taxAddress: TaxAddress): AddressValidationResult {
+	const errors: string[] = [];
+
+	// Validate JobAddress
+	if (!address.JobAddress1 || address.JobAddress1.trim() === "") {
+		errors.push("JobAddress1 is required");
+	}
+	if (!address.JobCity || address.JobCity.trim() === "") {
+		errors.push("JobCity is required");
+	}
+	if (!address.JobState || address.JobState.trim() === "") {
+		errors.push("JobState is required");
+	}
+	if (!address.JobZip || isNaN(address.JobZip)) {
+		errors.push("JobZip must be a valid number");
+	}
+
+	// Validate TaxAddress
+	if (!taxAddress.Address1 || taxAddress.Address1.trim() === "") {
+		errors.push("TaxAddress Address1 is required");
+	}
+	if (!taxAddress.City || taxAddress.City.trim() === "") {
+		errors.push("TaxAddress City is required");
+	}
+	if (!taxAddress.State || taxAddress.State.trim() === "") {
+		errors.push("TaxAddress State is required");
+	}
+	if (!taxAddress.Zip || isNaN(taxAddress.Zip)) {
+		errors.push("TaxAddress Zip must be a valid number");
+	}
+
+	return {
+		isValid: errors.length === 0,
+		errors,
+	};
+}
+
 export async function GET() {
 	try {
 		await connectDB();
@@ -93,21 +154,34 @@ export async function POST(request: Request) {
 
 		// Build the winTeam object
 		const wtJobToAdd = {} as any;
-		wtJobToAdd.TaxAddress = {};
-		wtJobToAdd.TaxAddress.Address1 = mgoLocalJob.address.jobAddress1;
-		wtJobToAdd.TaxAddress.Address2 = mgoLocalJob.address.jobAddress2;
-		wtJobToAdd.TaxAddress.City = mgoLocalJob.address.jobCity;
-		wtJobToAdd.TaxAddress.State = mgoLocalJob.address.jobState;
-		wtJobToAdd.TaxAddress.Zip = Number(mgoLocalJob.address.jobZip);
-		// wtJobToAdd.TaxAddress.Latitude = "33.513791";
-		// wtJobToAdd.TaxAddress.Longitude = "-86.811432";
-		// wtJobToAdd.TaxAddress.LocationCode = "01-073-158174";
+
+		// Build Address with correct structure
+		const jobAddress: JobAddress = {
+			JobAddress1: mgoLocalJob.address.jobAddress1 || "",
+			JobAddress2: mgoLocalJob.address.jobAddress2 || "",
+			JobCity: mgoLocalJob.address.jobCity || "",
+			JobState: mgoLocalJob.address.jobState || "",
+			JobZip: Number(mgoLocalJob.address.jobZip) || 0,
+		};
+
+		// Build TaxAddress with correct structure
+		const taxAddress: TaxAddress = {
+			Address1: mgoLocalJob.address.jobAddress1 || "",
+			Address2: mgoLocalJob.address.jobAddress2 || "",
+			City: mgoLocalJob.address.jobCity || "",
+			State: mgoLocalJob.address.jobState || "",
+			Zip: Number(mgoLocalJob.address.jobZip) || 0,
+			Latitude: mgoLocalJob.address.latitude || undefined,
+			Longitude: mgoLocalJob.address.longitude || undefined,
+			LocationCode: mgoLocalJob.address.locationCode || undefined,
+		};
+
+		wtJobToAdd.Address = jobAddress;
+		wtJobToAdd.TaxAddress = taxAddress;
 		wtJobToAdd.JobNumber = mgoLocalJob.jobNumber;
 		wtJobToAdd.JobDescription = mgoLocalJob.jobDescription;
 		wtJobToAdd.LocationId = 210;
 		wtJobToAdd.CompanyNumber = 1;
-		wtJobToAdd.Address = mgoLocalJob.address;
-		wtJobToAdd.Address.Zip = Number(mgoLocalJob.address.jobZip);
 		wtJobToAdd.JobAttention = mgoLocalJob.jobAttention;
 		wtJobToAdd.TypeId = mgoLocalJob.typeId;
 		wtJobToAdd.SupervisorId = mgoLocalJob.supervisorId;
@@ -121,7 +195,15 @@ export async function POST(request: Request) {
 		wtJobToAdd.HoursRuleId = mgoLocalJob.hoursRuleId;
 		wtJobToAdd.TimeKeepingJob = false;
 		wtJobToAdd.TimeSheetTypeId = 1;
-		wtJobToAdd.HoursCategoryId = mgoLocalJob.hoursCategoryId;
+
+		// Validate addresses before making API call
+		const addressValidation = validateAddress(jobAddress, taxAddress);
+		if (!addressValidation.isValid) {
+			return NextResponse.json(
+				{ error: "Address validation failed", details: addressValidation.errors },
+				{ status: 400 },
+			);
+		}
 
 		if (wtJobToAdd) {
 			const toAddBody = JSON.stringify(wtJobToAdd);
