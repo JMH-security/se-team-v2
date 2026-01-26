@@ -48,7 +48,7 @@ const UserSchema = new Schema<UserDocument>(
 		},
 		role: {
 			type: String,
-			default: "unauthorized",
+			default: "user",
 			required: true,
 		},
 	},

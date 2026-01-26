@@ -3,6 +3,7 @@ import dbConnect from "@/lib/db";
 import { PTORequest, PTORequestLog } from "@/models/PTORequest";
 import { ptoApprovalSchema } from "@/lib/schemas/ptoSchema";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import User from "@/models/User";
 
 // GET single PTO request
@@ -12,7 +13,10 @@ export async function GET(
 ) {
 	try {
 		await dbConnect();
-		const session = await auth();
+		const headersList = await headers();
+		const session = await auth.api.getSession({
+			headers: headersList,
+		});
 		const { id } = await params;
 
 		if (!session?.user?.email) {
@@ -53,7 +57,10 @@ export async function PATCH(
 ) {
 	try {
 		await dbConnect();
-		const session = await auth();
+		const headersList = await headers();
+		const session = await auth.api.getSession({
+			headers: headersList,
+		});
 		const { id } = await params;
 
 		if (!session?.user?.email) {
@@ -119,7 +126,9 @@ export async function PATCH(
 			performedBy: session.user.email,
 			performedByName: session.user.name || session.user.email,
 			performedByEmail: session.user.email,
-			details: validationResult.data.reviewNotes || `Request ${validationResult.data.status}`,
+			details:
+				validationResult.data.reviewNotes ||
+				`Request ${validationResult.data.status}`,
 		});
 
 		return NextResponse.json(updatedRequest);
@@ -139,7 +148,10 @@ export async function DELETE(
 ) {
 	try {
 		await dbConnect();
-		const session = await auth();
+		const headersList = await headers();
+		const session = await auth.api.getSession({
+			headers: headersList,
+		});
 		const { id } = await params;
 
 		if (!session?.user?.email) {

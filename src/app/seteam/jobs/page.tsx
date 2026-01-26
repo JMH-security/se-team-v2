@@ -1,11 +1,15 @@
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { JobData } from "@/types/job";
 import Jobs from "@/components/jobs/Jobs";
 
 export default async function WtJobs() {
 	//Verify user is logged in before fetching data
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 	if (!session) {
 		redirect("/");
 	}

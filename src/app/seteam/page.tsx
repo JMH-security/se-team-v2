@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import connectDB from "@/lib/db";
 import User from "@/models/User";
 import Image from "next/image";
@@ -8,7 +9,10 @@ const SETEAMHOME = async () => {
 	await connectDB();
 
 	// Get the session user
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 
 	// Initialize a variable to store the user's role
 	let sessionUser = null;

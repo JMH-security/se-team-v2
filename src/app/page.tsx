@@ -2,11 +2,15 @@ import Image from "next/image";
 import { ModeToggle } from "@/components/header/ModeToggle";
 import LoginForm from "@/components/formLogin/LoginForm";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
 	// Check if the user is loged in and if so redirect to seteam home page
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 	if (session) {
 		console.log("Already logged in - Redirecting to /seteam");
 		return redirect("/seteam");

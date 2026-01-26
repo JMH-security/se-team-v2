@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { UserDocument } from "@/models/User";
 import { redirect, useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 export default function AdminUser() {
 	const [users, setUsers] = useState<UserDocument[]>([]);
@@ -11,22 +12,27 @@ export default function AdminUser() {
 	const [isAuthorized, setIsAuthorized] = useState(true);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const { data: session } = useSession();
 
 	// Check if admin
 	useEffect(() => {
 		const checkAuth = async () => {
 			try {
-				// Check if user has a valid session
-				const sessionResponse = await fetch("/api/auth/session");
-				const session = await sessionResponse.json();
-
 				if (!session?.user?.email) {
-					redirect("/seteam");
 					setLoading(false);
+					router.push("/seteam");
+					return;
 				}
 
 				// Retrieve current user from database
 				const usersResponse = await fetch("/api/users");
+				if (!usersResponse.ok) {
+					if (usersResponse.status === 403) {
+						setLoading(false);
+						router.push("/seteam");
+						return;
+					}
+				}
 				const users = await usersResponse.json();
 				const currentUser = users.find(
 					(user: UserDocument) => user.email === session.user.email
@@ -35,10 +41,11 @@ export default function AdminUser() {
 				// Check if user is an admin and redirect if not
 				if (
 					!currentUser ||
-					!["admin", "ADMIN", "Admin"].includes(currentUser.role)
+					!["admin", "ADMIN", "Admin", "super-admin"].includes(currentUser.role)
 				) {
 					setLoading(false);
-					redirect("/seteam");
+					router.push("/seteam");
+					return;
 				}
 
 				setIsAuthorized(true);
@@ -46,11 +53,13 @@ export default function AdminUser() {
 			} catch (error) {
 				console.error("Error checking authorization:", error);
 				setLoading(false);
-				redirect("/seteam");
+				router.push("/seteam");
 			}
 		};
-		checkAuth();
-	}, [router]);
+		if (session !== undefined) {
+			checkAuth();
+		}
+	}, [router, session]);
 
 	// Fetch users
 	useEffect(() => {
@@ -66,8 +75,10 @@ export default function AdminUser() {
 				console.error("Error fetching users:", error);
 			}
 		};
-		fetchUsers();
-	}, []);
+		if (isAuthorized && !loading) {
+			fetchUsers();
+		}
+	}, [isAuthorized, loading]);
 
 	// Handle checkbox
 	const handleSelect = (userId: string) => {

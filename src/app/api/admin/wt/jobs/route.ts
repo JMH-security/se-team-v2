@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { Job, JobData } from "@/types/job";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function GET() {
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 	if (!session) {
 		redirect("/");
 	}

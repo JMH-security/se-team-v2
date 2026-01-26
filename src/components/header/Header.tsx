@@ -3,16 +3,19 @@ import connectDB from "@/lib/db";
 import User from "@/models/User";
 import Image from "next/image";
 import NavMenu from "../navigationMenu/NavMenu";
-import Link from "next/link";
-import { Button } from "../ui/button";
+import { headers } from "next/headers";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import LogoutButton from "./LogoutButton";
 
 export default async function Header() {
 	// Connect to the database
 	await connectDB();
 
 	// Get the session user
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 
 	// Initialize a variable to store the user's role
 	let sessionUser = null;
@@ -56,9 +59,7 @@ export default async function Header() {
 								</Avatar>
 							</div>
 							<div className="">
-								<Button asChild variant="secondary">
-									<Link href="/api/auth/signout">Logout</Link>
-								</Button>
+								<LogoutButton />
 							</div>
 						</div>
 					</div>

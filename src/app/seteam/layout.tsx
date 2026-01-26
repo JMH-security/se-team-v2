@@ -1,6 +1,6 @@
 import Header from "@/components/header/Header";
-//import Footer from "../components/Footer"
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function SeteamLayout({
@@ -8,8 +8,11 @@ export default async function SeteamLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	//VERIFY USER IS LOGGED IN
-	const session = await auth();
+	// VERIFY USER IS LOGGED IN
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
 	if (!session) {
 		redirect("/");
 	}
@@ -17,9 +20,7 @@ export default async function SeteamLayout({
 	return (
 		<>
 			<Header />
-
 			<section>{children}</section>
-			{/* <Footer /> */}
 		</>
 	);
 }

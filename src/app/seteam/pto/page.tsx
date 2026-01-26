@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import connectDB from "@/lib/db";
 import User from "@/models/User";
@@ -6,10 +7,13 @@ import PTORequestPage from "./PTORequestPage";
 
 export default async function PTOPage() {
 	await connectDB();
-	const session = await auth();
+	const headersList = await headers();
+	const session = await auth.api.getSession({
+		headers: headersList,
+	});
 
 	if (!session?.user?.email) {
-		redirect("/api/auth/signin");
+		redirect("/");
 	}
 
 	// Get user details

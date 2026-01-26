@@ -3,13 +3,17 @@ import dbConnect from "@/lib/db";
 import { PTORequest, PTORequestLog } from "@/models/PTORequest";
 import { ptoRequestSchema } from "@/lib/schemas/ptoSchema";
 import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import User from "@/models/User";
 
 // GET all PTO requests (for admin) or user's own requests
 export async function GET(request: Request) {
 	try {
 		await dbConnect();
-		const session = await auth();
+		const headersList = await headers();
+		const session = await auth.api.getSession({
+			headers: headersList,
+		});
 
 		if (!session?.user?.email) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -50,7 +54,10 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
 	try {
 		await dbConnect();
-		const session = await auth();
+		const headersList = await headers();
+		const session = await auth.api.getSession({
+			headers: headersList,
+		});
 
 		if (!session?.user?.email) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
